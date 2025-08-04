@@ -3,6 +3,7 @@ name: Deploy Documentation
 on:
   push:
     branches: [ main ]
+    paths: [ 'docs/**', '.github/workflows/docs.yml' ]
   workflow_dispatch:
 
 permissions:
@@ -17,43 +18,22 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
+      - name: Setup Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.12'
+
+      - name: Install Sphinx
+        run: |
+          python -m pip install sphinx sphinx-rtd-theme
+
+      - name: Build Sphinx docs
+        run: |
+          cd docs
+          make html
+
       - name: Setup Pages
         uses: actions/configure-pages@v4
-
-      - name: Create basic documentation
-        run: |
-          mkdir -p docs/build/html
-          cat > docs/build/html/index.html << 'EOF'
-          <!DOCTYPE html>
-          <html>
-          <head>
-              <title>Seedling Template</title>
-              <meta charset="utf-8">
-              <meta name="viewport" content="width=device-width, initial-scale=1">
-              <style>
-                  body { font-family: Arial, sans-serif; max-width: 800px; margin: 0 auto; padding: 20px; }
-                  h1 { color: #2c3e50; }
-                  .container { background: #f8f9fa; padding: 20px; border-radius: 5px; }
-              </style>
-          </head>
-          <body>
-              <h1>🌱 Seedling Template</h1>
-              <div class="container">
-                  <h2>Copier template for world-class Python projects</h2>
-                  <p>This template provides a complete foundation for Python projects with:</p>
-                  <ul>
-                      <li>Modern tooling (uv, Nox, Just, Sphinx, pre-commit)</li>
-                      <li>CI/CD workflows</li>
-                      <li>Professional documentation</li>
-                      <li>Quality assurance tools</li>
-                  </ul>
-                  <p><strong>Get started:</strong></p>
-                  <pre>copier copy https://github.com/jeffrichley/seedling-template.git my-project</pre>
-                  <p><a href="https://github.com/jeffrichley/seedling-template">View on GitHub</a></p>
-              </div>
-          </body>
-          </html>
-          EOF
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
