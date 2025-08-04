@@ -105,6 +105,13 @@ This is the initial stable release of the Seedling Template, featuring:
 - Install script works correctly
 - Documentation is complete and accessible
 
+### **Documentation Workflow Fix**
+✅ **FIXED** - GitHub Pages deployment workflow issues resolved:
+- Fixed "uv: not found" error by installing uv in CI environment
+- Fixed "No virtual environment found" error by using uv sync
+- Updated workflow to use docs/pyproject.toml for dependency management
+- Ensured consistent dependency installation across environments
+
 ---
 
 ## 🎉 **Phase 4 Complete!**
