@@ -23,9 +23,14 @@ jobs:
         with:
           python-version: '3.12'
 
+      - name: Install uv
+        run: |
+          curl -LsSf https://astral.sh/uv/install.sh | sh
+          echo "$HOME/.cargo/bin" >> $GITHUB_PATH
+
       - name: Install Sphinx and dependencies
         run: |
-          python -m pip install sphinx sphinx-rtd-theme myst-parser furo sphinx-autodoc-typehints sphinx-copybutton
+          uv pip install sphinx sphinx-rtd-theme myst-parser furo sphinx-autodoc-typehints sphinx-copybutton
 
       - name: Build Sphinx docs
         run: |
