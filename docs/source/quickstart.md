@@ -30,7 +30,7 @@ uv pip install nox
 
 ```bash
 # Generate a new project
-copier copy https://github.com/jeffrichley/seedling.git my-awesome-project
+copier copy https://github.com/jeffrichley/seedling-template.git my-awesome-project
 ```
 
 You'll be prompted to configure your project:

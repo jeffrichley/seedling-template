@@ -21,8 +21,11 @@ uv pip install copier
 uv pip install nox
 ```
 
-# Generate a new project
+## 🚀 Generate a new project
+
+```bash
 copier copy https://github.com/jeffrichley/seedling-template.git my-awesome-project
+```
 ```
 
 ## ✨ Features

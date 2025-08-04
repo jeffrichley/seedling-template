@@ -11,7 +11,7 @@ Generate a new Python project in seconds:
 pip install copier
 
 # Generate a new project
-copier copy https://github.com/jeffrichley/seedling.git my-awesome-project
+copier copy https://github.com/jeffrichley/seedling-template.git my-awesome-project
 ```
 
 ## ✨ Features
@@ -44,27 +44,16 @@ features/quality-tooling
 features/testing
 features/documentation
 features/ci-cd
-features/development
 ```
 
-```{toctree}
-:maxdepth: 2
-:caption: Advanced Usage
 
-advanced/customization
-advanced/extending
-advanced/troubleshooting
-advanced/documentation
-```
 
 ```{toctree}
 :maxdepth: 2
 :caption: Reference
 
-api
-dependency-groups
-reference/configuration
 reference/template-structure
+reference/configuration
 reference/post-generation
 reference/architecture
 ```
