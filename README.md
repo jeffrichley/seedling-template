@@ -19,6 +19,8 @@ cd seedling-template
 curl -LsSf https://astral.sh/uv/install.sh | sh
 uv pip install copier
 uv pip install nox
+```
+
 ## 🚀 Generate a new project
 
 ```bash
