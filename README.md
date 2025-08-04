@@ -8,11 +8,11 @@ Generate a new Python project:
 
 ```bash
 # Quick install all required tools
-curl -LsSf https://raw.githubusercontent.com/jeffrichley/seedling/main/scripts/install-tools.sh | bash
+curl -LsSf https://raw.githubusercontent.com/jeffrichley/seedling-template/main/scripts/install-tools.sh | bash
 
 # Or if you've cloned the repository
-git clone https://github.com/jeffrichley/seedling.git
-cd seedling
+git clone https://github.com/jeffrichley/seedling-template.git
+cd seedling-template
 ./scripts/install-tools.sh
 
 # Or install manually
@@ -22,7 +22,7 @@ uv pip install nox
 ```
 
 # Generate a new project
-copier copy https://github.com/jeffrichley/seedling.git my-awesome-project
+copier copy https://github.com/jeffrichley/seedling-template.git my-awesome-project
 ```
 
 ## ✨ Features
@@ -115,4 +115,4 @@ See [CONTRIBUTING.md](docs/contributing.md) for details on contributing to the t
 
 ## 📄 License
 
-MIT License - see [LICENSE](LICENSE) for details. 
+MIT License - see [LICENSE](LICENSE) for details. # GitHub Pages Test
