@@ -4,7 +4,7 @@
 # You can set these variables from the command line, and also
 # from the environment for the first two.
 SPHINXOPTS    ?=
-SPHINXBUILD   ?= sphinx-build
+SPHINXBUILD   ?= uv run sphinx-build
 SOURCEDIR     = source
 BUILDDIR      = build
 
@@ -16,7 +16,7 @@ help:
 serve:
 	@echo "Serving documentation at http://localhost:8000"
 	@echo "Press Ctrl+C to stop"
-	@python -m http.server 8000 --directory build/html
+	@uv run python -m http.server 8000 --directory build/html
 
 .PHONY: help serve Makefile
 

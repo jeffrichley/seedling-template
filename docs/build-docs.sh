@@ -18,8 +18,8 @@ uv sync
 
 # Build documentation
 echo "🔨 Building HTML documentation..."
-make clean
-make html
+uv run make clean
+uv run make html
 
 echo "✅ Documentation built successfully!"
 echo "📁 HTML files are in build/html/"

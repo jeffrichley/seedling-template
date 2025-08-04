@@ -310,7 +310,7 @@ pip install copier nox
 
 ### Getting Help
 
-- Check the {doc}`advanced/troubleshooting` guide
+- Check the troubleshooting section above
 - Visit the [Copier documentation](https://copier.readthedocs.io/)
 - Visit the [uv documentation](https://docs.astral.sh/uv/)
 - Visit the [Nox documentation](https://nox.thea.codes/)
@@ -324,4 +324,4 @@ Now that you have Seedling installed, you can:
 1. **Generate your first project**: See the {doc}`quickstart` guide
 2. **Learn about configuration**: Check the {doc}`configuration` guide
 3. **Explore examples**: Browse the {doc}`examples` page
-4. **Customize the template**: Read the {doc}`advanced/customization` guide 
+4. **Customize the template**: See the configuration guide for customization options 

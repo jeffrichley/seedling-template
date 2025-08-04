@@ -207,6 +207,6 @@ copier copy https://github.com/jeffrichley/seedling.git my-project
 
 ### Getting Help
 
-- Check the {doc}`troubleshooting` guide
+- Check the troubleshooting section below
 - Review the {doc}`examples` for working configurations
 - Visit the [Copier documentation](https://copier.readthedocs.io/) 

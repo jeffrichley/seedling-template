@@ -54,7 +54,7 @@ def example_function():
 
 ## Cross-References
 
-See {doc}`../api` for template reference documentation.
+See {doc}`../reference/template-structure` for template reference documentation.
 ```
 
 ### API Documentation

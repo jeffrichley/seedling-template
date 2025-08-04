@@ -6,7 +6,7 @@
 
 Dependency groups are defined in `pyproject.toml` and provide a clean way to manage different types of dependencies:
 
-- **Runtime dependencies**: Core functionality required to use the library
+- **Runtime dependencies**: Core functionality required to use the library (currently pydantic for data validation)
 - **Development dependencies**: Tools for development, testing, and quality assurance
 - **Documentation dependencies**: Tools for building documentation
 - **Type checking dependencies**: Tools for static type analysis
@@ -23,12 +23,7 @@ uv pip install -e .
 ```
 
 This includes:
-- **pandas**: Data manipulation and analysis
-- **pydantic**: Data validation and settings management
-- **pyyaml**: YAML configuration parsing
-- **pillow**: Image processing
-- **numpy**: Numerical computing
-- **rich**: Rich text and beautiful formatting
+- **pydantic**: Data validation and settings management (the only runtime dependency)
 
 ### Development
 

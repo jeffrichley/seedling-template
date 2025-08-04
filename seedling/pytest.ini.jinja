@@ -12,5 +12,6 @@ markers =
     functional: cross-module logic
     e2e: end-to-end test
     slow: long-running test
+    performance: performance tests
 addopts = --cov=src/{{ project_slug }} --cov-report=term-missing --cov-report=xml --cov-fail-under=80
 filterwarnings = ignore::pydantic.PydanticDeprecatedSince20:{{ project_slug }}.*

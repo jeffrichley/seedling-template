@@ -137,9 +137,9 @@ else
 fi
 echo ""
 echo "Next steps:"
-echo "  1. Generate a new project: copier copy https://github.com/jeffrichley/seedling.git my-awesome-project"
+echo "  1. Generate a new project: copier copy https://github.com/jeffrichley/seedling-template.git my-awesome-project"
 echo "  2. Navigate to your project: cd my-awesome-project"
 echo "  3. Install dependencies: uv sync"
 echo "  4. Start developing!"
 echo ""
-echo "For more information, see the documentation: https://jeffrichley.github.io/seedling/" 
+echo "For more information, see the documentation: https://jeffrichley.github.io/seedling-template/" 

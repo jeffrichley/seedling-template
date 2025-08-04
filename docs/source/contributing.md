@@ -2,16 +2,7 @@
 
 Thank you for your interest in contributing to the Seedling Python project template! This document provides guidelines and requirements for contributing to the template.
 
-## 📋 Table of Contents
 
-- [Code of Conduct](#code-of-conduct)
-- [Development Setup](#development-setup)
-- [Documentation](#documentation)
-- [Quality Requirements](#quality-requirements)
-- [Contribution Process](#contribution-process)
-- [Code Style Guidelines](#code-style-guidelines)
-- [Testing Requirements](#testing-requirements)
-- [Review Process](#review-process)
 
 ## 📜 Code of Conduct
 
