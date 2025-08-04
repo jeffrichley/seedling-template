@@ -30,7 +30,8 @@ jobs:
 
       - name: Install Sphinx and dependencies
         run: |
-          uv pip install sphinx sphinx-rtd-theme myst-parser furo sphinx-autodoc-typehints sphinx-copybutton
+          cd docs
+          uv sync
 
       - name: Build Sphinx docs
         run: |
