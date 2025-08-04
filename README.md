@@ -1,19 +1,19 @@
 # 🌱 Seedling - Modern Python Project Template
 
+[![Template](https://img.shields.io/badge/template-copier-brightgreen?logo=copier)](https://github.com/copier-org/copier)
+[![Python 3.11+](https://img.shields.io/badge/python-3.11+-blue.svg)](https://www.python.org/downloads/)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![pre-commit enabled](https://img.shields.io/badge/pre--commit-enabled-brightgreen?logo=pre-commit&logoColor=white)](https://github.com/pre-commit/pre-commit)
+
 A comprehensive Python project template with modern development tooling, automated CI/CD, and best practices built-in.
 
 ## 🚀 Quick Start
 
-Generate a new Python project:
+### Step 1: Install Required Tools
 
 ```bash
 # Quick install all required tools
 curl -LsSf https://raw.githubusercontent.com/jeffrichley/seedling-template/main/scripts/install-tools.sh | bash
-
-# Or if you've cloned the repository
-git clone https://github.com/jeffrichley/seedling-template.git
-cd seedling-template
-./scripts/install-tools.sh
 
 # Or install manually
 curl -LsSf https://astral.sh/uv/install.sh | sh
@@ -21,10 +21,37 @@ uv pip install copier
 uv pip install nox
 ```
 
-## 🚀 Generate a new project
+### Step 2: Generate Your Project
 
 ```bash
+# Generate with interactive prompts
 copier copy https://github.com/jeffrichley/seedling-template.git my-awesome-project
+
+# Or use a data file for non-interactive generation
+copier copy https://github.com/jeffrichley/seedling-template.git my-awesome-project --data-file project-data.yaml
+```
+
+### Step 3: Start Developing
+
+```bash
+cd my-awesome-project
+uv sync                    # Install dependencies
+uv run dev test           # Run tests
+uv run dev docs           # Build documentation
+```
+
+### Example Data File (`project-data.yaml`)
+
+```yaml
+project_name: "My Awesome Project"
+project_slug: "my_awesome_project"
+project_description: "A modern Python project built with best practices"
+author_name: "Your Name"
+author_email: "your.email@example.com"
+github_username: "yourusername"
+license: "MIT"
+python_versions: "3.11,3.12"
+coverage_threshold: 80
 ```
 
 ## ✨ Features
@@ -115,6 +142,43 @@ my-awesome-project/
 
 See [CONTRIBUTING.md](docs/contributing.md) for details on contributing to the template.
 
+## 🔧 Troubleshooting
+
+### Common Issues
+
+**Template generation fails**
+```bash
+# Make sure you have the latest version of Copier
+uv pip install --upgrade copier
+
+# Try with verbose output
+copier copy https://github.com/jeffrichley/seedling-template.git my-project --trust -v
+```
+
+**Dependencies fail to install**
+```bash
+# Make sure you have uv installed
+curl -LsSf https://astral.sh/uv/install.sh | sh
+
+# Try clearing uv cache
+uv cache clean
+```
+
+**Tests fail after generation**
+```bash
+# Make sure all dependencies are installed
+uv sync --all-extras
+
+# Run tests with verbose output
+uv run pytest -v
+```
+
+### Getting Help
+
+- 📖 **[Template Guide](docs/template-guide.md)** - Complete usage instructions
+- 🐛 **[Issues](https://github.com/jeffrichley/seedling-template/issues)** - Report bugs or request features
+- 💬 **[Discussions](https://github.com/jeffrichley/seedling-template/discussions)** - Ask questions and get help
+
 ## 📄 License
 
-MIT License - see [LICENSE](LICENSE) for details. # GitHub Pages Test
+MIT License - see [LICENSE](LICENSE) for details.

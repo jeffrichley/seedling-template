@@ -38,6 +38,34 @@ python_versions: "3.11,3.12"
 coverage_threshold: 80
 ```
 
+## 🎯 Configuration Best Practices
+
+### Project Naming
+- **Project Name**: Use descriptive, human-readable names (e.g., "Data Processing Pipeline")
+- **Project Slug**: Use lowercase with underscores, no spaces or hyphens (e.g., `data_processing_pipeline`)
+- **Keywords**: Include relevant PyPI keywords for discoverability
+
+### Python Versions
+- **Minimum**: Python 3.11+ for modern features and performance
+- **Recommended**: Support 2-3 recent Python versions (e.g., "3.11,3.12,3.13")
+- **Testing**: All supported versions are automatically tested in CI
+
+### Coverage Thresholds
+- **Libraries**: 90%+ for critical code paths
+- **Applications**: 80%+ for core functionality
+- **CLI Tools**: 85%+ for user-facing features
+
+### License Selection
+- **MIT**: Most permissive, good for open source
+- **Apache-2.0**: Enterprise-friendly with patent protection
+- **GPL-3.0**: Copyleft, requires source sharing
+- **BSD-3-Clause**: Simple permissive license
+
+### GitHub Integration
+- **Username**: Use your actual GitHub username for proper linking
+- **Repository**: Template will create proper GitHub workflows
+- **Documentation**: Automatic deployment to GitHub Pages
+
 ## 📋 Configuration Options
 
 ### Project Information
@@ -126,6 +154,56 @@ just docs
 
 # Serve documentation locally
 just docs-serve
+```
+
+## 📚 Project Type Examples
+
+### CLI Application
+
+```yaml
+# cli-project.yaml
+project_name: "My CLI Tool"
+project_slug: "my_cli_tool"
+project_description: "A command-line interface for data processing"
+project_keywords: "cli,data,processing,command-line"
+author_name: "Your Name"
+author_email: "your.email@example.com"
+github_username: "yourusername"
+license: "MIT"
+python_versions: "3.11,3.12"
+coverage_threshold: 85
+```
+
+### Python Library
+
+```yaml
+# library-project.yaml
+project_name: "Data Processing Library"
+project_slug: "data_processor"
+project_description: "A high-performance library for data processing and analysis"
+project_keywords: "data,processing,analysis,library"
+author_name: "Your Name"
+author_email: "your.email@example.com"
+github_username: "yourusername"
+license: "Apache-2.0"
+python_versions: "3.11,3.12,3.13"
+coverage_threshold: 90
+```
+
+### Web Application
+
+```yaml
+# web-app-project.yaml
+project_name: "My Web App"
+project_slug: "my_web_app"
+project_description: "A modern web application built with FastAPI"
+project_keywords: "web,fastapi,api,application"
+author_name: "Your Name"
+author_email: "your.email@example.com"
+github_username: "yourusername"
+license: "MIT"
+python_versions: "3.11,3.12"
+coverage_threshold: 80
 ```
 
 ### Available Commands
