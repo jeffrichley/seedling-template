@@ -5,11 +5,12 @@
 > — **Martin Fowler**
 
 [![Template](https://img.shields.io/badge/template-copier-brightgreen?logo=copier)](https://github.com/copier-org/copier)
-[![Python 3.11+](https://img.shields.io/badge/python-3.11+-blue.svg)](https://www.python.org/downloads/)
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-[![pre‑commit enabled](https://img.shields.io/badge/pre--commit-enabled-brightgreen?logo=pre-commit\&logoColor=white)](https://github.com/pre-commit/pre-commit)
+[![Python 3.11+](https://img.shields.io/badge/python-3.11+-blue.svg)](https://www.python.org/downloads/)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![pre‑commit enabled](https://img.shields.io/badge/pre--commit-enabled-brightgreen?logo=pre-commit\&logoColor=white)](https://github.com/pre-commit/pre-commit)
+[![Documentation](https://img.shields.io/badge/docs-latest-brightgreen?logo=read-the-docs)](https://jeffrichley.github.io/seedling-template)
 
-Seedling is the **“just add water”** template for modern Python projects: batteries included, CI wired up, quality gates armed, and zero yak‑shaving required. Clone it, answer a few prompts, and you’re sprinting instead of scaffolding. 🌱✨
+Seedling is the **"just add water"** template for modern Python projects: batteries included, CI wired up, quality gates armed, and zero yak‑shaving required. Clone it, answer a few prompts, and you're sprinting instead of scaffolding. 🌱✨
 
 ---
 
@@ -108,6 +109,8 @@ uv run dev docs         # Build docs 📚
 ---
 
 ## 📚 Documentation
+
+📖 **[View Live Documentation](https://jeffrichley.github.io/seedling-template)** - Complete documentation with guides, API reference, and examples.
 
 ### Building the Documentation
 
