@@ -1,18 +1,164 @@
-# Templates Directory
+# Documentation Templates
 
-This directory contains custom Jinja2 templates for the Sphinx documentation.
+This directory contains Sphinx documentation templates for {{ project_name }}.
 
-## Files
+## Overview
 
-- `.gitkeep` - Ensures this directory is tracked by Git
+The documentation is built using Sphinx with the Furo theme and includes:
 
-## Usage
+- **Markdown Support**: All documentation files use Markdown format
+- **Auto-generated API Docs**: API documentation is automatically generated from docstrings
+- **Responsive Design**: Mobile-friendly documentation with modern styling
+- **Search Functionality**: Full-text search across all documentation
+- **Dark Mode**: Automatic dark/light mode switching
 
-Add custom Jinja2 templates here to override theme templates. Common templates to customize include:
+## File Structure
 
-- `layout.html` - Main layout template
-- `page.html` - Individual page template
-- `genindex.html` - Index page template
-- `search.html` - Search results template
+```
+docs/source/
+├── _static/           # Static assets (CSS, images)
+├── _templates/        # Custom Sphinx templates
+├── adr/              # Architecture Decision Records
+├── *.md.jinja        # Documentation pages (templated)
+└── conf.py.jinja     # Sphinx configuration
+```
 
-Templates in this directory will override the default theme templates.
+## Customization Guide
+
+### Adding New Documentation Pages
+
+1. **Create a new `.md.jinja` file** in the appropriate directory
+2. **Follow the established structure**:
+   ```markdown
+   # Page Title
+   
+   Brief description of what this page covers.
+   
+   ## Overview
+   
+   What users will learn from this page.
+   
+   ## Main Content
+   
+   The primary content organized in logical sections.
+   
+   ## Related Topics
+   
+   Links to related documentation.
+   ```
+
+3. **Add to navigation** by updating the toctree in `index.md.jinja`
+
+### Customizing the Theme
+
+#### CSS Customization
+
+Edit `_static/custom.css.jinja` to customize:
+- Colors and typography
+- Code block styling
+- Admonition appearance
+- Navigation elements
+- Mobile responsiveness
+
+#### Template Customization
+
+Edit `_templates/layout.html.jinja` to customize:
+- Page layout structure
+- Header and footer content
+- Sidebar customization
+- Custom blocks and sections
+
+### Configuration Options
+
+The `conf.py.jinja` file contains Sphinx configuration including:
+
+- **Theme Settings**: Furo theme customization
+- **Extensions**: Sphinx extensions for functionality
+- **Build Options**: HTML output settings
+- **Search Configuration**: Search engine settings
+
+### Template Variables
+
+All `.jinja` files support these template variables:
+
+- `{{ project_name }}`: The project's display name
+- `{{ project_slug }}`: The project's package name
+- `{{ github_username }}`: GitHub username
+- `{{ author_name }}`: Author name
+- `{{ copyright_year }}`: Current year
+- `{{ version }}`: Project version
+
+### Building Documentation
+
+```bash
+# Build documentation
+uv run dev docs
+
+# Build with live reload
+uv run dev docs:serve
+
+# Check for broken links
+uv run dev docs:linkcheck
+
+# Validate documentation
+uv run dev docs:validate
+```
+
+## Best Practices
+
+### Content Guidelines
+
+1. **User-Focused**: Write from the user's perspective
+2. **Clear Examples**: Include practical, runnable examples
+3. **Consistent Structure**: Follow established section patterns
+4. **Cross-References**: Link to related documentation
+5. **Regular Updates**: Keep documentation current with code changes
+
+### Technical Guidelines
+
+1. **Markdown Format**: Use standard Markdown syntax
+2. **Jinja2 Variables**: Use template variables for dynamic content
+3. **Internal Links**: Use relative paths without `.md` extensions
+4. **Code Blocks**: Use appropriate language syntax highlighting
+5. **Images**: Store in `_static/` directory and reference with relative paths
+
+### Navigation Structure
+
+The documentation follows this logical structure:
+
+- **Getting Started**: Quick start, installation, examples
+- **Reference**: API documentation, configuration, architecture
+- **Development**: Contributing, testing, troubleshooting
+- **Architecture**: Design decisions and rationale
+
+## Maintenance
+
+### Regular Tasks
+
+- **Monthly**: Review and update examples
+- **Quarterly**: Review all documentation for accuracy
+- **Release**: Update version numbers and changelog
+- **Annually**: Review and refresh architecture decisions
+
+### Quality Checks
+
+- **Link Validation**: Ensure all internal links work
+- **Build Verification**: Confirm documentation builds successfully
+- **Content Review**: Check for outdated information
+- **User Feedback**: Incorporate user suggestions and questions
+
+## Resources
+
+- [Sphinx Documentation](https://www.sphinx-doc.org/)
+- [Furo Theme Documentation](https://pradyunsg.me/furo/)
+- [MyST Markdown](https://myst-parser.readthedocs.io/)
+- [Sphinx Extensions](https://www.sphinx-doc.org/en/master/usage/extensions/index.html)
+
+## Support
+
+For documentation issues or questions:
+
+1. Check the [Contributing Guide](../contributing) for guidelines
+2. Review existing documentation for patterns and examples
+3. Create an issue in the project repository
+4. Ask questions in project discussions 

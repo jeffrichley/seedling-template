@@ -1,0 +1,66 @@
+# Configuration Guide
+
+This document explains how to configure {{ project_name }} for different environments and use cases.
+
+## Overview
+
+{{ project_name }} uses a flexible configuration system that supports multiple environments and configuration sources.
+
+## Configuration Sources
+
+1. **Environment Variables** (highest priority)
+2. **Configuration Files** (JSON, YAML, TOML, INI)
+3. **Default Values** (built-in defaults)
+
+## Basic Configuration
+
+```python
+# TODO: Define your core configuration structure
+class Settings(BaseSettings):
+    app_name: str = "{{ project_name }}"
+    debug: bool = False
+    log_level: str = "INFO"
+    database_url: str = "sqlite:///app.db"
+    api_port: int = 8000
+    
+    class Config:
+        env_file = ".env"
+        case_sensitive = False
+```
+
+## Environment-Specific Configuration
+
+### Development
+```bash
+# .env.development
+DEBUG=true
+LOG_LEVEL=DEBUG
+DATABASE_URL=sqlite:///dev.db
+```
+
+### Production
+```bash
+# .env.production
+DEBUG=false
+LOG_LEVEL=INFO
+DATABASE_URL=postgresql://user:pass@prod/db
+```
+
+## TODO: Customize for Your Project
+
+1. **Define Core Settings**: Specify the actual configuration settings your project needs
+2. **Choose Configuration Sources**: Select appropriate sources (env vars, files, etc.)
+3. **Implement Validation**: Add validation rules for your configuration
+4. **Add Security**: Implement secure handling of sensitive configuration
+5. **Create Environment Configs**: Define environment-specific configurations
+6. **Add Testing**: Create tests for your configuration system
+7. **Document Settings**: Create a comprehensive configuration reference
+8. **Add Examples**: Provide configuration examples for different scenarios
+9. **Implement Loading**: Create configuration loading logic
+10. **Add Monitoring**: Implement configuration monitoring and validation
+
+## Related Documentation
+
+- [Architecture Guide](architecture) - System architecture overview
+- [Installation Guide](installation) - Installation and setup
+- [API Reference](api) - API documentation 

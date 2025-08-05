@@ -1,0 +1,33 @@
+"""Unit tests for {{ project_name }}.
+
+This package contains fast, isolated function and class tests that:
+- Test individual functions and methods in isolation
+- Mock external dependencies (databases, APIs, file systems)
+- Run quickly (< 200ms per test)
+- Focus on behavior, not implementation
+- Test one thing at a time
+
+Use @pytest.mark.unit to mark your tests.
+
+Example:
+    @pytest.mark.unit
+    def test_function_returns_expected_value():
+        '''Returns expected value when given valid input.'''
+        
+        # Arrange
+        input_data = "test"
+        
+        # Act
+        result = my_function(input_data)
+        
+        # Assert
+        assert result == "expected output"
+
+Best Practices:
+- Mock external dependencies (databases, APIs, file systems)
+- Test one behavior per test function
+- Use descriptive test names: test_<thing>_<expected_behavior>
+- Follow Arrange-Act-Assert pattern with blank lines
+- Keep tests independent and isolated
+- Test both happy path and error conditions
+"""

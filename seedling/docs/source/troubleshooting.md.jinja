@@ -1,0 +1,58 @@
+# Troubleshooting Guide
+
+This document helps you diagnose and resolve common issues with {{ project_name }}.
+
+## Overview
+
+This troubleshooting guide covers common problems, error messages, and their solutions. If you encounter an issue not covered here, please check the [FAQ](faq) or create an issue in the project repository.
+
+## Common Issue Example
+
+### Package Installation Fails
+
+**Symptoms**: `uv pip install` fails with errors
+
+**Solutions**:
+1. Check Python version (3.11+ required)
+2. Update package manager
+3. Install system dependencies
+4. Use virtual environment
+
+## Debugging Techniques
+
+### Enable Debug Mode
+
+```bash
+export DEBUG=true
+export LOG_LEVEL=DEBUG
+{{ project_slug }} --debug
+```
+
+## TODO: Add More Troubleshooting
+
+This troubleshooting guide provides a foundation for {{ project_name }}. You should add troubleshooting based on your specific issues:
+
+1. **Import Errors**: ModuleNotFoundError and ImportError issues
+2. **Configuration Issues**: Configuration loading and validation problems
+3. **Runtime Issues**: Application crashes and startup problems
+4. **Performance Problems**: Slow response times and memory issues
+5. **Data Processing Issues**: Validation errors and processing failures
+6. **Network Issues**: Connection errors and API problems
+7. **Authentication Errors**: Login and permission issues
+8. **Memory Issues**: Memory leaks and allocation problems
+9. **Database Issues**: Connection and query problems
+10. **Deployment Issues**: Production deployment problems
+
+## Getting Help
+
+If you encounter an issue not covered in this guide:
+
+1. **Check the FAQ**: See [FAQ](faq) for common questions
+2. **Search Issues**: Look for similar issues in the project repository
+3. **Create Issue**: Create a new issue with detailed information
+
+## Related Documentation
+
+- [Installation Guide](installation) - Installation and setup
+- [Configuration Guide](configuration) - Configuration management
+- [FAQ](faq) - Frequently asked questions 

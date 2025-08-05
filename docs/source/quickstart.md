@@ -1,44 +1,57 @@
 # 🚀 Quick Start Guide
 
-Get up and running with Seedling in under 5 minutes!
+> "Give me six hours to chop down a tree and I will spend the first four sharpening the axe."
+> — **Abraham Lincoln**
 
-## Prerequisites
+Get up and running with **Seedling** in under 5 minutes! 🌱 This guide walks you through the essentials so you can start coding instead of configuring.
 
-- **Python 3.11+**: Required for modern features and type hints
-- **Git**: For version control
-- **Copier**: Template engine (we'll install this)
-- **uv**: Fast Python package manager (recommended)
-- **Nox**: Task automation tool (recommended)
-- **Just**: Command runner for shortcuts (optional but recommended)
+---
 
-## Installation
+## 🧰 Prerequisites
 
-### 1. Install Required Tools
+* **Python 3.11+** — Modern language features & type hints
+* **Git** — Version control (because you *will* want history)
+* **Copier** — Template engine (we’ll install it)
+* **uv** — Fast Python package manager *(recommended)*
+* **Nox** — Task automation *(recommended)*
+* **Just** — Command runner for shortcuts *(optional, but addictive)*
+
+---
+
+## 📦 Installation
+
+### 1 — Install Required Tools
 
 ```bash
-# Quick install all tools (recommended)
+# One-stop shop (recommended)
 curl -LsSf https://raw.githubusercontent.com/jeffrichley/seedling/main/scripts/install-tools.sh | bash
 
-# Or install manually
+# Or roll your own
 curl -LsSf https://astral.sh/uv/install.sh | sh
 uv pip install copier
 uv pip install nox
-# Just: macOS: brew install just, Linux: Download from releases
 ```
 
-### 2. Generate Your First Project
+**Install Just** (command runner)
+
+* **macOS**: `brew install just`
+* **Linux**: download binary from [releases](https://github.com/casey/just/releases) and add to `PATH`
+* **Windows**: `choco install just`
+
+---
+
+### 2 — Generate Your First Project
 
 ```bash
-# Generate a new project
 copier copy https://github.com/jeffrichley/seedling-template.git my-awesome-project
 ```
 
-You'll be prompted to configure your project:
+You’ll be prompted for config:
 
 ```
 project_name [My Awesome Project]: My Data Science Tool
 project_slug [my_awesome_project]: my_data_science_tool
-project_description [A modern Python project built with best practices and comprehensive tooling]: A powerful data science toolkit
+project_description [A modern Python project built with best practices]: A powerful data science toolkit
 author_name [Your Name]: Jane Doe
 author_email [your.name@example.com]: jane.doe@example.com
 github_username [yourusername]: janedoe
@@ -47,149 +60,121 @@ python_versions [3.11,3.12]: 3.11,3.12
 coverage_threshold [80]: 85
 ```
 
-### 3. Navigate to Your Project
+---
+
+### 3 — Navigate to Your Project
 
 ```bash
 cd my-awesome-project
 ```
 
-### 4. Set Up Development Environment
+### 4 — Set Up Development Environment
 
 ```bash
-# Install dependencies
-uv sync
-
-# Install pre-commit hooks
-pre-commit install
-
-# Run initial quality checks
-just quality
+uv sync            # Install dependencies
+pre-commit install # Activate hooks
+just quality       # Run initial quality sweep
 ```
 
-### 5. Start Developing!
+### 5 — Start Developing!
 
 ```bash
-# Run tests using Nox
-nox -s tests
-
-# Run tests using Just
-just test
-
-# Format code
-just lint
-
-# Build documentation
-just docs
+nox -s tests   # via Nox (recommended)
+just test      # via Just
+just lint      # Format & lint
+just docs      # Build docs
 ```
+
+---
 
 ## 🎯 What Just Happened?
 
-1. **Project Structure**: A complete Python project structure was created
-2. **Dependencies**: All necessary development tools were configured
-3. **Quality Tools**: Pre-commit hooks, linting, and testing were set up
-4. **CI/CD**: GitHub Actions workflows were configured
-5. **Documentation**: Sphinx documentation was initialized
+1. **Project Structure** — Ready-to-go Python scaffolding
+2. **Dependencies** — Installed & configured
+3. **Quality Tools** — Hooks, linting, tests in place
+4. **CI/CD** — GitHub Actions locked & loaded
+5. **Docs** — Sphinx site bootstrapped
+
+---
 
 ## 📁 Your New Project Structure
 
 ```
 my-awesome-project/
 ├── src/my_data_science_tool/    # Your package code
-├── tests/                       # Test suite
-│   ├── unit/                    # Unit tests
-│   ├── integration/             # Integration tests
-│   └── e2e/                     # End-to-end tests
+├── tests/                       # Unit ▸ Integration ▸ E2E
 ├── docs/                        # Documentation
-├── .github/                     # GitHub Actions workflows
-├── pyproject.toml              # Modern Python configuration
-├── .pre-commit-config.yaml     # Code quality hooks
-├── noxfile.py                  # Development tasks
-├── justfile                    # Development shortcuts
-└── README.md                   # Project documentation
+├── .github/                     # CI workflows
+├── pyproject.toml               # Config central
+├── .pre-commit-config.yaml      # Quality rules
+├── noxfile.py                   # Automation scripts
+├── justfile                     # Command shortcuts
+└── README.md                    # Project overview
 ```
+
+---
 
 ## 🛠️ Available Commands
 
-### Using Nox (Recommended)
+### Using **Nox**
 
 ```bash
-# Run tests
-nox -s tests
-
-# Run linting
-nox -s lint
-
-# Run type checking
-nox -s type_check
-
-# Build documentation
-nox -s docs
-
-# Run all quality checks
-nox -s lint type_check docs
+nox -s tests        # Run tests
+nox -s lint         # Lint code
+nox -s type_check   # Type checking
+nox -s docs         # Build docs
+nox -s lint type_check docs # All checks
 ```
 
-### Using Just (Shortcuts)
+### Using **Just**
 
 ```bash
-# Run tests
-just test
-
-# Run linting
-just lint
-
-# Run type checking
-just type-check
-
-# Build documentation
-just docs
-
-# Run all quality checks
-just quality
+just test       # Tests
+just lint       # Lint
+just type-check # Type checking
+just docs       # Docs
+just quality    # All checks
 ```
 
-### Using uv (Direct)
+### Using **uv** Directly
 
 ```bash
-# Install dependencies
 uv sync
-
-# Run tests
 uv run pytest
-
-# Format code
 uv run black src tests
 uv run ruff check src tests --fix
-
-# Type check
 uv run mypy src tests
 ```
 
+---
+
 ## 🎯 What the Template Provides
 
-The generated project includes:
-
 ### ✅ **Automatically Included**
-- **All Python dependencies** (Black, Ruff, MyPy, pytest, Sphinx, etc.)
-- **Pre-commit hooks** for code quality
-- **Nox automation** for development tasks
-- **Just shortcuts** for common commands
-- **GitHub Actions** for CI/CD
-- **Complete test structure** with unit, integration, and e2e tests
-- **Documentation setup** with Sphinx and Furo theme
 
-### 🔧 **What You Need to Install**
-- **Copier**: To generate projects from the template
-- **uv**: For dependency management
-- **Nox**: For task automation
-- **Just**: For development shortcuts (optional)
+* Python deps: Black, Ruff, MyPy, pytest, Sphinx, etc.
+* Pre-commit hooks
+* Nox automation
+* Just shortcuts
+* GitHub Actions CI/CD
+* Complete test scaffold
+* Docs with Sphinx + Furo
 
-## Next Steps
+### 🔧 **What You Install**
 
-- **Read the documentation**: Check the generated `docs/` directory
-- **Customize your project**: Modify `pyproject.toml` and configuration files
-- **Add your code**: Start coding in `src/my_data_science_tool/`
-- **Write tests**: Add tests in the `tests/` directory
-- **Deploy**: Push to GitHub and let CI/CD handle the rest!
+* Copier — Project generator
+* uv — Dependency manager
+* Nox — Task automation
+* Just — Shortcuts *(optional)*
 
-For more detailed information, see the {doc}`installation` and {doc}`configuration` guides. 
+---
+
+## 🌱 Next Steps
+
+* **Read the docs** — Peek into the `docs/` folder
+* **Customize configs** — Edit `pyproject.toml` & friends
+* **Add code** — Start in `src/my_data_science_tool/`
+* **Write tests** — Keep `tests/` healthy
+* **Deploy** — Push to GitHub; CI/CD takes it from there
+
+For more details, see the {doc}`installation` and {doc}`configuration` guides.

@@ -19,10 +19,18 @@ Automatic code formatting with consistent style:
 
 ```bash
 # Format code
-uv run dev format
+just lint
+# or
+nox -s lint
+# or
+uv run ruff check src tests --fix && uv run black --check src tests
 
 # Check formatting
-uv run dev format --check
+just lint
+# or
+nox -s lint
+# or
+uv run ruff check src tests --fix && uv run black --check src tests
 ```
 
 **Configuration**: Uses Black's default settings (88 character line length)
@@ -33,10 +41,18 @@ Ultra-fast Python linter with comprehensive rules:
 
 ```bash
 # Lint code
-uv run dev lint
+just lint
+# or
+nox -s lint
+# or
+uv run ruff check src tests --fix
 
-# Auto-fix issues
-uv run dev lint --fix
+# Auto-fix issues (Ruff auto-fixes by default)
+just lint
+# or
+nox -s lint
+# or
+uv run ruff check src tests --fix
 ```
 
 **Features**:
@@ -51,10 +67,18 @@ Static type checking for Python:
 
 ```bash
 # Type check
-uv run dev typecheck
+just type-check
+# or
+nox -s type_check
+# or
+uv run mypy src tests
 
-# Type check with strict mode
-uv run dev typecheck --strict
+# Type check with strict mode (configured in pyproject.toml)
+just type-check
+# or
+nox -s type_check
+# or
+uv run mypy src tests
 ```
 
 **Configuration**: Strict type checking with zero errors required
@@ -65,10 +89,14 @@ Dependency vulnerability scanning:
 
 ```bash
 # Scan for vulnerabilities
-uv run dev security
+just security
+# or
+nox -s security
+# or
+uv run pip-audit --progress-spinner=off
 
 # Scan with detailed output
-uv run dev security --verbose
+uv run pip-audit --progress-spinner=off
 ```
 
 ### Vulture - Dead Code Detection
@@ -77,7 +105,8 @@ Find unused code and imports:
 
 ```bash
 # Find dead code
-uv run dev dead-code
+uv run vulture src tests
+# (No just/nox equivalent - use direct command)
 ```
 
 ## Pre-commit Hooks
@@ -86,10 +115,18 @@ All quality tools are integrated with pre-commit hooks:
 
 ```bash
 # Install pre-commit hooks
-pre-commit install
+just pre-commit
+# or
+nox -s pre-commit
+# or
+uv run pre-commit run --all-files
 
 # Run all hooks
-pre-commit run --all-files
+just pre-commit
+# or
+nox -s pre-commit
+# or
+uv run pre-commit run --all-files
 ```
 
 **Hooks included**:
@@ -174,13 +211,11 @@ disallow_untyped_defs = false
 
 All quality tools are integrated into the CI/CD pipeline:
 
-```yaml
-# .github/workflows/ci.yml
-- name: Quality Checks
-  run: |
-    uv run dev checkit
-    uv run dev quality-gates
-```
+- **Automated checks**: Quality tools run automatically on every commit
+- **Quality gates**: Build fails if any quality checks fail
+- **Fast feedback**: Issues are caught early in the development process
+- **Consistent standards**: All contributors must meet the same quality standards
+- **Documentation validation**: Ensures documentation builds correctly
 
 ## Best Practices
 
@@ -236,10 +271,14 @@ uv run ruff --generate-config
 
 ```bash
 # Generate coverage report
-uv run dev test --cov --cov-report=html
+just coverage
+# or
+nox -s coverage_html
+# or
+uv run coverage html
 
 # Check specific files
-uv run dev test --cov=src/your_package
+uv run pytest --cov=src/your_package
 ```
 
 ### Getting Help

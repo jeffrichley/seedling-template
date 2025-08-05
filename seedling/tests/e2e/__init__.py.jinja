@@ -1,0 +1,38 @@
+"""End-to-end tests for {{ project_name }}.
+
+This package contains complete user workflow tests that:
+- Test the entire system from user entry point to final output
+- Use real external dependencies (databases, APIs, file systems)
+- Simulate actual user interactions and workflows
+- Test complete user journeys and business processes
+- May take minutes to run and require full system setup
+
+Use @pytest.mark.e2e to mark your tests.
+
+Example:
+    @pytest.mark.e2e
+    def test_complete_user_onboarding():
+        '''Complete user onboarding workflow from signup to first use.'''
+        
+        # Arrange
+        user_credentials = {"email": "newuser@example.com", "password": "secure123"}
+        
+        # Act - Complete user journey
+        signup_result = signup_user(user_credentials)
+        login_result = login_user(user_credentials)
+        profile_result = create_user_profile(login_result.user_id)
+        
+        # Assert
+        assert signup_result.is_success
+        assert login_result.is_success
+        assert profile_result.is_success
+        assert profile_result.profile.is_complete
+
+Best Practices:
+- Test complete user workflows and journeys
+- Use real external dependencies and services
+- Test from user perspective (CLI, API, UI)
+- Set up realistic test environments
+- Test both success and failure scenarios
+- Focus on user experience and business value
+"""

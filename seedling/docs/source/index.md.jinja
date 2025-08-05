@@ -1,19 +1,145 @@
-# Welcome to {{ project_name }}'s documentation!
+# Welcome to {{ project_name }}'s documentation! 🚀
 
 {{ project_name }} is a modern Python project built with best practices and comprehensive tooling.
 
-```{toctree}
-:maxdepth: 2
-:caption: Contents:
+## Project Status
 
-api
-dependency-groups
-contributing
+[![Python Version](https://img.shields.io/badge/python-3.11+-blue.svg)](https://www.python.org/downloads/)
+[![License](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
+[![Code Style](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
+[![Type Checked](https://img.shields.io/badge/type%20checked-mypy-blue.svg)](https://mypy-lang.org/)
+[![Tests](https://img.shields.io/badge/tests-pytest-blue.svg)](https://docs.pytest.org/)
+[![Coverage](https://img.shields.io/badge/coverage-90%25+-green.svg)](https://coverage.readthedocs.io/)
+
+## Quick Start
+
+Get up and running with {{ project_name }} in minutes:
+
+```bash
+# Install with uv (recommended)
+uv pip install {{ project_slug }}
+
+# Or install from source
+git clone https://github.com/{{ github_username }}/{{ project_slug }}.git
+cd {{ project_slug }}
+uv sync
+uv pip install -e ".[dev,docs]"
 ```
 
-## Development
+## What is {{ project_name }}?
 
-For more detailed information about the project architecture, development guidelines, and quality standards, please refer to the project documentation in the main repository.
+{{ project_name }} is designed to help you build robust, maintainable Python applications with:
+
+- **🔧 Modern Tooling**: Built with uv, pytest, mypy, and other modern Python tools
+- **📚 Comprehensive Documentation**: Auto-generated API docs and detailed guides
+- **🧪 Excellent Testing**: Unit, integration, functional, and performance tests
+- **🎯 Type Safety**: Full type hints and static analysis
+- **🚀 CI/CD Ready**: GitHub Actions workflows and quality gates
+- **📦 Production Ready**: Proper packaging and dependency management
+
+## Documentation Overview
+
+### Getting Started
+Essential information to begin using {{ project_name }}:
+
+```{toctree}
+:maxdepth: 2
+:caption: Getting Started
+:name: getting-started
+
+quickstart
+installation
+examples
+```
+
+### Reference Documentation
+Complete API reference and technical details:
+
+```{toctree}
+:maxdepth: 2
+:caption: Reference
+:name: reference
+
+api
+configuration
+architecture
+dependency-groups
+```
+
+### Development & Contributing
+Guidelines for developers and contributors:
+
+```{toctree}
+:maxdepth: 2
+:caption: Development
+:name: development
+
+contributing
+testing-guide
+troubleshooting
+security
+performance
+faq
+```
+
+### Architecture Decisions
+Design decisions and technical rationale:
+
+```{toctree}
+:maxdepth: 2
+:caption: Architecture
+:name: architecture
+
+adr/index
+```
+
+## User Journeys
+
+### I'm New Here - Where Do I Start?
+1. **[Quick Start Guide](quickstart)** - Get up and running in 5 minutes
+2. **[Installation Guide](installation)** - Detailed setup instructions  
+3. **[Examples](examples)** - See it in action with practical examples
+
+### I Want to Use the API
+1. **[API Reference](api)** - Complete API documentation
+2. **[Configuration Guide](configuration)** - Learn configuration options
+3. **[Examples](examples)** - Study usage patterns
+
+### I Want to Contribute
+1. **[Contributing Guide](contributing)** - Learn the contribution process
+2. **[Testing Guide](testing-guide)** - Write and run tests
+3. **[Architecture Guide](architecture)** - Understand the system design
+
+### I Need Help
+1. **[Troubleshooting](troubleshooting)** - Common issues and solutions
+2. **[FAQ](faq)** - Frequently asked questions
+3. **[Security Guide](security)** - Security considerations
+
+## Key Features
+
+| Feature | Description | Documentation |
+|---------|-------------|---------------|
+| **Modern Python** | Python 3.11+ with type hints | [Installation](installation) |
+| **Fast Package Management** | uv for dependency management | [Dependency Groups](dependency-groups) |
+| **Comprehensive Testing** | pytest with 90%+ coverage | [Testing Guide](testing-guide) |
+| **Type Safety** | mypy for static type checking | [API Reference](api) |
+| **Quality Assurance** | Black, Ruff, and pre-commit hooks | [Contributing](contributing) |
+| **Documentation** | Sphinx with auto-generated API docs | [API Reference](api) |
+
+## Getting Help
+
+- **📖 Documentation**: Start with the [Quick Start Guide](quickstart)
+- **🐛 Issues**: Report bugs on [GitHub Issues](https://github.com/{{ github_username }}/{{ project_slug }}/issues)
+- **💬 Discussions**: Ask questions in [GitHub Discussions](https://github.com/{{ github_username }}/{{ project_slug }}/discussions)
+- **📧 Contact**: Reach out to the maintainers
+
+## Project Information
+
+- **Repository**: [{{ github_username }}/{{ project_slug }}](https://github.com/{{ github_username }}/{{ project_slug }})
+- **Documentation**: [docs.{{ project_slug }}.dev](https://docs.{{ project_slug }}.dev)
+- **PyPI**: [{{ project_slug }}](https://pypi.org/project/{{ project_slug }}/)
+- **License**: [MIT License](LICENSE)
+- **Author**: {{ author_name }}
 
 ## Indices and tables
 

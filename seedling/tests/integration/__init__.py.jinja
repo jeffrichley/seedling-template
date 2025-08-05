@@ -1,0 +1,35 @@
+"""Integration tests for {{ project_name }}.
+
+This package contains tests that verify cross-module interactions:
+- Test multiple components working together
+- Use real databases, file systems, or external services
+- May take longer to run (seconds, not milliseconds)
+- Focus on component integration, not individual behavior
+- Test data flow between modules
+
+Use @pytest.mark.integration to mark your tests.
+
+Example:
+    @pytest.mark.integration
+    def test_database_save_and_retrieve():
+        '''Saves data to database and retrieves it successfully.'''
+        
+        # Arrange
+        db = get_test_database()
+        data = {"key": "value"}
+        
+        # Act
+        db.save(data)
+        retrieved = db.get("key")
+        
+        # Assert
+        assert retrieved == data
+
+Best Practices:
+- Use real external dependencies (databases, file systems)
+- Test data flow between multiple components
+- Set up and tear down test data properly
+- Use test databases or isolated environments
+- Test both success and failure scenarios
+- Focus on integration points, not individual functions
+"""

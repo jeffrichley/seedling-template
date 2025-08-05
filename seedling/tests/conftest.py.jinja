@@ -1,0 +1,103 @@
+"""Shared test fixtures for {{ project_name }}.
+
+This module provides common fixtures used across all test types following the project's
+testing rules and conventions.
+
+To add new fixtures:
+1. Add the fixture function below
+2. Add a clear docstring explaining what it provides
+3. Consider the fixture scope (function, class, module, session)
+4. Add any necessary cleanup in yield fixtures
+"""
+
+import pytest
+import tempfile
+import shutil
+from pathlib import Path
+from unittest.mock import MagicMock
+from typing import Generator, Dict, Any
+
+
+@pytest.fixture
+def temp_directory() -> Generator[Path, None, None]:
+    """Provide a temporary directory for file-based tests.
+    
+    This fixture creates a temporary directory that is automatically cleaned up
+    after each test. Use this for tests that need to create, read, or write files.
+    
+    Example:
+        def test_file_operations(temp_directory):
+            file_path = temp_directory / "test.txt"
+            file_path.write_text("test content")
+            assert file_path.read_text() == "test content"
+    """
+    
+    temp_dir = Path(tempfile.mkdtemp())
+    yield temp_dir
+    shutil.rmtree(temp_dir)
+
+
+@pytest.fixture
+def sample_data() -> Dict[str, Any]:
+    """Provide sample test data for various test scenarios.
+    
+    This fixture provides a minimal set of test data that can be used across
+    different test types. Extend this with project-specific data as needed.
+    
+    Example:
+        def test_data_processing(sample_data):
+            result = process_data(sample_data["users"])
+            assert len(result) == 3
+    """
+    
+    return {
+        "users": [
+            {"id": 1, "name": "Alice", "email": "alice@example.com"},
+            {"id": 2, "name": "Bob", "email": "bob@example.com"},
+        ],
+        "config": {
+            "debug": True,
+            "timeout": 30,
+            "max_retries": 3,
+        }
+    }
+
+
+@pytest.fixture
+def mock_logger():
+    """Provide a mock logger for testing logging behavior.
+    
+    This fixture provides a mock logger that can be used to verify that
+    logging calls are made correctly during tests.
+    
+    Example:
+        def test_function_logs_success(mock_logger):
+            with patch('your_module.logger', mock_logger):
+                your_function()
+                mock_logger.info.assert_called_once_with("Function completed successfully")
+    """
+    
+    mock = MagicMock()
+    mock.info = MagicMock()
+    mock.error = MagicMock()
+    mock.warning = MagicMock()
+    mock.debug = MagicMock()
+    return mock
+
+
+# Add your project-specific fixtures below:
+# 
+# @pytest.fixture
+# def database_connection():
+#     """Provide a test database connection."""
+#     # Implementation here
+# 
+# @pytest.fixture
+# def api_client():
+#     """Provide a test API client."""
+#     # Implementation here
+# 
+# @pytest.fixture
+# def test_user():
+#     """Provide a test user for authentication tests."""
+#     # Implementation here 

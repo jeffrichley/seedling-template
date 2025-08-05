@@ -1,28 +1,56 @@
-## Description
-Please include a summary of the change and which issue is fixed. Please also include relevant motivation and context.
+> "Code is like humor. When you have to explain it, it’s bad."
+> — **Cory House**
 
-Fixes # (issue)
+# 🌱 Seedling Pull Request Checklist
 
-## Type of change
-Please delete options that are not relevant.
+Hello, brave contributor! 👋  Please fill out the sections below so reviewers (human *and* automated) can glide through your changes without spelunking the diff.
 
-- [ ] Bug fix (non-breaking change which fixes an issue)
-- [ ] New feature (non-breaking change which adds functionality)
-- [ ] Breaking change (fix or feature that would cause existing functionality to not work as expected)
-- [ ] Documentation update
+---
 
-## How Has This Been Tested?
-Please describe the tests that you ran to verify your changes. Provide instructions so we can reproduce. Please also list any relevant details for your test configuration.
+## ✍️ Description
 
-- [ ] Test A
-- [ ] Test B
+Briefly summarize **what** this PR does **and** *why* it matters. Link any related issues.
 
-## Checklist:
-- [ ] My code follows the style guidelines of this project
-- [ ] I have performed a self-review of my own code
-- [ ] I have commented my code, particularly in hard-to-understand areas
-- [ ] I have made corresponding changes to the documentation
-- [ ] My changes generate no new warnings
-- [ ] I have added tests that prove my fix is effective or that my feature works
-- [ ] New and existing unit tests pass locally with my changes
-- [ ] Any dependent changes have been merged and published in downstream modules 
+```
+Fixes #<issue‑number>
+Closes #<issue‑number>
+```
+
+---
+
+## 📦 Type of Change *(tick all that apply)*
+
+* [ ] 🐛 **Bug fix** – non‑breaking patch
+* [ ] ✨ **New feature** – shiny but non‑breaking
+* [ ] 💥 **Breaking change** – existing behaviour altered
+* [ ] 📝 **Docs** – documentation‑only update
+* [ ] ♻️ **Refactor / chore** – code cleanup, build tooling, etc.
+
+---
+
+## 🧪 How Has This Been Tested?
+
+Explain the tests you ran (or added) to verify your changes.
+
+```markdown
+- [ ] Unit tests (`pytest -k name`)
+- [ ] Integration tests (`nox -s tests-integration`)
+- [ ] Manual QA (describe steps):
+      1. …
+      2. …
+```
+
+---
+
+## ✅ Checklist *(keep it honest)*
+
+* [ ] My code follows the project’s style guidelines 🧹
+* [ ] I performed a self‑review of my changes 💭
+* [ ] I commented the hard‑to‑grok parts 💬
+* [ ] I updated **docs** where relevant 📚
+* [ ] My changes produce **no new warnings** 🚫
+* [ ] I added **tests** that cover my changes 🧪
+* [ ] Existing tests **all pass** locally ✅
+* [ ] Dependent changes (if any) are merged & published 🔗
+
+> 💡 **Tip:** Run `just pr-check` before requesting review — it lints, types, and tests in one go.

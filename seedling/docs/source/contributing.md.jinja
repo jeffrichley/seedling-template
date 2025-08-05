@@ -1,6 +1,10 @@
-# Contributing to {{ project_name }}
+# Contributing Guide
 
-Thank you for your interest in contributing to {{ project_name }}! This document provides guidelines and requirements for contributing to the project.
+Thank you for your interest in contributing to {{ project_name }}! This document provides comprehensive guidelines and requirements for contributing to the project.
+
+## Overview
+
+This guide covers everything you need to know to contribute to {{ project_name }}, from setting up your development environment to submitting pull requests.
 
 ## Code of Conduct
 
@@ -8,13 +12,9 @@ By participating in this project, you agree to maintain a respectful environment
 
 ## Development Setup
 
-### Prerequisites
+📖 **For detailed installation instructions**, see the [Installation Guide](installation).
 
-- **Python 3.11+**: Required for modern type hints and features
-- **uv**: Fast Python package manager (recommended)
-- **Git**: Version control system
-
-### Installation
+### Quick Setup
 
 ```bash
 # Clone the repository
@@ -24,26 +24,126 @@ cd {{ project_slug }}
 # Install with uv (recommended)
 uv sync
 
-# Or install with pip
-pip install -r requirements.txt
-
-# Install in editable mode for development
+# Install in development mode
 uv pip install -e ".[dev,docs]"
-```
-
-### Development Environment
-
-```bash
-# Activate virtual environment
-source .venv/bin/activate  # On Unix/macOS
-# or
-.venv\Scripts\activate     # On Windows
 
 # Verify installation
-uv run dev info
+uv run dev test
 ```
 
-## Quality Requirements
+## Contribution Types
+
+We welcome different types of contributions. Choose the type that best fits your skills and interests:
+
+### Bug Fixes
+
+**What**: Fix issues, errors, or unexpected behavior in the codebase.
+
+**How to contribute**:
+1. Search existing issues for known bugs
+2. Create a new issue if the bug isn't reported
+3. Fork the repository and create a `fix/` branch
+4. Write a test that reproduces the bug
+5. Fix the bug and ensure the test passes
+6. Submit a pull request
+
+**Example branch name**: `fix/import-error-in-data-processor`
+
+### New Features
+
+**What**: Add new functionality, capabilities, or improvements to the project.
+
+**How to contribute**:
+1. Discuss the feature in an issue first
+2. Create a `feature/` branch
+3. Implement the feature with comprehensive tests
+4. Update documentation
+5. Submit a pull request
+
+**Example branch name**: `feature/add-data-validation`
+
+### Documentation
+
+**What**: Improve or add documentation, examples, tutorials, or guides.
+
+**How to contribute**:
+1. Identify documentation gaps or improvements
+2. Create a `docs/` branch
+3. Write clear, helpful documentation
+4. Include examples and code snippets
+5. Submit a pull request
+
+**Example branch name**: `docs/add-api-examples`
+
+### Tests
+
+**What**: Add or improve test coverage, test utilities, or testing infrastructure.
+
+**How to contribute**:
+1. Identify areas needing better test coverage
+2. Create a `test/` branch
+3. Write comprehensive tests
+4. Ensure all tests pass
+5. Submit a pull request
+
+**Example branch name**: `test/add-integration-tests`
+
+### Infrastructure
+
+**What**: Improve build systems, CI/CD, tooling, or development environment.
+
+**How to contribute**:
+1. Identify infrastructure improvements
+2. Create an `infra/` branch
+3. Implement improvements
+4. Test thoroughly
+5. Submit a pull request
+
+**Example branch name**: `infra/update-ci-workflow`
+
+## Documentation Maintenance
+
+### Keeping Documentation Up to Date
+
+Documentation should be updated whenever you make changes to the codebase. Here's how to maintain high-quality documentation:
+
+#### When to Update Documentation
+
+- **API Changes**: Update API documentation when adding, removing, or modifying public APIs
+- **Configuration Changes**: Update configuration guides when adding new options
+- **New Features**: Add examples and usage instructions for new features
+- **Bug Fixes**: Update troubleshooting guides if fixing common issues
+- **Architecture Changes**: Update architecture documentation and ADRs for design changes
+
+#### Documentation Standards
+
+1. **Consistent Formatting**: Follow the established header and section structure
+2. **Clear Examples**: Include practical, runnable examples
+3. **Cross-References**: Link to related documentation sections
+4. **User-Focused**: Write from the user's perspective, not the developer's
+5. **Regular Review**: Review documentation quarterly for accuracy and completeness
+
+#### Documentation Tools
+
+```bash
+# Build documentation locally
+uv run dev docs
+
+# Check documentation links
+uv run dev docs:linkcheck
+
+# Validate documentation structure
+uv run dev docs:validate
+```
+
+#### Documentation Structure
+
+- **Getting Started**: Quick start, installation, examples
+- **Reference**: API documentation, configuration, architecture
+- **Development**: Contributing, testing, troubleshooting
+- **Architecture**: Design decisions and rationale
+
+### Quality Requirements
 
 {{ project_name }} maintains strict quality standards. **All contributions must pass these quality gates:**
 
@@ -67,6 +167,108 @@ uv run dev lint          # Ruff linting
 uv run dev typecheck     # MyPy type checking
 uv run dev test          # Pytest with coverage
 uv run dev quality-gates # All quality gates
+```
+
+## Development Workflow Examples
+
+### Example 1: Bug Fix Workflow
+
+```bash
+# 1. Identify the bug
+git checkout main
+git pull origin main
+
+# 2. Create a fix branch
+git checkout -b fix/import-error-in-utils
+
+# 3. Reproduce and fix
+# Edit the problematic file
+# Write a test that reproduces the bug
+# Fix the bug
+
+# 4. Test your fix
+uv run dev test
+uv run dev lint
+uv run dev typecheck
+
+# 5. Commit with clear message
+git add .
+git commit -m "fix: resolve import error in utils module
+
+- Fix circular import in data_processor
+- Add test to prevent regression
+- Update documentation
+
+Fixes #123"
+
+# 6. Push and create PR
+git push origin fix/import-error-in-utils
+```
+
+### Example 2: Feature Development Workflow
+
+```bash
+# 1. Discuss feature in issue
+# Create issue: "Add data validation feature"
+
+# 2. Create feature branch
+git checkout -b feature/add-data-validation
+
+# 3. Implement feature
+# Create new module: src/{{ project_slug }}/validation.py
+# Add comprehensive tests
+# Update documentation
+
+# 4. Ensure quality
+uv run dev checkit
+uv run dev test --cov
+uv run dev docs
+
+# 5. Commit with conventional commits
+git add .
+git commit -m "feat: add comprehensive data validation
+
+- Add DataValidator class with schema validation
+- Support JSON Schema and Pydantic models
+- Add validation error handling and reporting
+- Include comprehensive test suite
+- Update API documentation with examples
+
+Closes #456"
+
+# 6. Push and create PR
+git push origin feature/add-data-validation
+```
+
+### Example 3: Documentation Update Workflow
+
+```bash
+# 1. Identify documentation need
+# Notice missing API examples
+
+# 2. Create docs branch
+git checkout -b docs/add-api-examples
+
+# 3. Update documentation
+# Edit docs/source/api.md
+# Add usage examples
+# Include code snippets
+
+# 4. Verify documentation
+uv run dev docs
+# Check that docs build correctly
+
+# 5. Commit changes
+git add .
+git commit -m "docs: add comprehensive API examples
+
+- Add usage examples for all public functions
+- Include code snippets with expected output
+- Add troubleshooting section
+- Improve readability and clarity"
+
+# 6. Push and create PR
+git push origin docs/add-api-examples
 ```
 
 ## Contribution Process
@@ -285,46 +487,255 @@ def process_data_batch(
 - Update API documentation for technical changes
 - Include examples for new features
 
-## Review Process
+## Detailed Code Review Guidelines
 
-### Pull Request Requirements
+### For Contributors
 
-1. **Quality Gates**: All quality gates must pass
-2. **Tests**: All tests must pass
-3. **Documentation**: Updated as needed
-4. **Description**: Clear description of changes
-5. **Linked Issues**: Reference related issues
+#### Before Submitting a PR
 
-### Review Checklist
+- [ ] **Self-review**: Review your own code as if you were reviewing someone else's
+- [ ] **Test coverage**: Ensure new code has adequate test coverage
+- [ ] **Documentation**: Update relevant documentation
+- [ ] **Quality gates**: All quality checks pass locally
+- [ ] **Commit messages**: Use conventional commit format
+- [ ] **Branch naming**: Use descriptive branch names (e.g., `feature/add-validation`)
 
+#### PR Description Template
+
+```markdown
+## Description
+Brief description of what this PR does.
+
+## Type of Change
+- [ ] Bug fix (non-breaking change which fixes an issue)
+- [ ] New feature (non-breaking change which adds functionality)
+- [ ] Breaking change (fix or feature that would cause existing functionality to not work as expected)
+- [ ] Documentation update
+
+## Testing
+- [ ] Unit tests pass
+- [ ] Integration tests pass
+- [ ] Manual testing completed
+- [ ] Documentation builds successfully
+
+## Checklist
+- [ ] My code follows the style guidelines of this project
+- [ ] I have performed a self-review of my own code
+- [ ] I have commented my code, particularly in hard-to-understand areas
+- [ ] I have made corresponding changes to the documentation
+- [ ] My changes generate no new warnings
+- [ ] I have added tests that prove my fix is effective or that my feature works
+- [ ] New and existing unit tests pass locally with my changes
+- [ ] Any dependent changes have been merged and published
+
+## Related Issues
+Closes #123
+```
+
+### For Reviewers
+
+#### Review Checklist
+
+**Code Quality**
 - [ ] Code follows style guidelines
 - [ ] Type hints are complete and correct
+- [ ] Error handling is appropriate
+- [ ] No obvious bugs or issues
+- [ ] Code is readable and well-structured
+
+**Testing**
 - [ ] Tests are comprehensive and pass
-- [ ] Documentation is updated
+- [ ] New functionality is properly tested
+- [ ] Test coverage is adequate
+- [ ] Edge cases are covered
+
+**Documentation**
+- [ ] Documentation is updated as needed
+- [ ] Docstrings are clear and complete
+- [ ] Examples are provided where helpful
+- [ ] README updates are appropriate
+
+**Security & Performance**
+- [ ] No security vulnerabilities introduced
+- [ ] Performance impact is considered
 - [ ] No breaking changes (or properly documented)
-- [ ] Performance impact considered
-- [ ] Security implications reviewed
+- [ ] Dependencies are appropriate
 
-### Review Timeline
+#### Review Comments
 
-- **Initial Review**: Within 48 hours
-- **Follow-up Reviews**: Within 24 hours
-- **Merge**: After approval and CI passes
+**Be constructive and specific:**
+```markdown
+❌ "This code is wrong"
+✅ "This function should handle the case where `data` is None. Consider adding a check at line 15."
 
-## Getting Help
+❌ "Fix the tests"
+✅ "The test on line 45 should also verify that the error message contains the expected text."
+```
 
-### Questions and Discussions
+**Ask questions when unclear:**
+```markdown
+"I'm not sure I understand the logic here. Could you explain why we're using a list comprehension instead of a for loop?"
+```
+
+**Suggest improvements:**
+```markdown
+"This looks good! One small suggestion: we could make this more efficient by using a set instead of a list for the lookup."
+```
+
+## Release Process and Versioning
+
+### Versioning Strategy
+
+We follow [Semantic Versioning](https://semver.org/) (SemVer):
+
+- **MAJOR.MINOR.PATCH** (e.g., 1.2.3)
+- **MAJOR**: Breaking changes
+- **MINOR**: New features (backward compatible)
+- **PATCH**: Bug fixes (backward compatible)
+
+### Release Process
+
+#### 1. Pre-release Preparation
+
+```bash
+# Ensure all tests pass
+uv run dev test
+
+# Update version in pyproject.toml
+# Update CHANGELOG.md with new version
+# Create release branch
+git checkout -b release/v1.2.0
+```
+
+#### 2. Release Checklist
+
+- [ ] All tests pass
+- [ ] Documentation is up to date
+- [ ] CHANGELOG.md is updated
+- [ ] Version is updated in pyproject.toml
+- [ ] Release notes are prepared
+- [ ] Dependencies are up to date
+
+#### 3. Creating a Release
+
+```bash
+# Tag the release
+git tag -a v1.2.0 -m "Release version 1.2.0"
+
+# Push tag
+git push origin v1.2.0
+
+# Create GitHub release with release notes
+# Build and upload to PyPI
+uv run build
+uv run twine upload dist/*
+```
+
+### Release Notes Template
+
+```markdown
+## [1.2.0] - 2024-01-15
+
+### Added
+- New data validation feature
+- Support for JSON Schema validation
+- Enhanced error reporting
+
+### Changed
+- Improved performance of data processing
+- Updated dependency requirements
+
+### Fixed
+- Resolved import error in utils module
+- Fixed memory leak in data processor
+
+### Breaking Changes
+- None
+
+### Migration Guide
+- No migration required for this release
+```
+
+## Community Guidelines and Communication Channels
+
+### Communication Channels
+
+#### Primary Channels
+
+- **GitHub Issues**: Bug reports, feature requests, and technical discussions
+- **GitHub Discussions**: General questions, community discussions, and help
+- **Pull Requests**: Code reviews and technical feedback
+- **GitHub Releases**: Release announcements and updates
+
+#### When to Use Each Channel
+
+**GitHub Issues**
+- Bug reports with reproduction steps
+- Feature requests with detailed descriptions
+- Technical discussions about implementation
+- Security vulnerabilities (use private issues)
+
+**GitHub Discussions**
+- General questions about usage
+- Community discussions and ideas
+- Help with installation or setup
+- Sharing examples and use cases
+
+**Pull Requests**
+- Code contributions and reviews
+- Documentation updates
+- Infrastructure improvements
+
+### Community Guidelines
+
+#### Be Respectful and Inclusive
+
+- Use inclusive language
+- Respect different perspectives and experiences
+- Be patient with newcomers
+- Provide constructive feedback
+
+#### Communication Best Practices
+
+**Asking Questions**
+- Search existing issues and discussions first
+- Provide context and reproduction steps
+- Include relevant code examples
+- Be specific about what you're trying to achieve
+
+**Providing Help**
+- Be patient and encouraging
+- Provide clear, actionable advice
+- Include code examples when helpful
+- Follow up if additional help is needed
+
+**Giving Feedback**
+- Be constructive and specific
+- Focus on the code, not the person
+- Suggest improvements when possible
+- Acknowledge good work
+
+#### Recognition and Attribution
+
+- Contributors are recognized in README.md
+- All contributions are listed in CHANGELOG.md
+- GitHub automatically tracks contributors
+- Significant contributions may be highlighted in release notes
+
+### Getting Help
+
+#### Questions and Discussions
 
 - **GitHub Issues**: For bug reports and feature requests
 - **GitHub Discussions**: For questions and general discussion
 - **Documentation**: Check the docs/ directory for detailed guides
 
-### Development Resources
+#### Development Resources
 
-- **API Documentation**: `docs/api/`
-- **Architecture Guide**: `docs/ARCHITECTURE_PATTERNS.md`
-- **Quality Checks**: Run `nox -s lint type_check complexity security` for comprehensive quality validation
-- **Project Status**: `docs/STATUS.md`
+- **API Documentation**: [API Reference](api)
+- **Testing Guide**: [Testing Guide](testing-guide)
+- **Installation Guide**: [Installation Guide](installation)
+- **Quality Checks**: Run `uv run dev checkit` for comprehensive quality validation
 
 ## Recognition
 
@@ -333,5 +744,6 @@ Contributors will be recognized in:
 - **README.md**: For significant contributions
 - **CHANGELOG.md**: For all contributions
 - **GitHub Contributors**: Automatic recognition
+- **Release Notes**: For major contributions
 
 Thank you for contributing to {{ project_name }}! 🚀

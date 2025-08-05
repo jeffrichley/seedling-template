@@ -1,0 +1,35 @@
+"""Functional tests for {{ project_name }}.
+
+This package contains high-level, multi-layer behavior tests that:
+- Test complete business workflows and use cases
+- Verify system behavior from a user's perspective
+- Test multiple layers working together (UI, API, business logic)
+- Focus on end-to-end functionality, not technical implementation
+- May use mocks for external dependencies but test real internal flow
+
+Use @pytest.mark.functional to mark your tests.
+
+Example:
+    @pytest.mark.functional
+    def test_user_registration_workflow():
+        '''Complete user registration workflow works end-to-end.'''
+        
+        # Arrange
+        user_data = {"email": "test@example.com", "password": "secure123"}
+        
+        # Act
+        result = register_user(user_data)
+        
+        # Assert
+        assert result.is_success
+        assert result.user.email == user_data["email"]
+        assert result.user.is_verified is False
+
+Best Practices:
+- Test complete business workflows and use cases
+- Focus on user-facing functionality
+- Test multiple layers working together
+- Use mocks for external dependencies (APIs, databases)
+- Test both happy path and error scenarios
+- Verify business rules and constraints
+""" 

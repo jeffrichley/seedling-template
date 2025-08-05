@@ -25,6 +25,18 @@ uv pip install -e .
 This includes:
 - **pydantic**: Data validation and settings management (the only runtime dependency)
 
+**When to use**: Always required for using {{ project_name }} in any environment.
+
+**Security considerations**: 
+- Pydantic is a well-maintained, security-focused library
+- Regular security updates and vulnerability patches
+- No known critical security issues
+
+**Performance implications**: 
+- Minimal overhead (~2-5ms per validation)
+- Memory efficient for most use cases
+- Fast JSON serialization/deserialization
+
 ### Development
 
 Development dependencies for coding, testing, and quality assurance:
@@ -45,9 +57,24 @@ This includes:
 - **vulture**: Dead code detection
 - **radon**: Code complexity analysis
 - **xenon**: Complexity monitoring
-
 - **validate-pyproject**: Configuration validation
 - **toml-sort**: TOML file formatting
+
+**When to use**: 
+- Local development environment
+- Contributing to the project
+- Code quality assurance
+- Testing and debugging
+
+**Security considerations**:
+- Development tools don't run in production
+- Some tools may access local files for analysis
+- Ensure you trust the development dependencies
+
+**Performance implications**:
+- Adds ~50-100MB to installation size
+- May slow down initial environment setup
+- Improves development productivity and code quality
 
 ### Documentation
 
@@ -64,6 +91,22 @@ This includes:
 - **sphinx-copybutton**: Copy button for code blocks
 - **myst-parser**: Markdown support for Sphinx
 
+**When to use**:
+- Building project documentation
+- Documentation deployment pipelines
+- Local documentation development
+- Documentation maintenance
+
+**Security considerations**:
+- Documentation tools are generally safe
+- Sphinx has a good security track record
+- No network access required for local builds
+
+**Performance implications**:
+- Adds ~30-50MB to installation size
+- Documentation builds can be memory-intensive
+- Build time scales with documentation size
+
 ### Type Checking
 
 Type checking tools:
@@ -75,6 +118,22 @@ uv pip install -e ".[typecheck]"
 This includes:
 - **mypy**: Static type checker
 
+**When to use**:
+- Type safety verification
+- CI/CD type checking pipelines
+- Pre-commit type checking
+- Development environment type validation
+
+**Security considerations**:
+- Mypy is a trusted, widely-used tool
+- No network access during type checking
+- Safe for use in CI/CD environments
+
+**Performance implications**:
+- Adds ~20-30MB to installation size
+- Type checking can be CPU-intensive
+- Caching available for faster subsequent runs
+
 ### Security
 
 Security scanning tools:
@@ -85,6 +144,22 @@ uv pip install -e ".[security]"
 
 This includes:
 - **pip-audit**: Dependency vulnerability scanning
+
+**When to use**:
+- Security audits
+- CI/CD security scanning
+- Pre-deployment security checks
+- Regular security monitoring
+
+**Security considerations**:
+- pip-audit accesses vulnerability databases
+- Requires network access for vulnerability checks
+- Should be run regularly in CI/CD
+
+**Performance implications**:
+- Minimal installation size (~5-10MB)
+- Network-dependent for vulnerability checks
+- Fast execution for dependency scanning
 
 ### Testing
 
@@ -99,77 +174,395 @@ This includes:
 - **pytest-benchmark**: Performance benchmarking
 - **psutil**: System and process utilities
 
-## Installation Examples
+**When to use**:
+- Running tests in CI/CD
+- Performance testing
+- Property-based testing
+- Test environments without full dev tools
 
-### Full Development Setup
+**Security considerations**:
+- Testing tools are generally safe
+- psutil provides system information access
+- Hypothesis may generate large test data
 
-For complete development environment:
+**Performance implications**:
+- Adds ~15-25MB to installation size
+- Hypothesis can be memory-intensive for large test cases
+- Benchmarking tools add minimal overhead
 
+## When to Use Each Group
+
+### Production Environments
 ```bash
-uv pip install -e ".[dev,docs,typecheck,security]"
-```
-
-This installs all development, documentation, type checking, and security tools.
-
-### Minimal Development Setup
-
-For basic development without documentation:
-
-```bash
-uv pip install -e ".[dev]"
-```
-
-This installs core development tools for coding and testing.
-
-### Documentation Only
-
-For building documentation:
-
-```bash
-uv pip install -e ".[docs]"
-```
-
-This installs only the tools needed to build documentation.
-
-### Production Deployment
-
-For production deployment, install only runtime dependencies:
-
-```bash
-uv pip install -e .
-# or
+# Minimal production installation
 uv pip install {{ project_slug }}
+# or
+uv pip install -e .
 ```
 
-This installs only the core functionality without development tools.
+### Development Environments
+```bash
+# Full development setup
+uv pip install -e ".[dev,docs,typecheck,security]"
 
-## Usage in CI/CD
+# Minimal development setup
+uv pip install -e ".[dev]"
 
-Dependency groups are particularly useful in CI/CD pipelines:
+# Development without documentation
+uv pip install -e ".[dev,typecheck]"
+```
+
+### CI/CD Pipelines
+```bash
+# Testing pipeline
+uv pip install -e ".[test]"
+
+# Quality assurance pipeline
+uv pip install -e ".[dev,typecheck]"
+
+# Documentation pipeline
+uv pip install -e ".[docs]"
+
+# Security pipeline
+uv pip install -e ".[security]"
+```
+
+### Docker Containers
+```bash
+# Production container
+uv pip install {{ project_slug }}
+
+# Development container
+uv pip install -e ".[dev,docs]"
+
+# Testing container
+uv pip install -e ".[test,typecheck]"
+```
+
+## Troubleshooting Dependency Conflicts
+
+### Common Issues and Solutions
+
+#### Issue: Version Conflicts
+**Problem**: Multiple packages require different versions of the same dependency.
+
+**Solution**:
+```bash
+# Check for conflicts
+uv pip check
+
+# Update all dependencies
+uv sync --upgrade
+
+# Install with specific version constraints
+uv pip install "package==1.2.3"
+```
+
+#### Issue: Platform-Specific Dependencies
+**Problem**: Some dependencies fail to install on specific platforms.
+
+**Solution**:
+```bash
+# Use platform-specific installation
+uv pip install --platform linux_x86_64 package
+
+# Or install with platform markers
+uv pip install "package; sys_platform == 'linux'"
+```
+
+#### Issue: Build Dependencies Missing
+**Problem**: Native extensions fail to compile.
+
+**Solution**:
+```bash
+# Install build tools
+# Ubuntu/Debian:
+sudo apt install python3-dev build-essential
+
+# macOS:
+xcode-select --install
+
+# Windows:
+# Install Visual Studio Build Tools
+```
+
+#### Issue: Network/Proxy Problems
+**Problem**: Package downloads fail due to network issues.
+
+**Solution**:
+```bash
+# Use alternative package index
+uv pip install --index-url https://pypi.org/simple/ package
+
+# Configure proxy
+export HTTP_PROXY=http://proxy.company.com:8080
+export HTTPS_PROXY=http://proxy.company.com:8080
+```
+
+#### Issue: Permission Errors
+**Problem**: Installation fails due to permission issues.
+
+**Solution**:
+```bash
+# Use user installation
+uv pip install --user package
+
+# Or use virtual environment
+python -m venv .venv
+source .venv/bin/activate
+uv pip install package
+```
+
+### Debugging Commands
+
+```bash
+# Check installed packages
+uv pip list
+
+# Check for conflicts
+uv pip check
+
+# Show dependency tree
+uv pip show package
+
+# Verify installation
+python -c "import package; print(package.__version__)"
+```
+
+## Security Considerations
+
+### Runtime Dependencies
+- **Pydantic**: Well-maintained, security-focused
+- **Regular updates**: Monitor for security patches
+- **No network access**: Safe for production use
+
+### Development Dependencies
+- **Local use only**: Don't run in production
+- **File access**: Some tools access local files
+- **Trusted sources**: All from PyPI or trusted repositories
+
+### Security Best Practices
+1. **Regular updates**: Keep dependencies updated
+2. **Vulnerability scanning**: Run `pip-audit` regularly
+3. **Minimal installation**: Only install what you need
+4. **Source verification**: Use trusted package sources
+5. **Environment isolation**: Use virtual environments
+
+## Performance Implications
+
+### Installation Size Impact
+| Group | Size | Impact |
+|-------|------|--------|
+| Core | ~5MB | Minimal |
+| Dev | ~50-100MB | Moderate |
+| Docs | ~30-50MB | Moderate |
+| Typecheck | ~20-30MB | Low |
+| Security | ~5-10MB | Minimal |
+| Test | ~15-25MB | Low |
+
+### Runtime Performance
+- **Core dependencies**: Minimal overhead
+- **Development tools**: No runtime impact
+- **Documentation tools**: Build-time only
+- **Type checking**: Development-time only
+- **Security tools**: Scan-time only
+
+### Optimization Strategies
+1. **Use specific groups**: Install only what you need
+2. **Cache dependencies**: Use uv's caching features
+3. **Parallel installation**: uv installs dependencies in parallel
+4. **Minimal containers**: Use production-only dependencies in containers
+
+## CI/CD Integration Examples
+
+### GitHub Actions Workflow
 
 ```yaml
-# Example GitHub Actions workflow
-- name: Install dependencies
-  run: |
-    uv pip install -e ".[dev,test]"
+name: CI/CD Pipeline
 
-- name: Run tests
-  run: |
-    uv run dev test
+on: [push, pull_request]
 
-- name: Build documentation
-  run: |
-    uv pip install -e ".[docs]"
-    make docs
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Setup Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+          
+      - name: Install uv
+        uses: astral-sh/setup-uv@v1
+        
+      - name: Install test dependencies
+        run: uv pip install -e ".[test,typecheck]"
+        
+      - name: Run tests
+        run: uv run pytest
+        
+      - name: Type checking
+        run: uv run mypy src/
+        
+  quality:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Setup Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+          
+      - name: Install uv
+        uses: astral-sh/setup-uv@v1
+        
+      - name: Install dev dependencies
+        run: uv pip install -e ".[dev]"
+        
+      - name: Run linting
+        run: uv run ruff check .
+        
+      - name: Run formatting check
+        run: uv run black --check .
+        
+  security:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Setup Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+          
+      - name: Install uv
+        uses: astral-sh/setup-uv@v1
+        
+      - name: Install security dependencies
+        run: uv pip install -e ".[security]"
+        
+      - name: Security audit
+        run: uv run pip-audit
+        
+  docs:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Setup Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+          
+      - name: Install uv
+        uses: astral-sh/setup-uv@v1
+        
+      - name: Install docs dependencies
+        run: uv pip install -e ".[docs]"
+        
+      - name: Build documentation
+        run: uv run sphinx-build docs/source docs/build/html
+        
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./docs/build/html
 ```
 
-## Benefits
+### GitLab CI Pipeline
 
-- **Reduced installation time**: Install only what you need
-- **Smaller environments**: Keep development environments lean
-- **Clear separation**: Distinguish between runtime and development dependencies
-- **CI/CD optimization**: Use specific groups for different pipeline stages
-- **Security**: Separate security tools from development tools
+```yaml
+stages:
+  - test
+  - quality
+  - security
+  - docs
+
+variables:
+  PIP_CACHE_DIR: "$CI_PROJECT_DIR/.pip-cache"
+
+cache:
+  paths:
+    - .pip-cache/
+
+test:
+  stage: test
+  image: python:3.11
+  before_script:
+    - pip install uv
+    - uv pip install -e ".[test,typecheck]"
+  script:
+    - uv run pytest
+    - uv run mypy src/
+
+quality:
+  stage: quality
+  image: python:3.11
+  before_script:
+    - pip install uv
+    - uv pip install -e ".[dev]"
+  script:
+    - uv run ruff check .
+    - uv run black --check .
+    - uv run xenon --max-absolute A --max-modules A --max-average A src/
+
+security:
+  stage: security
+  image: python:3.11
+  before_script:
+    - pip install uv
+    - uv pip install -e ".[security]"
+  script:
+    - uv run pip-audit
+
+docs:
+  stage: docs
+  image: python:3.11
+  before_script:
+    - pip install uv
+    - uv pip install -e ".[docs]"
+  script:
+    - uv run sphinx-build docs/source docs/build/html
+  artifacts:
+    paths:
+      - docs/build/html/
+```
+
+### Docker Multi-stage Build
+
+```dockerfile
+# Base image with Python
+FROM python:3.11-slim as base
+
+# Install uv
+RUN pip install uv
+
+# Development stage
+FROM base as development
+WORKDIR /app
+COPY pyproject.toml uv.lock ./
+RUN uv pip install -e ".[dev,docs,typecheck,security]"
+COPY . .
+
+# Testing stage
+FROM base as testing
+WORKDIR /app
+COPY pyproject.toml uv.lock ./
+RUN uv pip install -e ".[test,typecheck]"
+COPY . .
+CMD ["uv", "run", "pytest"]
+
+# Production stage
+FROM base as production
+WORKDIR /app
+COPY pyproject.toml uv.lock ./
+RUN uv pip install -e .
+COPY . .
+CMD ["python", "-m", "{{ project_slug }}"]
+```
 
 ## Best Practices
 
@@ -178,3 +571,8 @@ Dependency groups are particularly useful in CI/CD pipelines:
 3. **Test installations**: Verify that each group installs correctly
 4. **Keep groups focused**: Each group should have a clear, single purpose
 5. **Update CI/CD**: Use appropriate groups in your CI/CD pipelines
+6. **Security first**: Regularly audit dependencies for vulnerabilities
+7. **Performance aware**: Consider installation size and runtime impact
+8. **Environment specific**: Use different groups for different environments
+
+📖 **For detailed installation examples and setup instructions**, see the [Installation Guide](installation).

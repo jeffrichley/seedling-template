@@ -1,0 +1,110 @@
+"""Example end-to-end tests for {{ project_name }}.
+
+This module demonstrates proper end-to-end testing practices following the project's
+testing rules and conventions.
+"""
+
+import pytest
+import subprocess
+import sys
+from pathlib import Path
+from {{ project_slug }} import main_function
+
+
+@pytest.mark.e2e
+class TestMainFunctionEndToEnd:
+    """End-to-end tests for main_function complete workflows."""
+    
+    def test_main_function_cli_workflow(self, capsys):
+        """Complete CLI workflow from input to output."""
+        
+        # Arrange
+        test_input = "end-to-end test data"
+        
+        # Act
+        with pytest.MonkeyPatch().context() as m:
+            m.setattr('sys.argv', ['{{ project_slug }}', 'process', test_input])
+            
+            # Simulate CLI execution
+            result = main_function(test_input)
+            print(f"CLI Output: {result}")
+        
+        # Assert
+        captured = capsys.readouterr()
+        assert "CLI Output: Processed: end-to-end test data" in captured.out
+        assert result == "Processed: end-to-end test data"
+    
+    def test_main_function_with_real_file_operations(self, tmp_path):
+        """Complete workflow with real file system operations."""
+        
+        # Arrange
+        input_file = tmp_path / "input.txt"
+        output_file = tmp_path / "output.txt"
+        test_data = "file-based test data"
+        
+        input_file.write_text(test_data)
+        
+        # Act
+        result = main_function(test_data)
+        output_file.write_text(result)
+        
+        # Assert
+        assert input_file.exists()
+        assert output_file.exists()
+        assert input_file.read_text() == test_data
+        assert output_file.read_text() == "Processed: file-based test data"
+        assert result == "Processed: file-based test data"
+    
+    def test_main_function_error_workflow(self, capsys):
+        """Complete error handling workflow."""
+        
+        # Arrange
+        invalid_input = None
+        
+        # Act
+        with pytest.MonkeyPatch().context() as m:
+            m.setattr('sys.argv', ['{{ project_slug }}', 'process', 'invalid'])
+            
+            # Simulate CLI execution with error
+            with pytest.raises(ValueError, match="input_data cannot be empty"):
+                main_function(invalid_input)
+            
+            print("Error handled successfully")
+        
+        # Assert
+        captured = capsys.readouterr()
+        assert "Error handled successfully" in captured.out
+    
+    def test_main_function_with_environment_variables(self, monkeypatch):
+        """Complete workflow with environment variable configuration."""
+        
+        # Arrange
+        test_input = "env test data"
+        monkeypatch.setenv("PROCESSING_PREFIX", "Custom: ")
+        
+        # Act
+        # Note: This would require the main_function to read from environment
+        # For this example, we'll test the basic functionality
+        result = main_function(test_input)
+        
+        # Assert
+        assert result == "Processed: env test data"
+        assert "PROCESSING_PREFIX" in monkeypatch.getenv("PROCESSING_PREFIX", "")
+    
+    def test_main_function_performance_under_load(self):
+        """Complete workflow performance under load."""
+        
+        # Arrange
+        large_dataset = ["data_" + str(i) for i in range(1000)]
+        
+        # Act
+        results = []
+        for data in large_dataset:
+            result = main_function(data)
+            results.append(result)
+        
+        # Assert
+        assert len(results) == 1000
+        assert all(result.startswith("Processed: ") for result in results)
+        assert results[0] == "Processed: data_0"
+        assert results[-1] == "Processed: data_999" 

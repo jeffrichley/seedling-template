@@ -44,6 +44,15 @@ extensions = [
     "sphinx.ext.napoleon",
     "sphinx.ext.viewcode",
     "sphinx.ext.githubpages",
+    "sphinx.ext.intersphinx",
+    "sphinx.ext.todo",
+    "sphinx.ext.coverage",
+    "sphinx.ext.mathjax",
+    "sphinx.ext.ifconfig",
+    "sphinx.ext.autosummary",
+    "sphinx.ext.doctest",
+    "sphinx_copybutton",
+    "sphinx_autodoc_typehints",
     "myst_parser",  # Add MyST parser for Markdown support
 ]
 
@@ -72,13 +81,36 @@ html_theme_options = {
     "light_css_variables": {
         "color-brand-primary": "#7C3AED",
         "color-brand-content": "#7C3AED",
+        "color-accent": "#7C3AED",
+        "color-background-primary": "#ffffff",
+        "color-background-secondary": "#f8fafc",
+        "color-background-border": "#e5e7eb",
+        "color-foreground-primary": "#111827",
+        "color-foreground-secondary": "#6b7280",
+        "color-foreground-muted": "#9ca3af",
+        "color-foreground-border": "#d1d5db",
+        "font-stack": "system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif",
+        "font-stack--monospace": "ui-monospace, SFMono-Regular, 'SF Mono', Consolas, 'Liberation Mono', Menlo, monospace",
     },
     "dark_css_variables": {
         "color-brand-primary": "#A78BFA",
         "color-brand-content": "#A78BFA",
+        "color-accent": "#A78BFA",
+        "color-background-primary": "#0f172a",
+        "color-background-secondary": "#1e293b",
+        "color-background-border": "#334155",
+        "color-foreground-primary": "#f8fafc",
+        "color-foreground-secondary": "#cbd5e1",
+        "color-foreground-muted": "#94a3b8",
+        "color-foreground-border": "#475569",
     },
     "navigation_with_keys": True,
     "announcement": "<em>🌱 Generated with <a href='https://github.com/jeffrichley/seedling-template'>Seedling</a></em>",
+    "sidebar_hide_name": False,
+    "top_of_page_button": "edit",
+    "source_repository": "https://github.com/{{ github_username }}/{{ project_slug }}",
+    "source_branch": "main",
+    "source_directory": "docs/source/",
 }
 
 # Add any paths that contain custom static files (such as style sheets) here,
@@ -114,3 +146,23 @@ myst_enable_extensions = [
     "substitution",
     "tasklist",
 ]
+
+# Intersphinx mapping for external references
+intersphinx_mapping = {
+    "python": ("https://docs.python.org/3/", None),
+    "sphinx": ("https://www.sphinx-doc.org/en/master/", None),
+}
+
+# Todo settings
+todo_include_todos = True
+todo_link_only = True
+
+# Copy button settings
+copybutton_prompt_text = r">>> |\.\.\. |\$ |In \[\d*\]: | {2,5}\.\.\.: | {5,8}: "
+copybutton_prompt_is_regexp = True
+copybutton_line_continuation_character = "\\"
+
+# Autodoc type hints settings
+autodoc_typehints = "description"
+autodoc_typehints_format = "short"
+autodoc_typehints_description_target = "documented"

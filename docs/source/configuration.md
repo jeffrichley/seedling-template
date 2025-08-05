@@ -1,46 +1,32 @@
 # ⚙️ Configuration Guide
 
-Learn how to configure your Seedling template project with all available options.
+> "By failing to prepare, you are preparing to fail."
+> — **Benjamin Franklin**
 
-## Template Variables
+This guide covers every configurable option in the **Seedling** template so you can shape your project exactly how you want it. 🌱
 
-Seedling uses Copier's template system with the following configuration variables:
+---
 
-### Project Metadata
+## 🧩 Template Variables & Prompts (12 total)
 
-| Variable | Type | Default | Description |
-|----------|------|---------|-------------|
-| `project_name` | str | "My Awesome Project" | Human-readable project name |
-| `project_slug` | str | "my_awesome_project" | Python package name (lowercase, underscores) |
-| `project_description` | str | "A modern Python project..." | Brief project description |
-| `project_keywords` | str | "python,modern,uv,nox,just" | Comma-separated keywords for PyPI |
-| `version` | str | "0.1.0" | Initial version number |
+| #  | Prompt (variable)                               | What it controls                                                                      | Example value                  |
+| -- | ----------------------------------------------- | ------------------------------------------------------------------------------------- | ------------------------------ |
+| 1  | **Project Name**        (`project_name`)        | Human-friendly display name used in docs and metadata                                 | `Data Wizard`                  |
+| 2  | **Project Slug**        (`project_slug`)        | Import-safe package folder (lowercase, underscores)                                   | `data_wizard`                  |
+| 3  | **Project Description** (`project_description`) | Short tagline shown in README, `pyproject`, and PyPI                                  | `A modern Python data toolkit` |
+| 4  | **Project Keywords** (`project_keywords`)       | Comma-separated keywords used in `pyproject.toml` for package metadata and search SEO | `ai, automation, audio`        |
+| 5  | **Author Name**         (`author_name`)         | Primary maintainer’s name for docs & license header                                   | `Jane Doe`                     |
+| 6  | **Author Email**        (`author_email`)        | Contact e-mail baked into `pyproject` metadata                                        | `jane@example.com`             |
+| 7  | **GitHub Username**     (`github_username`)     | Used to craft repo URLs and badge links                                               | `janedoe`                      |
+| 8  | **Copyright Year** (`copyright_year`)           | Year injected into the `LICENSE` file and doc headers                                 | `2025`                         |
+| 9  | **Version** (`version`)                         | Initial semantic version pinned in `pyproject.toml`, shown in badges & release tags   | `0.1.0`                        |
+| 10 | **License**             (`license`)             | SPDX ID dropped into `LICENSE` and `pyproject`                                        | `MIT`                          |
+| 11 | **Python Versions**     (`python_versions`)     | Comma-separated list for CI matrix & `pyproject`                                      | `3.11,3.12`                    |
+| 12 | **Coverage Threshold**  (`coverage_threshold`)  | Minimum % before CI fails                                                             | `80`                           |
 
-### Author Information
+---
 
-| Variable | Type | Default | Description |
-|----------|------|---------|-------------|
-| `author_name` | str | "Your Name" | Your full name |
-| `author_email` | str | "your.name@example.com" | Your email address |
-| `github_username` | str | "yourusername" | Your GitHub username |
-| `copyright_year` | str | "2024" | Copyright year |
-
-### Project Settings
-
-| Variable | Type | Default | Description |
-|----------|------|---------|-------------|
-| `license` | choice | "MIT" | License type (MIT, Apache-2.0, GPL-3.0, BSD-3-Clause) |
-| `python_versions` | str | "3.11,3.12" | Supported Python versions (comma-separated) |
-| `coverage_threshold` | int | 80 | Minimum test coverage percentage (0-100) |
-
-### Optional Features
-
-| Variable | Type | Default | Description |
-|----------|------|---------|-------------|
-| `include_cli` | bool | false | Include CLI interface |
-| `enable_conda_fallback` | bool | false | Enable conda fallback for uv |
-
-## Configuration Examples
+## 📂 Configuration Examples
 
 ### Basic Python Package
 
@@ -90,18 +76,18 @@ include_cli: true
 enable_conda_fallback: true
 ```
 
-## Using Configuration Files
+---
 
-### Method 1: Interactive Prompts
+## ⚙️ Using Configuration Files
+
+### Method 1 — Interactive Prompts
 
 ```bash
 copier copy https://github.com/jeffrichley/seedling.git my-project
 # Answer prompts interactively
 ```
 
-### Method 2: Data File
-
-Create a configuration file:
+### Method 2 — Data File
 
 ```yaml
 # my-config.yaml
@@ -116,13 +102,11 @@ python_versions: "3.11,3.12"
 coverage_threshold: 85
 ```
 
-Use the data file:
-
 ```bash
 copier copy https://github.com/jeffrichley/seedling.git my-project --data-file my-config.yaml
 ```
 
-### Method 3: Command Line Arguments
+### Method 3 — Command Line Arguments
 
 ```bash
 copier copy https://github.com/jeffrichley/seedling.git my-project \
@@ -132,55 +116,42 @@ copier copy https://github.com/jeffrichley/seedling.git my-project \
   --data license="MIT"
 ```
 
-## Validation Rules
+---
 
-### Python Versions
+## 🧪 Validation Rules
 
-- Must be comma-separated list
-- Format: `3.11,3.12,3.13`
-- Must be valid Python version numbers
-- At least one version required
+* **Python Versions**: Comma-separated list, valid Python version numbers, at least one required.
+* **Coverage Threshold**: Integer 0–100, used in CI/CD gates.
+* **Project Slug**: Lowercase letters, numbers, underscores only.
 
-### Coverage Threshold
+---
 
-- Integer between 0 and 100
-- Represents minimum test coverage percentage
-- Used in CI/CD quality gates
+## 🔄 Post-Generation Configuration
 
-### Project Slug
-
-- Lowercase letters, numbers, and underscores only
-- Must be a valid Python package name
-- No spaces or special characters
-
-## Post-Generation Configuration
-
-After generating your project, you can:
-
-### Update Template
+Update the template:
 
 ```bash
 cd my-project
 copier update
 ```
 
-### Override Settings
+Override a setting:
 
 ```bash
-# Update specific settings
 copier update --data coverage_threshold=90
 ```
 
-### Skip Updates
+Skip specific files:
 
 ```bash
-# Skip specific files during update
 copier update --skip .github/workflows/ci.yml
 ```
 
-## Environment Variables
+---
 
-You can use environment variables for sensitive data:
+## 🔒 Environment Variables
+
+For sensitive data:
 
 ```bash
 export SEEDLING_AUTHOR_EMAIL="your.email@example.com"
@@ -189,24 +160,22 @@ export SEEDLING_GITHUB_USERNAME="yourusername"
 copier copy https://github.com/jeffrichley/seedling.git my-project
 ```
 
-## Best Practices
+---
 
-1. **Use descriptive names**: Make project names and descriptions clear
-2. **Choose appropriate licenses**: Consider your project's needs
-3. **Set realistic coverage**: Start with 80% and increase over time
-4. **Use data files**: For reproducible configurations
-5. **Version control**: Commit your configuration files
+## 🌱 Best Practices
 
-## Troubleshooting
+1. Use descriptive names
+2. Choose licenses intentionally
+3. Set realistic coverage targets (start at 80%)
+4. Commit configuration files for reproducibility
+5. Keep them under version control
 
-### Common Issues
+---
 
-- **Invalid project slug**: Use only lowercase letters, numbers, and underscores
-- **Python version format**: Use comma-separated list (e.g., "3.11,3.12")
-- **Coverage threshold**: Must be integer between 0-100
+## 🛟 Troubleshooting
 
-### Getting Help
+* **Invalid slug** — lowercase letters, numbers, underscores only
+* **Bad Python version format** — e.g., `3.11,3.12`
+* **Coverage threshold invalid** — must be 0–100
 
-- Check the troubleshooting section below
-- Review the {doc}`examples` for working configurations
-- Visit the [Copier documentation](https://copier.readthedocs.io/) 
+See the {doc}`examples` page for more working configs.

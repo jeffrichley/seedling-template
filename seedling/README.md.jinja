@@ -16,8 +16,6 @@
 
 ## 🚀 Quick Start
 
-### Installation
-
 ```bash
 # Clone the repository
 git clone https://github.com/{{ github_username }}/{{ project_slug }}.git
@@ -26,25 +24,14 @@ cd {{ project_slug }}
 # Install with uv (recommended)
 uv sync
 
-# Or install with pip
-pip install -e .
-```
+# Install in development mode
+uv pip install -e ".[dev,docs]"
 
-### Development Setup
-
-```bash
-# Install in editable mode with development dependencies
-uv pip install -e ".[dev]"
-
-# Run quality checks
-uv run dev checkit
-
-# Run tests
+# Run tests to verify installation
 uv run dev test
-
-# Build documentation
-uv run dev docs
 ```
+
+📖 **For detailed installation instructions**, see the [Installation Guide](docs/installation.md).
 
 ## 📦 Usage
 
@@ -117,6 +104,8 @@ uv run dev checkit
 # Make your changes and test
 uv run dev test
 ```
+
+📖 **For detailed setup instructions**, see the [Installation Guide](docs/installation.md).
 
 ## 📄 License
 

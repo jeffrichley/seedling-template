@@ -5,13 +5,30 @@ python_classes = Test*
 python_functions = test_*
 norecursedirs = debug_*.py test_*_debug.py .hypothesis
 pythonpath = src
+
+# Test markers for different test types
 markers =
-    unit: unit tests
-    integration: integration tests
+    unit: marks tests as unit tests (fast, isolated function/class tests)
+    integration: marks tests as integration tests (cross-module or DB/file system I/O)
+    functional: marks tests as functional tests (high-level, multi-layer behavior)
+    e2e: marks tests as end-to-end tests (complete user workflows)
+    performance: marks tests as performance tests (load/latency testing)
+    slow: marks tests as slow (deselect with '-m "not slow"')
     data: schema/data parsing tests
-    functional: cross-module logic
-    e2e: end-to-end test
-    slow: long-running test
-    performance: performance tests
-addopts = --cov=src/{{ project_slug }} --cov-report=term-missing --cov-report=xml --cov-fail-under=80
-filterwarnings = ignore::pydantic.PydanticDeprecatedSince20:{{ project_slug }}.*
+
+# Test execution options
+addopts = 
+    --strict-markers
+    --strict-config
+    --verbose
+    --tb=short
+    --cov=src/{{ project_slug }}
+    --cov-report=term-missing
+    --cov-report=xml
+    --cov-report=html
+    --cov-fail-under=90
+
+# Coverage configuration
+filterwarnings = 
+    ignore::pydantic.PydanticDeprecatedSince20:{{ project_slug }}.*
+    ignore::UserWarning:pytest.*

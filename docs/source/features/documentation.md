@@ -17,7 +17,6 @@ The template provides:
 docs/
 ├── source/                    # Source files
 │   ├── index.md              # Main documentation index
-│   ├── api.md                # API documentation
 │   ├── contributing.md       # Contributing guide
 │   └── _static/              # Static assets
 ├── build/                    # Built documentation
@@ -28,12 +27,15 @@ docs/
 
 ```bash
 # Build documentation
-cd docs
-uv sync
-make html
+just docs
+# or
+nox -s docs
+# or
+uv run sphinx-build -W docs/source docs/build
 
-# Serve locally
-make serve
+# Serve locally (after building)
+cd docs/build/html
+python -m http.server 8000
 ```
 
 ## Writing Documentation
@@ -54,7 +56,7 @@ def example_function():
 
 ## Cross-References
 
-See {doc}`../reference/template-structure` for template reference documentation.
+See {doc}`../configuration` for template configuration options and {doc}`../examples` for usage examples.
 ```
 
 ### API Documentation
@@ -117,14 +119,13 @@ myst_enable_extensions = [
 
 ### GitHub Pages
 
-```yaml
-# .github/workflows/docs.yml
-- name: Deploy Documentation
-  uses: peaceiris/actions-gh-pages@v3
-  with:
-    github_token: ${{ secrets.GITHUB_TOKEN }}
-    publish_dir: ./docs/build/html
-```
+The template includes automatic documentation deployment:
+
+- **Automatic builds**: Documentation is built and deployed on every commit
+- **GitHub Pages**: Automatically publishes to your project's GitHub Pages site
+- **Branch protection**: Only deploys from the main branch
+- **Custom domain support**: Can be configured to use a custom domain
+- **Version history**: Maintains documentation history across releases
 
 ## Next Steps
 

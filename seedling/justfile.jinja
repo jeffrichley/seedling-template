@@ -5,6 +5,24 @@
 test:
     nox -s tests
 
+# Run specific test types
+test-unit:
+    nox -s tests -- -m unit
+
+test-integration:
+    nox -s tests -- -m integration
+
+test-functional:
+    nox -s tests -- -m functional
+
+test-e2e:
+    nox -s tests -- -m e2e
+
+test-performance:
+    nox -s tests -- -m performance
+
+
+
 # Run linting
 lint:
     nox -s lint

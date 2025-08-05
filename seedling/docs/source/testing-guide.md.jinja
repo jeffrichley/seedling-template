@@ -1,0 +1,466 @@
+# 🧪 Testing Guide for {{ project_name }}
+
+This guide provides **concrete, actionable guidance** for writing excellent tests in your {{ project_name }} project. It's designed to help you get started quickly and write high-quality tests that work for any Python project.
+
+## 🚀 Quick Start
+
+### Your First Test in 5 Minutes
+
+```bash
+# 1. Create a new unit test
+just test-unit-create my_function
+
+# 2. Edit the generated file
+# tests/unit/test_my_function.py
+
+# 3. Run your test
+just test-unit
+```
+
+### What You Get
+
+When you run `just test-unit-create my_function`, you get a complete test file with:
+- ✅ Proper imports and structure
+- ✅ Correct pytest markers
+- ✅ Example test patterns
+- ✅ Mocking examples
+- ✅ Ready to customize
+
+## 🎯 Test Types - Which One Should You Use?
+
+### Unit Tests (`tests/unit/`)
+**Use when**: Testing individual functions or methods
+**Example**: Testing a calculation function, validation logic, or data transformation
+
+```bash
+just test-unit-create calculate_total
+```
+
+### Integration Tests (`tests/integration/`)
+**Use when**: Testing multiple components working together
+**Example**: Testing database operations, file system interactions, API calls
+
+```bash
+just test-integration-create user_service
+```
+
+### Functional Tests (`tests/functional/`)
+**Use when**: Testing complete business workflows
+**Example**: Testing user registration, order processing, data import workflows
+
+```bash
+just test-functional-create user_registration
+```
+
+### E2E Tests (`tests/e2e/`)
+**Use when**: Testing complete user journeys
+**Example**: Testing CLI commands, API endpoints, complete user workflows
+
+```bash
+just test-e2e-create cli_workflow
+```
+
+### Performance Tests (`tests/performance/`)
+**Use when**: Testing speed, memory usage, or throughput
+**Example**: Testing data processing speed, API response times, memory efficiency
+
+```bash
+just test-performance-create data_processing
+```
+
+## 📝 Writing Tests - Step by Step
+
+### 1. Choose Your Test Type
+Use the decision tree:
+
+```
+What are you testing?
+├── Individual function/method? → Unit Test
+├── Multiple components together? → Integration Test  
+├── Complete business workflow? → Functional Test
+├── End-to-end user journey? → E2E Test
+└── Performance characteristics? → Performance Test
+```
+
+### 2. Create Your Test File
+```bash
+# Replace 'my_feature' with what you're actually testing
+just test-unit-create my_feature
+```
+
+### 3. Customize the Template
+The generated file will look like this:
+
+```python
+"""Tests for my_feature."""
+
+import pytest
+from {{ project_slug }}.my_module import my_function
+
+# TODO: Replace 'my_module' and 'my_function' with your actual module and function names
+# Example: from {{ project_slug }}.core import process_data
+```
+
+
+@pytest.mark.unit
+def test_my_function_returns_expected_value():
+    """Returns expected value when given valid input."""
+    
+    # Arrange
+    input_data = "test input"
+    
+    # Act
+    result = my_function(input_data)
+    
+    # Assert
+    assert result == "expected output"
+```
+
+**Customize it by:**
+1. Updating the import statement to match your actual module
+2. Changing function names to match your actual functions
+3. Adding your specific test logic
+4. Updating assertions to match expected behavior
+
+### 4. Run Your Tests
+```bash
+# Run all tests
+just test
+
+# Run just your test type
+just test-unit
+
+# Run a specific test file
+uv run pytest tests/unit/test_my_feature.py
+
+# Run a specific test function
+uv run pytest tests/unit/test_my_feature.py::test_my_function_returns_expected_value
+```
+
+## 🎭 Testing Patterns You'll Use
+
+### Testing with Mocks
+```python
+from unittest.mock import patch, MagicMock
+
+@pytest.mark.unit
+def test_function_with_external_dependency():
+    """Tests function that calls external service."""
+    
+    # Arrange
+    mock_service = MagicMock()
+    mock_service.get_data.return_value = {"key": "value"}
+    
+    # Act
+    with patch('your_module.external_service', mock_service):
+        result = your_function()
+    
+    # Assert
+    assert result == "expected result"
+    mock_service.get_data.assert_called_once()
+```
+
+### Testing with Temporary Files
+```python
+@pytest.mark.integration
+def test_file_operations(temp_directory):
+    """Tests file reading and writing."""
+    
+    # Arrange
+    file_path = temp_directory / "test.txt"
+    content = "test content"
+    
+    # Act
+    file_path.write_text(content)
+    result = file_path.read_text()
+    
+    # Assert
+    assert result == content
+```
+
+### Testing Error Conditions
+```python
+@pytest.mark.unit
+def test_function_raises_error():
+    """Tests that function raises correct error."""
+    
+    # Arrange
+    invalid_input = None
+    
+    # Act & Assert
+    with pytest.raises(ValueError, match="Input cannot be None"):
+        your_function(invalid_input)
+```
+
+### Testing with Sample Data
+```python
+@pytest.mark.unit
+def test_data_processing(sample_data):
+    """Tests processing with sample data."""
+    
+    # Arrange
+    users = sample_data["users"]
+    
+    # Act
+    result = process_users(users)
+    
+    # Assert
+    assert len(result) == 2
+    assert result[0]["name"] == "Alice"
+```
+
+## 🔧 Common Commands You'll Use
+
+### Running Tests
+```bash
+just test              # Run all tests with coverage
+just test-unit         # Run only unit tests
+just test-integration  # Run only integration tests
+just test-functional   # Run only functional tests
+just test-e2e          # Run only e2e tests
+just test-performance  # Run only performance tests
+```
+
+### Creating New Tests
+```bash
+just test-unit-create <name>     # Create unit test
+just test-integration-create <name>  # Create integration test
+just test-functional-create <name>   # Create functional test
+just test-e2e-create <name>      # Create e2e test
+just test-performance-create <name>  # Create performance test
+```
+
+### Coverage and Quality
+```bash
+just coverage          # Generate HTML coverage report
+just quality           # Run all quality checks
+just lint              # Run linting
+just type-check        # Run type checking
+```
+
+## 📊 Coverage Requirements
+
+Your project enforces these coverage standards:
+- **Minimum coverage**: 90%
+- **New code**: 100% coverage required
+- **Critical paths**: 100% coverage required
+
+### Checking Coverage
+```bash
+# Run tests with coverage
+just test
+
+# Generate detailed HTML report
+just coverage
+
+# Check coverage in terminal
+uv run pytest --cov=src --cov-report=term-missing
+```
+
+## 🗃️ Available Fixtures
+
+### Built-in Fixtures (in `tests/conftest.py`)
+```python
+def test_with_temp_directory(temp_directory):
+    # temp_directory is automatically cleaned up
+    file_path = temp_directory / "test.txt"
+    # Your test here...
+
+def test_with_sample_data(sample_data):
+    # sample_data contains test users and config
+    users = sample_data["users"]
+    # Your test here...
+
+def test_with_mock_logger(mock_logger):
+    # mock_logger for testing logging behavior
+    # Your test here...
+```
+
+### Database Fixtures (in `tests/fixtures/database_fixtures.py`)
+```python
+def test_database_operations(sqlite_memory_db):
+    # In-memory SQLite database
+    sqlite_memory_db.execute("CREATE TABLE users (id INTEGER PRIMARY KEY, name TEXT)")
+    # Your test here...
+
+def test_database_persistence(sqlite_temp_db):
+    # Temporary file-based SQLite database
+    # Your test here...
+
+def test_with_mock_database(mock_database):
+    # Mock database for unit tests
+    # Your test here...
+```
+
+### File Fixtures (in `tests/fixtures/file_fixtures.py`)
+```python
+def test_file_operations(temp_file):
+    # Single temporary file
+    temp_file.write_text("content")
+    # Your test here...
+
+def test_multiple_files(temp_files):
+    # Multiple temporary files
+    temp_files["input"].write_text("data")
+    # Your test here...
+
+def test_with_sample_files(sample_files):
+    # Files with pre-populated content
+    content = sample_files["config"].read_text()
+    # Your test here...
+```
+
+## 🚨 Common Issues and Solutions
+
+### Import Errors
+```bash
+# If you get import errors, try:
+PYTHONPATH=src uv run pytest
+
+# Or install your package in editable mode:
+uv pip install -e .
+```
+
+### Test Discovery Issues
+```bash
+# Check what tests pytest finds:
+uv run pytest --collect-only
+
+# Run a specific test file:
+uv run pytest tests/unit/test_my_function.py
+```
+
+### Slow Tests
+```bash
+# Run only fast tests:
+uv run pytest -m "not slow"
+
+# See which tests are slow:
+uv run pytest --durations=10
+```
+
+### Coverage Issues
+```bash
+# Debug coverage:
+uv run coverage debug data
+
+# Check coverage configuration:
+uv run coverage run --source=src -m pytest
+uv run coverage report
+```
+
+## 🎯 Best Practices
+
+### Test Naming
+```python
+# Good names
+def test_calculate_total_with_discount():
+def test_user_registration_raises_error_on_duplicate_email():
+def test_file_processor_handles_large_files():
+
+# Bad names
+def test_function():
+def test_it_works():
+def test_stuff():
+```
+
+### Test Structure
+```python
+def test_my_function():
+    """Clear docstring explaining what is being tested."""
+    
+    # Arrange - Set up test data
+    input_data = "test"
+    
+    # Act - Call the function
+    result = my_function(input_data)
+    
+    # Assert - Verify the result
+    assert result == "expected"
+```
+
+### Test Independence
+```python
+# Good - Each test is independent
+def test_user_creation():
+    user_data = {"name": "Alice"}
+    result = create_user(user_data)
+    assert result.is_success
+
+def test_user_retrieval():
+    user_data = {"name": "Bob"}
+    created = create_user(user_data)
+    retrieved = get_user(created.id)
+    assert retrieved.name == "Bob"
+
+# Bad - Tests depend on each other
+def test_user_creation():
+    # Creates user and stores ID globally
+    global test_user_id
+    test_user_id = create_user(data).id
+
+def test_user_retrieval():
+    # Depends on previous test
+    user = get_user(test_user_id)  # Will fail if run alone
+```
+
+## 🚀 Advanced Patterns
+
+### Parameterized Tests
+```python
+@pytest.mark.parametrize("input_data,expected", [
+    ("hello", "Processed: hello"),
+    ("world", "Processed: world"),
+    ("", "Processed: "),
+])
+def test_process_data_with_various_inputs(input_data, expected):
+    """Tests multiple input scenarios efficiently."""
+    result = process_data(input_data)
+    assert result == expected
+```
+
+### Property-Based Testing
+```python
+from hypothesis import given, strategies as st
+
+@given(st.text())
+def test_process_data_properties(input_text):
+    """Tests that process_data maintains certain properties."""
+    result = process_data(input_text)
+    
+    # Property 1: Result is always a string
+    assert isinstance(result, str)
+    
+    # Property 2: Result always starts with "Processed: "
+    assert result.startswith("Processed: ")
+```
+
+### Async Testing
+```python
+@pytest.mark.asyncio
+async def test_async_function():
+    """Tests async function correctly."""
+    result = await async_function("test")
+    assert result == "async processed: test"
+```
+
+## 📖 Where to Get Help
+
+1. **This guide** - Start here for quick answers
+2. **Test templates** - Look at `tests/unit/test_example.py` for patterns
+3. **Fixture documentation** - Check `tests/fixtures/` for available helpers
+4. **pytest documentation** - https://docs.pytest.org/
+5. **Hypothesis documentation** - https://hypothesis.readthedocs.io/
+6. **Your team** - Ask experienced developers for guidance
+
+## 🎉 You're Ready!
+
+You now have everything you need to write excellent tests:
+
+- ✅ **Quick start commands** to create test files
+- ✅ **Clear patterns** for different test types
+- ✅ **Built-in fixtures** for common scenarios
+- ✅ **Coverage enforcement** to maintain quality
+- ✅ **Best practices** to follow
+
+Start with a simple unit test and build from there. Remember: good tests are an investment in code quality and developer productivity! 🚀 

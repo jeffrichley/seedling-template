@@ -1,30 +1,113 @@
-# Seedling Template Guide
+# 🌱 Seedling Template Guide
 
-A comprehensive guide for using the Seedling template to create world-class Python projects.
+> "Give me six hours to chop down a tree and I will spend the first four sharpening the axe."
+> — **Abraham Lincoln**
 
-## 🌱 What is Seedling?
+Welcome, planter of projects! This guide is your **sharpened axe**—showing you exactly how to sprout, nurture, and prune a world‑class Python repository using the Seedling template.
 
-Seedling is a **Copier template** that generates modern Python projects with:
+---
 
-- **Complete CI/CD pipeline** with GitHub Actions
-- **Quality assurance** with pre-commit-ci
-- **Modern tooling** (uv, Nox, Just, Sphinx)
-- **Professional documentation** with dark mode support
-- **Enterprise-grade standards** and best practices
+## 🌟 Why Seedling?
 
-## 🚀 Quick Start
+Seedling is a **Copier‑powered generator** that gives you:
 
-### Generate a New Project
+| 🌱                       | What You Get                                                   | Why You’ll Love It                                        |
+| ------------------------ | -------------------------------------------------------------- | --------------------------------------------------------- |
+| **CI/CD, pre‑wired**     | GitHub Actions for tests, lint, type‑check, docs, and releases | Automated confidence, zero yak‑shaving                    |
+| **Modern tooling**       | `uv`, Nox, Just, Black, Ruff, MyPy                             | Fast installs, one‑command dev tasks, opinionated quality |
+| **Docs that don’t suck** | Sphinx + Furo (dark‑mode ready)                                | Because READMEs alone won’t cut it                        |
+| **Enterprise hygiene**   | Pre‑commit hooks, security scanning, semantic‑release          | Impress your CTO *and* future you                         |
+
+> 💡 **Tip:** Run `just` (generated project) to see all available dev shortcuts.
+
+---
+
+## 🚀 Quick Start
+
+### 1 — Install Copier (minimal path)
 
 ```bash
-# Generate a new project with interactive prompts
-copier copy https://github.com/your-org/seedling my-new-project
-
-# Or use a data file for non-interactive generation
-copier copy https://github.com/your-org/seedling my-new-project --data-file project-data.yaml
+curl -LsSf https://astral.sh/uv/install.sh | sh   # install uv
+uv pip install copier                             # install Copier via uv
 ```
 
-### Example Data File (`project-data.yaml`)
+### 2 — Generate Your Project
+
+```bash
+# Interactive prompts
+copier copy https://github.com/jeffrichley/seedling-template.git my-new-project
+
+# Zero‑prompt (CI‑friendly)
+copier copy https://github.com/jeffrichley/seedling-template.git my-new-project \
+  --data-file project-data.yaml
+```
+
+Need an example data file? See [project-data.yaml](#📜-example-project-datayaml).
+
+### 3 — Dive In
+
+```bash
+cd my-new-project
+uv sync                 # install deps
+uv run dev test         # run tests
+uv run dev docs         # build docs
+```
+
+---
+
+### 🧩 Template Variables & Prompts (12 total)
+
+| # | Prompt (variable)        | What it controls                              | Example value |
+|---|--------------------------|-----------------------------------------------|---------------|
+| 1 | **Project Name**        (`project_name`)        | Human-friendly display name used in docs and metadata | `Data Wizard` |
+| 2 | **Project Slug**        (`project_slug`)        | Import-safe package folder (lowercase, underscores) | `data_wizard` |
+| 3 | **Project Description** (`project_description`) | Short tagline shown in README, `pyproject`, and PyPI | `A modern Python data toolkit` |
+| 4 | **Project Keywords** (`project_keywords`) | Comma-separated keywords used in `pyproject.toml` for package metadata and search SEO | `ai, automation, audio` |
+| 5 | **Author Name**         (`author_name`)         | Primary maintainer’s name for docs & license header | `Jane Doe` |
+| 6 | **Author Email**        (`author_email`)        | Contact e-mail baked into `pyproject` metadata | `jane@example.com` |
+| 7 | **GitHub Username**     (`github_username`)     | Used to craft repo URLs and badge links            | `janedoe` |
+| 8 | **Copyright Year** (`copyright_year`)    | Year injected into the `LICENSE` file and doc headers | `2025` |
+| 9 | **Version** (`version`) | Initial semantic version pinned in `pyproject.toml`, shown in badges & release tags | `0.1.0` |
+| 10 | **License**             (`license`)             | SPDX ID dropped into `LICENSE` and `pyproject`     | `MIT` |
+| 11 | **Python Versions**     (`python_versions`)     | Comma-separated list for CI matrix & `pyproject`   | `3.11,3.12` |
+| 12 | **Coverage Threshold**  (`coverage_threshold`)  | Minimum % before CI fails                          | `80` |
+
+---
+
+## 🔧 Configuration Best Practices
+
+### Naming
+
+* **Slug first** – Make sure import path (`project_slug`) is short & unique.
+* **Display Name** – Keep spaces & capitalisation; shown in docs/pyproject metadata.
+
+### Python Matrix
+
+* Pin two recent versions (e.g. 3.11 + 3.12); drop EOL ones early.
+* Slide new minors in after they hit *stable* status.
+
+### Dependency Strategy
+
+* Runtime deps → `dependencies=` in `pyproject.toml`.
+* Dev‑only deps → `group.dev.dependencies=` (keeps lean installs).
+
+> 🔬 **Science says:** Smaller dependency graphs reduce supply‑chain risk.
+
+### Testing
+
+* **Unit** for business logic, **integration** for boundary layers, **e2e** for user flows.
+* Use **pytest‑cov** + `just coverage-html` to eyeball blind spots.
+* Hypothesis for property‑based fuzzing—catch those sneaky edge cases.
+
+### Documentation
+
+* Break up long tutorials; keep one topic per page.
+* Use literal‑include to pull code blocks directly from source—no drift.
+* Run `nox -s docs-linkcheck` before publishing; broken links are bad optics.
+
+---
+
+## 📜 Example project-data.yaml
 
 ```yaml
 project_name: "My Awesome Project"
@@ -38,380 +121,56 @@ python_versions: "3.11,3.12"
 coverage_threshold: 80
 ```
 
-## 🎯 Configuration Best Practices
+---
 
-### Project Naming
-- **Project Name**: Use descriptive, human-readable names (e.g., "Data Processing Pipeline")
-- **Project Slug**: Use lowercase with underscores, no spaces or hyphens (e.g., `data_processing_pipeline`)
-- **Keywords**: Include relevant PyPI keywords for discoverability
+## 🏗️ Post‑Generation Checklist
 
-### Python Versions
-- **Minimum**: Python 3.11+ for modern features and performance
-- **Recommended**: Support 2-3 recent Python versions (e.g., "3.11,3.12,3.13")
-- **Testing**: All supported versions are automatically tested in CI
+1. `cd my-new-project`
+2. Run `uv sync` (installs all extras)
+3. Initialise git: `git init && git add . && git commit -m "seedling: first sprout"`
+4. Push to GitHub; branch protection rules FTW.
+5. Enable GitHub Pages under **Settings → Pages** (docs will auto‑publish).
 
-### Coverage Thresholds
-- **Libraries**: 90%+ for critical code paths
-- **Applications**: 80%+ for core functionality
-- **CLI Tools**: 85%+ for user-facing features
-
-### License Selection
-- **MIT**: Most permissive, good for open source
-- **Apache-2.0**: Enterprise-friendly with patent protection
-- **GPL-3.0**: Copyleft, requires source sharing
-- **BSD-3-Clause**: Simple permissive license
-
-### GitHub Integration
-- **Username**: Use your actual GitHub username for proper linking
-- **Repository**: Template will create proper GitHub workflows
-- **Documentation**: Automatic deployment to GitHub Pages
-
-## 📋 Configuration Options
-
-### Project Information
-
-| Option | Type | Default | Description |
-|--------|------|---------|-------------|
-| `project_name` | str | "My Awesome Project" | Human-readable project name |
-| `project_slug` | str | "my_awesome_project" | Python package name (lowercase, underscores) |
-| `project_description` | str | "A modern Python project..." | Brief project description |
-| `project_keywords` | str | "python,modern,uv,nox,just" | Comma-separated PyPI keywords |
-| `author_name` | str | "Your Name" | Your full name |
-| `author_email` | str | "your.name@example.com" | Your email address |
-| `github_username` | str | "yourusername" | Your GitHub username |
-| `copyright_year` | str | "2024" | Copyright year |
-| `version` | str | "0.1.0" | Initial version number |
-
-### Features
-
-| Option | Type | Default | Description |
-|--------|------|---------|-------------|
-| `license` | choice | "MIT" | Project license (MIT, Apache-2.0, GPL-3.0, BSD-3-Clause) |
-| `python_versions` | str | "3.11,3.12" | Supported Python versions |
-| `coverage_threshold` | int | 80 | Minimum test coverage percentage |
-
-
-
-## 🛠️ Generated Project Structure
-
-```
-my-new-project/
-├── src/
-│   └── my_awesome_project/
-│       └── __init__.py
-├── tests/
-│   ├── unit/
-│   ├── integration/
-│   └── e2e/
-├── docs/
-│   ├── source/
-│   │   ├── api.md
-│   │   ├── contributing.md
-│   │   └── index.md
-│   └── build/
-├── .github/
-│   └── workflows/
-│       ├── ci_nox.yml
-│       ├── docs.yml
-│       ├── release.yml
-│       └── codeql.yml
-├── pyproject.toml
-├── noxfile.py
-├── justfile
-├── .pre-commit-config.yaml
-└── README.md
-```
-
-## 🎯 Development Workflow
-
-### Initial Setup
-
-```bash
-# Navigate to your new project
-cd my-new-project
-
-# Install dependencies (already done by copier)
-uv sync --all-extras
-
-# Verify installation
-just test
-```
-
-### Daily Development
-
-```bash
-# Run quality checks
-just quality
-
-# Run tests
-just test
-
-# Format code
-just format
-
-# Build documentation
-just docs
-
-# Serve documentation locally
-just docs-serve
-```
-
-## 📚 Project Type Examples
-
-### CLI Application
-
-```yaml
-# cli-project.yaml
-project_name: "My CLI Tool"
-project_slug: "my_cli_tool"
-project_description: "A command-line interface for data processing"
-project_keywords: "cli,data,processing,command-line"
-author_name: "Your Name"
-author_email: "your.email@example.com"
-github_username: "yourusername"
-license: "MIT"
-python_versions: "3.11,3.12"
-coverage_threshold: 85
-```
-
-### Python Library
-
-```yaml
-# library-project.yaml
-project_name: "Data Processing Library"
-project_slug: "data_processor"
-project_description: "A high-performance library for data processing and analysis"
-project_keywords: "data,processing,analysis,library"
-author_name: "Your Name"
-author_email: "your.email@example.com"
-github_username: "yourusername"
-license: "Apache-2.0"
-python_versions: "3.11,3.12,3.13"
-coverage_threshold: 90
-```
-
-### Web Application
-
-```yaml
-# web-app-project.yaml
-project_name: "My Web App"
-project_slug: "my_web_app"
-project_description: "A modern web application built with FastAPI"
-project_keywords: "web,fastapi,api,application"
-author_name: "Your Name"
-author_email: "your.email@example.com"
-github_username: "yourusername"
-license: "MIT"
-python_versions: "3.11,3.12"
-coverage_threshold: 80
-```
-
-### Available Commands
-
-| Command | Description |
-|---------|-------------|
-| `just test` | Run tests with coverage |
-| `just lint` | Run linting checks |
-| `just type-check` | Run type checking |
-| `just docs` | Build documentation |
-| `just docs-serve` | Serve documentation locally |
-| `just quality` | Run all quality checks |
-| `just security` | Run security checks |
-| `just complexity` | Run complexity analysis |
-
-## 📚 Documentation
-
-### Built-in Documentation
-
-Every generated project includes:
-
-- **API Reference**: Automatic API documentation
-- **Contributing Guide**: Development guidelines
-- **Dependency Groups**: Package management guide
-- **Search Functionality**: Built-in search
-- **Dark Mode Support**: Automatic theme switching
-
-### Customizing Documentation
-
-1. **Add API documentation** in `docs/source/api.md`
-2. **Update contributing guide** in `docs/source/contributing.md`
-3. **Add custom pages** in `docs/source/`
-4. **Customize theme** in `docs/source/conf.py`
-
-## 🔧 Customization
-
-### Adding New Modules
-
-1. **Create your module** in `src/your_project/`
-2. **Add docstrings** with Google or NumPy style
-3. **Include type hints** for all functions
-4. **Update API docs** in `docs/source/api.md`
-
-### Example: Adding a Core Module
-
-```python
-# src/your_project/core.py
-"""Core functionality for the project."""
-
-from typing import Any, Dict, List
-
-def process_data(data: List[Dict[str, Any]]) -> Dict[str, Any]:
-    """Process input data and return results.
-    
-    Args:
-        data: List of data dictionaries to process
-        
-    Returns:
-        Processed results as a dictionary
-    """
-    # Your implementation here
-    return {"processed": len(data)}
-```
-
-### Extending CI/CD
-
-The generated project includes comprehensive CI/CD:
-
-- **Multi-environment testing** (Python 3.11, 3.12)
-- **Quality gates** (linting, type checking, coverage)
-- **Security scanning** (CodeQL, pip-audit)
-- **Documentation deployment** (GitHub Pages)
-- **Automated releases** (PyPI publishing)
-
-## 🚀 Deployment
-
-### PyPI Publishing
-
-```bash
-# Build and publish to PyPI
-just release
-
-# Or manually
-python -m build
-python -m twine upload dist/*
-```
-
-### Documentation Deployment
-
-Documentation is automatically deployed to GitHub Pages when you push to main.
-
-## 🔍 Quality Standards
-
-Every generated project enforces:
-
-- **Type Safety**: Full MyPy integration
-- **Code Quality**: Ruff linting with comprehensive rules
-- **Test Coverage**: Minimum 80% coverage requirement
-- **Documentation**: Comprehensive docstrings
-- **Security**: Regular vulnerability scanning
-- **Performance**: Code complexity analysis
-
-## 🆘 Troubleshooting
-
-### Common Issues
-
-#### Pre-commit Hooks Failing
-
-```bash
-# Run pre-commit manually
-pre-commit run --all-files
-
-# Skip hooks temporarily (not recommended)
-git commit --no-verify
-```
-
-#### Documentation Build Errors
-
-```bash
-# Check Sphinx configuration
-just docs
-
-# Verify dependencies
-uv pip install -e ".[docs]"
-```
-
-#### Test Failures
-
-```bash
-# Run tests with verbose output
-just test -- -v
-
-# Run specific test file
-just test -- tests/unit/test_specific.py
-```
-
-### Getting Help
-
-- **Check the logs**: Look for error messages in CI/CD runs
-- **Review documentation**: Generated projects include comprehensive docs
-- **Community support**: Open an issue on the seedling repository
-
-## 🔄 Updating Projects
-
-### Template Updates
-
-```bash
-# Update your project with latest template
-copier update
-
-# Review changes before applying
-copier update --vcs-ref HEAD~1
-```
-
-### Dependency Updates
-
-```bash
-# Update dependencies
-uv lock --upgrade
-
-# Update specific package
-uv add package-name --upgrade
-```
-
-## 📖 Best Practices
-
-### Code Organization
-
-- **Use src/ layout**: Prevents import confusion
-- **Follow naming conventions**: snake_case for modules, PascalCase for classes
-- **Add type hints**: All public APIs should have type annotations
-- **Write docstrings**: Use Google or NumPy style consistently
-
-### Testing Strategy
-
-- **Unit tests**: Fast, isolated tests for individual functions
-- **Integration tests**: Tests for component interactions
-- **End-to-end tests**: Full workflow testing
-- **Property-based testing**: Use Hypothesis for edge cases
-
-### Documentation
-
-- **Keep docs updated**: Update documentation with code changes
-- **Use examples**: Include usage examples in docstrings
-- **Link related docs**: Cross-reference related documentation
-- **Test documentation**: Ensure all code examples work
-
-## 🎉 Success Stories
-
-Projects built with Seedling include:
-
-- **Enterprise applications** with strict quality requirements
-- **Open source libraries** with comprehensive documentation
-- **Research projects** requiring reproducible environments
-- **CLI tools** with professional user experience
-
-## 🤝 Contributing to Seedling
-
-Want to improve the template?
-
-1. **Fork the repository**
-2. **Create a feature branch**
-3. **Make your changes**
-4. **Test with multiple configurations**
-5. **Submit a pull request**
-
-See the [Contributing Guide](../CONTRIBUTING.md) for detailed instructions.
+> 🛟 **Safety net:** Commit often; you can always prune branches—resurrecting lost work is harder.
 
 ---
 
-**Seedling** - Growing world-class Python projects from the ground up! 🌱
+## 🚑 Troubleshooting
+
+| Symptom                               | Fix                                               |
+| ------------------------------------- | ------------------------------------------------- |
+| Copier fails with cryptic Jinja error | Upgrade Copier: `uv pip install --upgrade copier` |
+| `uv sync` takes ages                  | Clear cache: `uv cache clean`                     |
+| CI coverage < threshold               | Run `just coverage-html` → find gaps              |
+
+Still stuck? File an issue—no reasonable question refused (unreasonable ones welcome if entertaining). 😎
+
+---
+
+## 🎉 Success Stories
+
+- **The 10-Minute MVP:** A team scaffolded a service, shipped a working API before their coffee cooled, and then spent the rest of the stand-up debating Furo dark mode. Priorities. ☕️
+- **CI Whisperer:** Someone pushed a fresh Seedling repo and the pipeline went green on the first try. Their manager accused them of faking screenshots. They did not. ✅
+- **Yak-Free Weekend:** A side project launched without writing a new Makefile. Yaks remained gloriously unshaved. 🐃✂️🚫
+- **Docs Convert:** A README skeptic built the Sphinx site and filed their first-ever docs PR. We printed it and put it on the fridge. 🧲
+- **Lint Lottery Win:** Adopting the pre-commit config surfaced a sneaky bug. The bounty was paid in donuts. 🍩
+- **The Great Rename:** Thanks to `project_slug`, a team avoided shipping `import project`. Future-you says thanks.
+
+> “Results may vary. Side effects include faster pipelines, cleaner diffs, and sudden urges to write tests.”
+
+Ready to add your legend? Plant your seed and tell us what grew.
+
+
+---
+
+## 🤝 Contributing to Seedling
+
+* Fork → feature branch → PR
+* Pass **all** Nox sessions: `nox -s tests lint type_check docs`
+* Write docs for new features; we break hearts over undocumented magic.
+
+See [Contributing Guide](../CONTRIBUTING.md) for the full ritual.
+
+---
+
+**Seedling** – Growing world‑class Python projects from the ground up. 🌱

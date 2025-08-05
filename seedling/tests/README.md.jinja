@@ -1,0 +1,130 @@
+# 🧪 Testing Guide for {{ project_name }}
+
+This directory contains all tests for {{ project_name }}. The testing framework follows strict rules to ensure consistent, maintainable, and high-quality tests.
+
+## 🚀 Quick Start
+
+### Run Tests
+```bash
+# Run all tests with coverage
+just test
+
+# Run specific test types
+just test-unit      # Unit tests only
+just test-integration  # Integration tests only
+just test-functional   # Functional tests only
+just test-e2e       # End-to-end tests only
+just test-performance # Performance tests only
+```
+
+### Write Your First Test
+1. Choose the appropriate test directory based on what you're testing
+2. Create a new test file following the naming convention: `test_<module>.py`
+3. Use the appropriate marker: `@pytest.mark.unit`, `@pytest.mark.integration`, etc.
+4. Follow the Arrange-Act-Assert pattern
+5. Add a descriptive docstring
+
+## 🎯 Test Type Decision Tree
+
+```
+What are you testing?
+├── Individual function/method behavior?
+│   └── Unit Test (tests/unit/)
+├── Multiple components working together?
+│   └── Integration Test (tests/integration/)
+├── Complete business workflow?
+│   └── Functional Test (tests/functional/)
+├── End-to-end user journey?
+│   └── E2E Test (tests/e2e/)
+└── Performance characteristics?
+    └── Performance Test (tests/performance/)
+```
+
+
+
+## 📚 Common Patterns
+
+### Testing with Mocks
+```python
+from unittest.mock import patch, MagicMock
+
+@pytest.mark.unit
+def test_function_with_mock():
+    """Tests function behavior with mocked dependencies."""
+    
+    # Arrange
+    mock_dependency = MagicMock()
+    mock_dependency.method.return_value = "mocked result"
+    
+    # Act
+    with patch('your_module.dependency', mock_dependency):
+        result = your_function()
+    
+    # Assert
+    assert result == "expected result"
+    mock_dependency.method.assert_called_once()
+```
+
+### Testing with Temporary Files
+```python
+@pytest.mark.integration
+def test_file_operations(temp_directory):
+    """Tests file operations using temporary directory."""
+    
+    # Arrange
+    file_path = temp_directory / "test.txt"
+    content = "test content"
+    
+    # Act
+    file_path.write_text(content)
+    result = file_path.read_text()
+    
+    # Assert
+    assert result == content
+```
+
+### Testing Error Conditions
+```python
+@pytest.mark.unit
+def test_error_handling():
+    """Tests that errors are handled correctly."""
+    
+    # Arrange
+    invalid_input = None
+    
+    # Act & Assert
+    with pytest.raises(ValueError, match="Input cannot be None"):
+        your_function(invalid_input)
+```
+
+## ⚠️ Anti-patterns to Avoid
+
+| ❌ Bad Practice | ✅ Good Practice |
+|----------------|------------------|
+| `assert True` | Write meaningful assertions |
+| Testing implementation details | Test public behavior |
+| Mocking the function you're testing | Mock external dependencies |
+| Testing multiple behaviors in one test | Test one behavior per test |
+| Using production data | Use test data |
+| Slow tests without justification | Keep tests fast |
+
+## 🔧 Configuration
+
+### Test Markers
+- `@pytest.mark.unit` - Fast, isolated tests
+- `@pytest.mark.integration` - Cross-module tests
+- `@pytest.mark.functional` - Business workflow tests
+- `@pytest.mark.e2e` - End-to-end tests
+- `@pytest.mark.performance` - Performance tests
+- `@pytest.mark.slow` - Long-running tests
+
+### Coverage Requirements
+- **Minimum coverage**: 90%
+- **New code**: 100% coverage required
+- **Critical paths**: 100% coverage required
+
+## 📖 Further Reading
+
+- [Testing Rules](../.cursor/rules/testing-rules.mdc) - Detailed testing rules and guidelines
+- [pytest Documentation](https://docs.pytest.org/) - Official pytest documentation
+ 

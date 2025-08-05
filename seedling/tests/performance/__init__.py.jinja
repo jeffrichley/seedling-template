@@ -1,0 +1,38 @@
+"""Performance tests for {{ project_name }}.
+
+This package contains tests that verify system performance characteristics:
+- Measure execution time, memory usage, and resource consumption
+- Test system behavior under load and stress conditions
+- Verify performance requirements and SLAs
+- Test scalability and throughput characteristics
+- May require special test environments and monitoring
+
+Use @pytest.mark.performance to mark your tests.
+
+Example:
+    @pytest.mark.performance
+    def test_data_processing_throughput():
+        '''Processes data within acceptable throughput limits.'''
+        
+        # Arrange
+        test_data = generate_large_dataset(10000)
+        max_processing_time = 5.0  # seconds
+        
+        # Act
+        start_time = time.time()
+        result = process_dataset(test_data)
+        processing_time = time.time() - start_time
+        
+        # Assert
+        assert result.is_success
+        assert processing_time < max_processing_time
+        assert result.throughput > 1000  # records per second
+
+Best Practices:
+- Set clear performance benchmarks and requirements
+- Test under realistic conditions and data volumes
+- Measure multiple performance metrics (time, memory, CPU)
+- Use consistent test environments and data
+- Test both normal and stress conditions
+- Document performance requirements and SLAs
+""" 

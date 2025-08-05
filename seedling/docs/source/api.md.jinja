@@ -1,6 +1,19 @@
 # API Reference
 
-This section provides comprehensive API documentation for {{ project_name }}.
+This section provides comprehensive API documentation for {{ project_name }}. All API documentation is automatically generated from docstrings in your source code.
+
+## Overview
+
+This reference documents all public APIs, classes, functions, and modules in {{ project_name }}. The documentation is automatically generated from docstrings in the source code.
+
+## Quick Navigation
+
+- [Core Package](#core-package)
+- [Module Documentation](#module-documentation)
+- [Class Documentation](#class-documentation)
+- [Function Documentation](#function-documentation)
+- [Configuration](#configuration)
+- [Troubleshooting](#troubleshooting)
 
 ## Core Package
 
@@ -10,56 +23,365 @@ This section provides comprehensive API documentation for {{ project_name }}.
 :members:
 :undoc-members:
 :show-inheritance:
+:special-members: __init__
 ```
 
-## Adding New Modules
+## Module Documentation
 
-To add documentation for new modules, follow these steps:
+### Core Modules
 
-1. **Create your module** in `src/{{ project_slug }}/`
-2. **Add docstrings** with Google or NumPy style
-3. **Include type hints** for all functions and methods
-4. **Update this file** to include your new module
-
-### Example: Adding a Core Module
-
-If you create `src/{{ project_slug }}/core.py`, add this section:
-
-```markdown
-### {{ project_slug }}.core
+#### {{ project_slug }}.core
 
 ```{automodule} {{ project_slug }}.core
 :members:
 :undoc-members:
 :show-inheritance:
+:special-members: __init__
 ```
+
+#### {{ project_slug }}.models
+
+```{automodule} {{ project_slug }}.models
+:members:
+:undoc-members:
+:show-inheritance:
+:special-members: __init__
 ```
 
-### Example: Adding a Utils Module
+### Utility Modules
 
-If you create `src/{{ project_slug }}/utils.py`, add this section:
-
-```markdown
-### {{ project_slug }}.utils
+#### {{ project_slug }}.utils
 
 ```{automodule} {{ project_slug }}.utils
 :members:
 :undoc-members:
 :show-inheritance:
 ```
+
+#### {{ project_slug }}.exceptions
+
+```{automodule} {{ project_slug }}.exceptions
+:members:
+:undoc-members:
+:show-inheritance:
 ```
 
-## Examples
+## Class Documentation
 
-For usage examples, see the project repository and test files.
+### Data Models
+
+```{automodule} {{ project_slug }}.models
+:members:
+:undoc-members:
+:show-inheritance:
+:special-members: __init__
+```
+
+### Core Classes
+
+```{automodule} {{ project_slug }}.core
+:members:
+:undoc-members:
+:show-inheritance:
+:special-members: __init__
+```
+
+## Function Documentation
+
+### Public API Functions
+
+```{automodule} {{ project_slug }}
+:members:
+:undoc-members:
+:show-inheritance:
+```
+
+### Utility Functions
+
+```{automodule} {{ project_slug }}.utils
+:members:
+:undoc-members:
+:show-inheritance:
+```
+
+## Configuration
+
+### Settings and Configuration
+
+```{automodule} {{ project_slug }}.config
+:members:
+:undoc-members:
+:show-inheritance:
+:special-members: __init__
+```
+
+## Adding New API Documentation
+
+### Step 1: Write Good Docstrings
+
+Use Google-style docstrings for all public APIs:
+
+```python
+def process_data(data: List[Dict[str, Any]], 
+                processor: Optional[DataProcessor] = None,
+                batch_size: Optional[int] = None) -> ProcessedData:
+    """Process a batch of data records.
+
+    Args:
+        data: List of data records to process. Each record should be a dictionary
+            containing the required fields.
+        processor: Optional custom processor. If None, uses the default processor.
+        batch_size: Optional batch size for processing. If None, auto-calculates
+            optimal batch size.
+
+    Returns:
+        A ProcessedData object containing the processed results and metadata.
+
+    Raises:
+        ValueError: If data list is empty or contains invalid records.
+        TypeError: If data contains non-dictionary items.
+
+    Example:
+        >>> data = [{"id": 1, "value": "test"}, {"id": 2, "value": "example"}]
+        >>> result = process_data(data)
+        >>> result.save("output.json")
+    """
+    pass
+```
+
+### Step 2: Add Type Hints
+
+Include comprehensive type hints for all functions and methods:
+
+```python
+from typing import List, Dict, Any, Optional, Union
+from pathlib import Path
+
+def load_config(config_path: Union[str, Path]) -> Dict[str, Any]:
+    """Load configuration from file."""
+    pass
+
+class DataProcessor:
+    def __init__(self, settings: Optional[Dict[str, Any]] = None) -> None:
+        """Initialize the data processor."""
+        pass
+    
+    def process(self, data: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
+        """Process the input data."""
+        pass
+```
+
+### Step 3: Update This File
+
+Add your new module to the appropriate section:
+
+```markdown
+#### {{ project_slug }}.your_module
+
+```{automodule} {{ project_slug }}.your_module
+:members:
+:undoc-members:
+:show-inheritance:
+:special-members: __init__
+```
+```
+
+## Auto-Documentation Setup
+
+### Sphinx Configuration
+
+The following Sphinx extensions are configured for auto-documentation:
+
+- **`sphinx.ext.autodoc`**: Automatically generate documentation from docstrings
+- **`sphinx.ext.napoleon`**: Support for Google and NumPy docstring formats
+- **`sphinx.ext.viewcode`**: Link to source code
+- **`sphinx_autodoc_typehints`**: Include type hints in documentation
+
+### Configuration Options
+
+```python
+# In conf.py
+autodoc_default_options = {
+    "members": True,
+    "member-order": "bysource",
+    "special-members": "__init__",
+    "undoc-members": True,
+    "exclude-members": "__weakref__",
+}
+
+autodoc_typehints = "description"
+autodoc_typehints_format = "short"
+autodoc_typehints_description_target = "documented"
+```
+
+### Building Documentation
+
+```bash
+# Build API documentation
+uv run dev docs
+
+# Or build manually
+cd docs
+make html
+```
+
+## Documentation Standards
+
+### Required for All Public APIs
+
+1. **Docstrings**: Google-style docstrings for all public functions, classes, and modules
+2. **Type Hints**: Complete type annotations for all parameters and return values
+3. **Examples**: Usage examples in docstrings for complex functions
+4. **Error Handling**: Document all exceptions that can be raised
+
+### Optional Enhancements
+
+1. **Cross-references**: Use `:func:`, `:class:`, `:mod:` for internal links
+2. **External links**: Use `:external:` for links to external documentation
+3. **Deprecation warnings**: Use `.. deprecated::` for deprecated APIs
+4. **Version information**: Use `.. versionadded::` and `.. versionchanged::`
+
+### Example: Complete API Documentation
+
+```python
+"""Data processing utilities for {{ project_name }}.
+
+This module provides utilities for processing and transforming data
+in various formats. It includes functions for data validation,
+transformation, and export.
+
+Example:
+    >>> from {{ project_slug }}.utils import process_data
+    >>> data = [{"id": 1, "name": "Alice"}, {"id": 2, "name": "Bob"}]
+    >>> result = process_data(data)
+    >>> print(result)
+"""
+
+from typing import List, Dict, Any, Optional
+import json
+from pathlib import Path
+
+
+def process_data(data: List[Dict[str, Any]], 
+                output_format: str = "json",
+                output_path: Optional[Path] = None) -> Dict[str, Any]:
+    """Process a list of data records and optionally save to file.
+    
+    This function takes a list of dictionaries and processes them according
+    to the specified output format. It validates the input data and provides
+    detailed error messages for invalid records.
+    
+    Args:
+        data: List of data records to process. Each record must be a dictionary.
+        output_format: Output format for the processed data. Supported formats:
+            "json", "csv", "xml". Defaults to "json".
+        output_path: Optional path to save the processed data. If None, data
+            is returned but not saved to file.
+    
+    Returns:
+        Dictionary containing the processed data and metadata including:
+        - processed_records: List of processed records
+        - total_count: Total number of records processed
+        - error_count: Number of records with errors
+        - errors: List of error messages for failed records
+    
+    Raises:
+        ValueError: If data is empty or output_format is not supported.
+        TypeError: If data contains non-dictionary items.
+        FileNotFoundError: If output_path parent directory doesn't exist.
+    
+    Example:
+        Basic usage:
+        >>> data = [{"id": 1, "name": "Alice"}, {"id": 2, "name": "Bob"}]
+        >>> result = process_data(data)
+        >>> print(result["total_count"])
+        2
+        
+        Save to file:
+        >>> result = process_data(data, output_path="output.json")
+        >>> # Data is saved to output.json
+    """
+    pass
+```
+
+## Troubleshooting
+
+### Common Issues and Solutions
+
+#### Issue: Module Not Found
+**Problem**: Sphinx can't find your module during documentation build.
+
+**Solution**:
+```bash
+# Ensure your package is installed in development mode
+uv pip install -e ".[dev,docs]"
+
+# Check PYTHONPATH includes your source directory
+export PYTHONPATH="${PYTHONPATH}:$(pwd)/src"
+```
+
+#### Issue: Missing Type Hints
+**Problem**: Type hints not appearing in documentation.
+
+**Solution**:
+```python
+# In conf.py, ensure these settings:
+autodoc_typehints = "description"
+autodoc_typehints_format = "short"
+autodoc_typehints_description_target = "documented"
+```
+
+#### Issue: Docstrings Not Rendering
+**Problem**: Docstrings appear as plain text instead of formatted.
+
+**Solution**:
+```python
+# In conf.py, ensure napoleon extension is enabled:
+extensions = [
+    "sphinx.ext.napoleon",
+    # ... other extensions
+]
+```
+
+#### Issue: Import Errors
+**Problem**: Import errors during documentation build.
+
+**Solution**:
+```python
+# In conf.py, add your source directory to sys.path:
+import sys
+import os
+sys.path.insert(0, os.path.abspath("../.."))
+```
+
+### Debugging Documentation Build
+
+```bash
+# Build with verbose output
+sphinx-build -v -b html source build/html
+
+# Check for specific warnings
+sphinx-build -W -b html source build/html
+
+# Build only specific modules
+sphinx-build -D autodoc_default_options.members= -b html source build/html
+```
+
+## Resources
+
+- [Sphinx Autodoc Documentation](https://www.sphinx-doc.org/en/master/usage/extensions/autodoc.html)
+- [Google Python Style Guide](https://google.github.io/styleguide/pyguide.html#38-comments-and-docstrings)
+- [NumPy Docstring Guide](https://numpydoc.readthedocs.io/en/latest/format.html)
+- [Type Hints Documentation](https://docs.python.org/3/library/typing.html)
 
 ## Contributing
 
 To add new API documentation, follow these guidelines:
 
-1. Use docstrings with Google or NumPy style
-2. Include type hints for all functions and methods
-3. Add examples in docstrings where appropriate
-4. Update this file to include new modules
+1. Use Google-style docstrings for all public APIs
+2. Include comprehensive type hints
+3. Add usage examples for complex functions
+4. Document all exceptions and edge cases
+5. Update this file to include new modules
 
-For more information, see the [Contributing Guide](contributing.md).
+For more information, see the [Contributing Guide](contributing).

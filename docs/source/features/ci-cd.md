@@ -14,73 +14,23 @@ The template provides:
 
 ### CI Workflow
 
-The main CI workflow runs on every push and pull request:
+The main CI workflow runs on every push and pull request and includes:
 
-```yaml
-# .github/workflows/ci.yml
-name: CI
-
-on: [push, pull_request]
-
-jobs:
-  test:
-    runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        python-version: ["3.11", "3.12"]
-    
-    steps:
-    - uses: actions/checkout@v4
-    - uses: actions/setup-python@v4
-      with:
-        python-version: ${{ matrix.python-version }}
-    
-    - name: Install uv
-      uses: astral-sh/setup-uv@v1
-    
-    - name: Install dependencies
-      run: uv sync
-    
-    - name: Run tests
-      run: uv run dev test --cov
-    
-    - name: Run quality checks
-      run: uv run dev checkit
-```
+- **Multi-Python Testing**: Tests against Python 3.11 and 3.12
+- **Dependency Installation**: Uses `uv sync` for fast dependency management
+- **Test Execution**: Runs the full test suite with coverage reporting
+- **Quality Checks**: Runs linting, type checking, and documentation validation
+- **Automatic Triggers**: Runs on every push and pull request
 
 ### Release Workflow
 
-Automated releases to PyPI:
+Automated releases to PyPI that trigger on version tags:
 
-```yaml
-# .github/workflows/release.yml
-name: Release
-
-on:
-  push:
-    tags:
-      - 'v*'
-
-jobs:
-  release:
-    runs-on: ubuntu-latest
-    steps:
-    - uses: actions/checkout@v4
-    - uses: actions/setup-python@v4
-      with:
-        python-version: "3.11"
-    
-    - name: Install uv
-      uses: astral-sh/setup-uv@v1
-    
-    - name: Build and publish
-      run: |
-        uv run build
-        uv run twine upload dist/*
-      env:
-        TWINE_USERNAME: __token__
-        TWINE_PASSWORD: ${{ secrets.PYPI_API_TOKEN }}
-```
+- **Tag-Based Triggers**: Automatically runs when you push a version tag (e.g., `v1.0.0`)
+- **Package Building**: Builds the Python package using `uv run build`
+- **PyPI Publishing**: Automatically publishes to PyPI using `twine`
+- **Secure Credentials**: Uses GitHub secrets for PyPI authentication
+- **Quality Gates**: Only releases if all tests and quality checks pass
 
 ## Quality Gates
 
@@ -93,13 +43,14 @@ The CI pipeline enforces strict quality standards:
 
 ## Configuration
 
-### GitHub Actions
+### Automatic Configuration
 
-All workflows are automatically configured based on template variables:
+The workflows are automatically configured based on your template variables:
 
-- **Python versions**: Uses `python_versions` from copier.yml
-- **Package name**: Uses `project_slug` from copier.yml
-- **Repository**: Uses `github_username` from copier.yml
+- **Python versions**: Uses the `python_versions` you specified
+- **Package name**: Uses your `project_slug`
+- **Repository**: Uses your `github_username`
+- **Dependencies**: Automatically includes all your project dependencies
 
 ### Secrets Required
 

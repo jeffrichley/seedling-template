@@ -1,0 +1,167 @@
+# Quick Start Guide
+
+Get up and running with {{ project_name }} in minutes.
+
+## Overview
+
+This guide will help you install {{ project_name }} and run your first example in under 5 minutes.
+
+## Prerequisites
+
+- Python 3.11 or higher
+- Git
+
+## Step-by-Step Getting Started
+
+### Quick Installation
+
+```bash
+# Clone the repository
+git clone https://github.com/{{ github_username }}/{{ project_slug }}.git
+cd {{ project_slug }}
+
+# Install with uv (recommended)
+uv sync
+
+# Install in development mode
+uv pip install -e ".[dev,docs]"
+```
+
+📖 **For detailed installation instructions** including platform-specific setup, see the [Installation Guide](installation).
+
+### Verify Installation
+
+```bash
+# Run tests to verify everything is working
+uv run dev test
+
+# Check code quality
+uv run dev lint
+
+# Build documentation
+uv run dev docs
+```
+
+### Your First "Hello World"
+
+Create a simple script to test your installation:
+
+```python
+# hello_world.py
+from {{ project_slug }} import main_function
+
+def main():
+    """Simple example to verify {{ project_name }} is working."""
+    
+    # Test basic functionality
+    result = main_function("Hello, {{ project_name }}!")
+    print(f"✅ {result}")
+    
+    # Test with different input
+    test_data = ["Alice", "Bob", "Charlie"]
+    for name in test_data:
+        result = main_function(f"Hello, {name}!")
+        print(f"👋 {result}")
+
+if __name__ == "__main__":
+    main()
+```
+
+Run your first example:
+```bash
+python hello_world.py
+```
+
+Expected output:
+```
+✅ Processed: Hello, {{ project_name }}!
+👋 Processed: Hello, Alice!
+👋 Processed: Hello, Bob!
+👋 Processed: Hello, Charlie!
+```
+
+## Common First Tasks
+
+### Explore the Project Structure
+
+```bash
+# View the project structure
+tree src/{{ project_slug }}/
+
+# Or on Windows
+dir src\{{ project_slug }}\
+```
+
+### Run Your First Test
+
+```bash
+# Run all tests
+uv run dev test
+
+# Run a specific test file
+uv run pytest tests/unit/test_example.py
+
+# Run tests with coverage
+uv run dev test:coverage
+```
+
+### Check Code Quality
+
+```bash
+# Run all quality checks
+uv run dev quality
+
+# Individual checks
+uv run dev lint      # Code formatting and linting
+uv run dev typecheck # Type checking
+uv run dev security  # Security audit
+```
+
+## Next Steps
+
+### For Users
+- [Installation Guide](installation) - Complete setup instructions
+- [API Reference](api) - Understand available functions
+- [Testing Guide](testing-guide) - Learn how to write tests
+
+### For Developers
+- [Contributing Guide](contributing) - Learn the contribution process
+- [Architecture Decisions](adr/index) - Understand design choices
+- [Configuration Guide](configuration) - Learn configuration options
+- [Examples](examples) - Study advanced usage patterns
+
+## Troubleshooting
+
+### Common Issues
+
+**Import Error**: If you get import errors, make sure you've installed the package:
+```bash
+uv pip install -e ".[dev,docs]"
+```
+
+**Test Failures**: If tests fail, check your Python version:
+```bash
+python --version  # Should be 3.11+
+```
+
+**Documentation Build Errors**: Ensure all dependencies are installed:
+```bash
+uv sync
+```
+
+### Getting Help
+
+If you encounter issues not covered here:
+- Review the [Installation Guide](installation) for setup issues
+- Consult the [API Reference](api) for usage questions
+- Check the [Troubleshooting Guide](troubleshooting) for common problems
+- Create an issue in the project repository
+
+## Related Topics
+
+- [Contributing Guide](contributing) - Development guidelines
+- [Architecture Decisions](adr/index) - Design rationale
+- [Configuration Guide](configuration) - Configuration options
+- [Examples](examples) - Advanced usage patterns
+
+**Ready for more?** Check out the [Installation Guide](installation) for detailed setup instructions or the [Contributing Guide](contributing) to start contributing to the project. 

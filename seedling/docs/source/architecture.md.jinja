@@ -1,0 +1,70 @@
+# Architecture Guide
+
+This document provides an overview of {{ project_name }}'s architecture and design patterns.
+
+## Overview
+
+{{ project_name }} follows a modular, extensible architecture designed for maintainability, testability, and scalability.
+
+## System Architecture
+
+### High-Level Architecture
+
+```
+┌─────────────────┐    ┌─────────────────┐    ┌─────────────────┐
+│   User Input    │───▶│  Core Engine    │───▶│   Output Data   │
+└─────────────────┘    └─────────────────┘    └─────────────────┘
+                              │
+                              ▼
+                       ┌─────────────────┐
+                       │   Validation    │
+                       │   & Processing  │
+                       └─────────────────┘
+```
+
+### Core Components
+
+- **Core Engine**: Main processing logic and orchestration
+- **Data Models**: Data structures and validation (using Pydantic)
+- **Utilities**: Common helper functions and utilities
+- **Exceptions**: Custom exception classes
+
+## Module Structure
+
+```
+src/{{ project_slug }}/
+├── __init__.py
+├── core/              # Main processing engine
+├── models/            # Data structures and validation
+├── utils/             # Common utilities
+├── exceptions.py      # Custom exceptions
+└── main.py           # Entry point
+```
+
+## Design Patterns
+
+Consider implementing these patterns based on your project's needs:
+
+- **Factory Pattern**: For creating different types of processors
+- **Strategy Pattern**: For different processing algorithms
+- **Observer Pattern**: For event handling and notifications
+- **Builder Pattern**: For complex object construction
+
+## TODO: Customize for Your Project
+
+1. **Update System Architecture**: Modify the diagram to match your components
+2. **Define Core Components**: Specify actual components and responsibilities
+3. **Choose Design Patterns**: Select appropriate patterns for your use case
+4. **Plan Data Flow**: Define how data moves through your system
+5. **Structure Modules**: Organize your code according to the module structure
+6. **Add Security**: Implement appropriate security measures
+7. **Optimize Performance**: Add performance considerations
+8. **Plan Deployment**: Define your deployment strategy
+9. **Add Monitoring**: Implement monitoring and observability
+10. **Consider Future**: Plan for extensibility and migrations
+
+## Related Documentation
+
+- [ADR Index](adr/index) - Architecture Decision Records
+- [Configuration Guide](configuration) - Configuration management
+- [API Reference](api) - API documentation 

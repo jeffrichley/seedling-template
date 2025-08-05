@@ -1,0 +1,360 @@
+# Installation Guide
+
+Detailed instructions for installing and setting up {{ project_name }} on different platforms and environments.
+
+## Overview
+
+This guide provides comprehensive installation instructions for {{ project_name }} across different platforms, environments, and use cases.
+
+## System Requirements
+
+### Minimum Requirements
+
+- **Python**: 3.11.0 or higher
+- **Operating System**: Windows 10+, macOS 10.15+, or Linux (Ubuntu 20.04+, CentOS 8+, etc.)
+- **Memory**: 4GB RAM minimum, 8GB recommended
+- **Disk Space**: 2GB free space minimum, 5GB recommended
+- **Network**: Internet connection for package downloads
+
+### Recommended Requirements
+
+- **Python**: 3.12.x (latest stable)
+- **Memory**: 8GB RAM or more
+- **Disk Space**: 10GB free space
+- **CPU**: Multi-core processor (2+ cores)
+- **Network**: Stable broadband connection
+
+### Python Version Compatibility
+
+| Python Version | Status | Notes |
+|----------------|--------|-------|
+| 3.11.x | ✅ Supported | Minimum required version |
+| 3.12.x | ✅ Supported | Recommended version |
+| 3.13.x | ✅ Supported | Latest features |
+| 3.10.x | ❌ Not Supported | Too old |
+| 3.9.x | ❌ Not Supported | Too old |
+
+## Platform-Specific Installation
+
+### Windows
+
+#### Prerequisites
+- Windows 10 or later
+- PowerShell 5.1+ or Windows Terminal
+- Git for Windows (optional but recommended)
+
+#### Installation Steps
+
+**Option 1: Using uv (Recommended)**
+```powershell
+# Install uv
+powershell -c "irm https://astral.sh/uv/install.ps1 | iex"
+
+# Install {{ project_slug }}
+uv pip install {{ project_slug }}
+
+# For development
+uv pip install -e ".[dev,docs]"
+```
+
+**Option 2: Using pip**
+```powershell
+# Create virtual environment
+python -m venv .venv
+.venv\Scripts\Activate.ps1
+
+# Install package
+pip install {{ project_slug }}
+```
+
+**Option 3: Using Chocolatey**
+```powershell
+# Install Python (if not already installed)
+choco install python
+
+# Install {{ project_slug }}
+pip install {{ project_slug }}
+```
+
+#### Windows-Specific Notes
+- Use PowerShell instead of Command Prompt for better experience
+- Ensure Python is added to PATH during installation
+- Use Windows Terminal for better Unicode support
+- Consider using WSL2 for development if you prefer Linux tools
+
+### macOS
+
+#### Prerequisites
+- macOS 10.15 (Catalina) or later
+- Xcode Command Line Tools
+- Homebrew (recommended)
+
+#### Installation Steps
+
+**Option 1: Using uv (Recommended)**
+```bash
+# Install uv
+curl -LsSf https://astral.sh/uv/install.sh | sh
+
+# Restart terminal or reload shell
+source ~/.zshrc  # or source ~/.bash_profile
+
+# Install {{ project_slug }}
+uv pip install {{ project_slug }}
+```
+
+**Option 2: Using Homebrew**
+```bash
+# Install Python (if not already installed)
+brew install python
+
+# Install {{ project_slug }}
+pip install {{ project_slug }}
+```
+
+**Option 3: Using pip**
+```bash
+# Create virtual environment
+python3 -m venv .venv
+source .venv/bin/activate
+
+# Install package
+pip install {{ project_slug }}
+```
+
+#### macOS-Specific Notes
+- Use Homebrew for easier Python management
+- Consider using pyenv for multiple Python versions
+- Use Terminal.app or iTerm2 for better experience
+- Ensure Xcode Command Line Tools are installed
+
+### Linux
+
+#### Prerequisites
+- Ubuntu 20.04+, CentOS 8+, or equivalent
+- Python 3.11+ installed
+- Git (optional but recommended)
+
+#### Installation Steps
+
+**Option 1: Using uv (Recommended)**
+```bash
+# Install uv
+curl -LsSf https://astral.sh/uv/install.sh | sh
+
+# Reload shell
+source ~/.bashrc  # or source ~/.zshrc
+
+# Install {{ project_slug }}
+uv pip install {{ project_slug }}
+```
+
+**Option 2: Using pip**
+```bash
+# Create virtual environment
+python3 -m venv .venv
+source .venv/bin/activate
+
+# Install package
+pip install {{ project_slug }}
+```
+
+**Option 3: Using system package manager**
+```bash
+# Ubuntu/Debian
+sudo apt update
+sudo apt install python3-pip
+pip3 install {{ project_slug }}
+
+# CentOS/RHEL/Fedora
+sudo dnf install python3-pip  # or sudo yum install python3-pip
+pip3 install {{ project_slug }}
+```
+
+#### Linux-Specific Notes
+- Use virtual environments to avoid conflicts
+- Consider using pyenv for Python version management
+- Use your distribution's package manager for system dependencies
+- Ensure proper permissions for installation directories
+
+## Development Installation
+
+### From Source
+
+```bash
+# Clone the repository
+git clone https://github.com/{{ github_username }}/{{ project_slug }}.git
+cd {{ project_slug }}
+
+# Install with uv (recommended)
+uv sync
+
+# Install in development mode
+uv pip install -e ".[dev,docs]"
+```
+
+### Verify Development Installation
+
+```bash
+# Run tests
+uv run dev test
+
+# Check code quality
+uv run dev lint
+
+# Build documentation
+uv run dev docs
+
+# Type checking
+uv run dev typecheck
+```
+
+## Environment-Specific Installation
+
+### Virtual Environments
+
+**Using venv (built-in)**
+```bash
+# Create virtual environment
+python -m venv .venv
+
+# Activate (Windows)
+.venv\Scripts\activate
+
+# Activate (macOS/Linux)
+source .venv/bin/activate
+
+# Install package
+pip install {{ project_slug }}
+```
+
+**Using conda**
+```bash
+# Create conda environment
+conda create -n {{ project_slug }} python=3.11
+
+# Activate environment
+conda activate {{ project_slug }}
+
+# Install package
+pip install {{ project_slug }}
+```
+
+### Docker
+
+**Dockerfile Example**
+```dockerfile
+FROM python:3.11-slim
+
+WORKDIR /app
+
+# Install system dependencies
+RUN apt-get update && apt-get install -y \
+    git \
+    && rm -rf /var/lib/apt/lists/*
+
+# Install uv
+RUN pip install uv
+
+# Copy project files
+COPY . .
+
+# Install dependencies
+RUN uv sync
+
+# Install package
+RUN uv pip install -e ".[dev]"
+
+# Run tests
+RUN uv run dev test
+```
+
+**Docker Compose Example**
+```yaml
+version: '3.8'
+services:
+  {{ project_slug }}:
+    build: .
+    volumes:
+      - .:/app
+    working_dir: /app
+    command: uv run dev test
+```
+
+## Configuration
+
+### Environment Variables
+
+Set these environment variables for custom configuration:
+
+```bash
+# Development mode
+export {{ project_slug.upper() }}_ENV=development
+
+# Debug mode
+export {{ project_slug.upper() }}_DEBUG=true
+
+# Custom configuration file
+export {{ project_slug.upper() }}_CONFIG=/path/to/config.yaml
+```
+
+### Configuration Files
+
+Create a configuration file for persistent settings:
+
+```yaml
+# config.yaml
+environment: development
+debug: true
+log_level: INFO
+```
+
+## Troubleshooting
+
+### Common Issues
+
+**Python Version Issues**
+```bash
+# Check Python version
+python --version
+
+# Should be 3.11 or higher
+```
+
+**Permission Issues**
+```bash
+# Use --user flag for user installation
+pip install --user {{ project_slug }}
+
+# Or use virtual environment
+python -m venv .venv
+source .venv/bin/activate
+pip install {{ project_slug }}
+```
+
+**Network Issues**
+```bash
+# Use alternative package index
+pip install -i https://pypi.org/simple/ {{ project_slug }}
+
+# Or use mirror
+pip install -i https://pypi.tuna.tsinghua.edu.cn/simple/ {{ project_slug }}
+```
+
+### Getting Help
+
+If you encounter installation issues:
+
+1. **Check System Requirements**: Ensure your system meets minimum requirements
+2. **Review Platform-Specific Notes**: Check notes for your operating system
+3. **Use Virtual Environment**: Isolate installation in virtual environment
+4. **Check Network**: Ensure stable internet connection
+5. **Review Logs**: Check installation logs for specific errors
+
+## Related Topics
+
+- [Quick Start Guide](quickstart) - Get up and running quickly
+- [Architecture Guide](architecture) - System architecture overview
+- [API Reference](api) - API documentation
+- [Configuration Guide](configuration) - Configuration management
+- [Troubleshooting Guide](troubleshooting) - Common issues and solutions 
