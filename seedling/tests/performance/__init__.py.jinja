@@ -13,16 +13,16 @@ Example:
     @pytest.mark.performance
     def test_data_processing_throughput():
         '''Processes data within acceptable throughput limits.'''
-        
+
         # Arrange
         test_data = generate_large_dataset(10000)
         max_processing_time = 5.0  # seconds
-        
+
         # Act
         start_time = time.time()
         result = process_dataset(test_data)
         processing_time = time.time() - start_time
-        
+
         # Assert
         assert result.is_success
         assert processing_time < max_processing_time
@@ -35,4 +35,4 @@ Best Practices:
 - Use consistent test environments and data
 - Test both normal and stress conditions
 - Document performance requirements and SLAs
-""" 
+"""

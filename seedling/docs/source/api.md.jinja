@@ -6,80 +6,13 @@ This section provides comprehensive API documentation for {{ project_name }}. Al
 
 This reference documents all public APIs, classes, functions, and modules in {{ project_name }}. The documentation is automatically generated from docstrings in the source code.
 
-## Quick Navigation
 
-- [Core Package](#core-package)
-- [Module Documentation](#module-documentation)
-- [Class Documentation](#class-documentation)
-- [Function Documentation](#function-documentation)
-- [Configuration](#configuration)
-- [Troubleshooting](#troubleshooting)
 
 ## Core Package
 
 ### {{ project_slug }}
 
 ```{automodule} {{ project_slug }}
-:members:
-:undoc-members:
-:show-inheritance:
-:special-members: __init__
-```
-
-## Module Documentation
-
-### Core Modules
-
-#### {{ project_slug }}.core
-
-```{automodule} {{ project_slug }}.core
-:members:
-:undoc-members:
-:show-inheritance:
-:special-members: __init__
-```
-
-#### {{ project_slug }}.models
-
-```{automodule} {{ project_slug }}.models
-:members:
-:undoc-members:
-:show-inheritance:
-:special-members: __init__
-```
-
-### Utility Modules
-
-#### {{ project_slug }}.utils
-
-```{automodule} {{ project_slug }}.utils
-:members:
-:undoc-members:
-:show-inheritance:
-```
-
-#### {{ project_slug }}.exceptions
-
-```{automodule} {{ project_slug }}.exceptions
-:members:
-:undoc-members:
-:show-inheritance:
-```
-
-## Class Documentation
-
-### Data Models
-
-```{automodule} {{ project_slug }}.models
-:members:
-:undoc-members:
-:show-inheritance:
-:special-members: __init__
-```
-
-### Core Classes
-
-```{automodule} {{ project_slug }}.core
 :members:
 :undoc-members:
 :show-inheritance:
@@ -94,25 +27,6 @@ This reference documents all public APIs, classes, functions, and modules in {{ 
 :members:
 :undoc-members:
 :show-inheritance:
-```
-
-### Utility Functions
-
-```{automodule} {{ project_slug }}.utils
-:members:
-:undoc-members:
-:show-inheritance:
-```
-
-## Configuration
-
-### Settings and Configuration
-
-```{automodule} {{ project_slug }}.config
-:members:
-:undoc-members:
-:show-inheritance:
-:special-members: __init__
 ```
 
 ## Adding New API Documentation
@@ -260,7 +174,6 @@ Example:
 from typing import List, Dict, Any, Optional
 import json
 from pathlib import Path
-
 
 def process_data(data: List[Dict[str, Any]], 
                 output_format: str = "json",

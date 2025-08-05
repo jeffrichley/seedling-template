@@ -13,15 +13,15 @@ Example:
     @pytest.mark.integration
     def test_database_save_and_retrieve():
         '''Saves data to database and retrieves it successfully.'''
-        
+
         # Arrange
         db = get_test_database()
         data = {"key": "value"}
-        
+
         # Act
         db.save(data)
         retrieved = db.get("key")
-        
+
         # Assert
         assert retrieved == data
 

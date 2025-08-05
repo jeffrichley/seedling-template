@@ -13,15 +13,15 @@ Example:
     @pytest.mark.e2e
     def test_complete_user_onboarding():
         '''Complete user onboarding workflow from signup to first use.'''
-        
+
         # Arrange
         user_credentials = {"email": "newuser@example.com", "password": "secure123"}
-        
+
         # Act - Complete user journey
         signup_result = signup_user(user_credentials)
         login_result = login_user(user_credentials)
         profile_result = create_user_profile(login_result.user_id)
-        
+
         # Assert
         assert signup_result.is_success
         assert login_result.is_success

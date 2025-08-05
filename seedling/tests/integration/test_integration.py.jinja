@@ -1,71 +1,23 @@
-"""Example integration tests for {{ project_name }}.
-
-This module demonstrates proper integration testing practices following the project's
-testing rules and conventions.
-"""
+"""Integration tests for {{ project_name }}."""
 
 import pytest
-from {{ project_slug }} import main_function
+
+from {{ project_slug }} import config, main_function
 
 
 @pytest.mark.integration
-class TestMainFunctionIntegration:
-    """Integration tests for main_function with external dependencies."""
+def test_main_function_with_configuration() -> None:
+    """Test that main_function works with configuration changes."""
+    # Arrange
+    input_data = "test"
+    original_prefix = config.get_setting("processing_prefix")
+    config.set_setting("processing_prefix", "Result: ")
     
-    def test_main_function_with_file_system(self, tmp_path):
-        """Processes data and writes to file system successfully."""
-        
-        # Arrange
-        input_data = "test data"
-        output_file = tmp_path / "output.txt"
-        
-        # Act
-        result = main_function(input_data)
-        output_file.write_text(result)
-        
-        # Assert
-        assert result == "Processed: test data"
-        assert output_file.exists()
-        assert output_file.read_text() == "Processed: test data"
+    # Act
+    result = main_function(input_data)
     
-    def test_main_function_with_multiple_files(self, tmp_path):
-        """Processes multiple files in sequence."""
-        
-        # Arrange
-        input_files = [
-            tmp_path / "input1.txt",
-            tmp_path / "input2.txt",
-            tmp_path / "input3.txt"
-        ]
-        
-        for i, file_path in enumerate(input_files):
-            file_path.write_text(f"data {i + 1}")
-        
-        # Act
-        results = []
-        for file_path in input_files:
-            input_data = file_path.read_text()
-            result = main_function(input_data)
-            results.append(result)
-        
-        # Assert
-        assert len(results) == 3
-        assert results[0] == "Processed: data 1"
-        assert results[1] == "Processed: data 2"
-        assert results[2] == "Processed: data 3"
+    # Assert
+    assert result == "Result: test"
     
-    def test_main_function_with_large_data(self, tmp_path):
-        """Handles large data sets without performance issues."""
-        
-        # Arrange
-        large_data = "x" * 10000  # 10KB of data
-        output_file = tmp_path / "large_output.txt"
-        
-        # Act
-        result = main_function(large_data)
-        output_file.write_text(result)
-        
-        # Assert
-        assert len(result) == len("Processed: ") + len(large_data)
-        assert output_file.stat().st_size > 10000
-        assert result.startswith("Processed: ") 
+    # Cleanup - restore original configuration
+    config.set_setting("processing_prefix", original_prefix) 

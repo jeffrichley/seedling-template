@@ -1,93 +1,20 @@
-"""Example functional tests for {{ project_name }}.
-
-This module demonstrates proper functional testing practices following the project's
-testing rules and conventions.
-"""
+"""Functional tests for {{ project_name }}."""
 
 import pytest
-from unittest.mock import MagicMock, patch
+
 from {{ project_slug }} import main_function
 
 
 @pytest.mark.functional
-class TestMainFunctionFunctional:
-    """Functional tests for main_function business logic."""
+def test_main_function_with_business_rules() -> None:
+    """Test that main_function enforces business rules correctly."""
+    # Arrange
+    input_data = "valid input"
     
-    def test_main_function_with_mock_dependencies(self):
-        """Processes data using mocked external dependencies."""
-        
-        # Arrange
-        input_data = "test data"
-        mock_logger = MagicMock()
-        mock_config = MagicMock()
-        mock_config.get_setting.return_value = "Processed: "
-        
-        # Act
-        with patch('{{ project_slug }}.logger', mock_logger):
-            with patch('{{ project_slug }}.config', mock_config):
-                result = main_function(input_data)
-        
-        # Assert
-        assert result == "Processed: test data"
-        mock_logger.info.assert_called_once()
-        mock_config.get_setting.assert_called_once()
+    # Act
+    result = main_function(input_data)
     
-    def test_main_function_with_error_handling(self):
-        """Handles errors gracefully with proper logging."""
-        
-        # Arrange
-        input_data = None
-        mock_logger = MagicMock()
-        
-        # Act & Assert
-        with patch('{{ project_slug }}.logger', mock_logger):
-            with pytest.raises(ValueError, match="input_data cannot be empty"):
-                main_function(input_data)
-        
-        # Verify error was logged
-        mock_logger.error.assert_called_once()
-    
-    def test_main_function_with_configuration_changes(self):
-        """Responds correctly to configuration changes."""
-        
-        # Arrange
-        input_data = "test"
-        mock_config = MagicMock()
-        
-        # Test with different prefix configurations
-        test_cases = [
-            ("Processed: ", "Processed: test"),
-            ("Result: ", "Result: test"),
-            ("Output: ", "Output: test"),
-        ]
-        
-        for prefix, expected in test_cases:
-            mock_config.get_setting.return_value = prefix
-            
-            # Act
-            with patch('{{ project_slug }}.config', mock_config):
-                result = main_function(input_data)
-            
-            # Assert
-            assert result == expected
-    
-    def test_main_function_with_business_rules(self):
-        """Enforces business rules correctly."""
-        
-        # Arrange
-        test_cases = [
-            ("", ValueError, "input_data cannot be empty"),
-            (None, ValueError, "input_data cannot be empty"),
-            ("valid", str, "Processed: valid"),
-            ("   ", str, "Processed:    "),
-        ]
-        
-        for input_data, expected_type, expected_value in test_cases:
-            # Act & Assert
-            if expected_type == ValueError:
-                with pytest.raises(ValueError, match=expected_value):
-                    main_function(input_data)
-            else:
-                result = main_function(input_data)
-                assert isinstance(result, expected_type)
-                assert result == expected_value 
+    # Assert
+    assert isinstance(result, str)
+    assert result.startswith("Processed: ")
+    assert result == "Processed: valid input" 

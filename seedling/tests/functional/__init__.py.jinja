@@ -13,13 +13,13 @@ Example:
     @pytest.mark.functional
     def test_user_registration_workflow():
         '''Complete user registration workflow works end-to-end.'''
-        
+
         # Arrange
         user_data = {"email": "test@example.com", "password": "secure123"}
-        
+
         # Act
         result = register_user(user_data)
-        
+
         # Assert
         assert result.is_success
         assert result.user.email == user_data["email"]
@@ -32,4 +32,4 @@ Best Practices:
 - Use mocks for external dependencies (APIs, databases)
 - Test both happy path and error scenarios
 - Verify business rules and constraints
-""" 
+"""
