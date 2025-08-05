@@ -1,5 +1,8 @@
 # ADR-0002: Technology Stack Rationale
 
+> "The best tool for the job is the one you know how to use."
+> — **Unknown**
+
 ## Status
 Accepted
 

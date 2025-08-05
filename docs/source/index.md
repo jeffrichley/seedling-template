@@ -65,7 +65,6 @@ features/ci-cd
 
 configuration
 examples
-adr/index
 ```
 
 ```{toctree}

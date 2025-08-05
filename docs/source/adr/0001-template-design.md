@@ -1,5 +1,8 @@
 # ADR-0001: Seedling Template Design Philosophy
 
+> "Design is not just what it looks like and feels like. Design is how it works."
+> — **Steve Jobs**
+
 ## Status
 Accepted
 

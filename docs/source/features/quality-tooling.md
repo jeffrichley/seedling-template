@@ -1,5 +1,8 @@
 # 🔍 Quality Tooling
 
+> "Quality is not an act, it is a habit."
+> — **Aristotle**
+
 Seedling includes comprehensive quality tooling to ensure your code meets the highest standards.
 
 ## Overview

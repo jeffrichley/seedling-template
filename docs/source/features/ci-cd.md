@@ -1,5 +1,8 @@
 # 🚀 CI/CD
 
+> "Automation is not about replacing humans, it's about amplifying human potential."
+> — **Unknown**
+
 Seedling includes comprehensive CI/CD configuration for automated testing and deployment.
 
 ## Overview

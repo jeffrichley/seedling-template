@@ -1,5 +1,8 @@
 # 📚 Documentation
 
+> "Good documentation is like a good joke: it needs no explanation."
+> — **Unknown**
+
 Seedling includes comprehensive documentation tooling with Sphinx and modern documentation practices.
 
 ## Overview

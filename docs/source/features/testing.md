@@ -1,5 +1,8 @@
 # 🧪 Testing
 
+> "Testing leads to failure, and failure leads to understanding."
+> — **Burt Rutan**
+
 Seedling includes a comprehensive testing framework with modern Python testing tools and **enforceable testing rules** to ensure consistent, maintainable, high-quality tests.
 
 ## Overview

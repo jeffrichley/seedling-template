@@ -1,5 +1,8 @@
 # ADR-0003: Architecture Decisions
 
+> "Architecture is the art of how to waste space."
+> — **Philip Johnson**
+
 ## Status
 Accepted
 

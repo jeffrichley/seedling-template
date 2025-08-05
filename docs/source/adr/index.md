@@ -1,5 +1,8 @@
 # 📋 Architecture Decision Records (ADRs)
 
+> "The best architecture is the one that allows for change."
+> — **Unknown**
+
 This section contains Architecture Decision Records (ADRs) that document the design decisions made during the development of the Seedling template.
 
 ## What are ADRs?
