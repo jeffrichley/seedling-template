@@ -3,6 +3,12 @@
 
 set -e
 
+# Ensure script runs from the docs directory
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+if [[ "$PWD" != "$SCRIPT_DIR" ]]; then
+    cd "$SCRIPT_DIR"
+fi
+
 echo "🌱 Building Seedling documentation..."
 
 # Check if uv is installed
@@ -27,4 +33,4 @@ echo ""
 echo "🌐 To serve locally, run:"
 echo "   cd docs && make serve"
 echo ""
-echo "📖 Or open build/html/index.html in your browser" 
+echo "📖 Or open build/html/index.html in your browser"
