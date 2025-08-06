@@ -1,33 +1,35 @@
-"""Unit tests for {{ project_name }}.
+"""Unit tests for Cursor Project.
 
-This package contains fast, isolated function and class tests that:
-- Test individual functions and methods in isolation
-- Mock external dependencies (databases, APIs, file systems)
-- Run quickly (< 200ms per test)
-- Focus on behavior, not implementation
-- Test one thing at a time
+This package contains fast, isolated tests that:
+- Test individual functions, methods, or classes in isolation
+- Mock all external dependencies (databases, APIs, file systems)
+- Focus on testing the logic and behavior of single units of code
+- Should be fast to run (milliseconds per test)
+- Verify input/output relationships and edge cases
 
 Use @pytest.mark.unit to mark your tests.
 
 Example:
     @pytest.mark.unit
-    def test_function_returns_expected_value():
-        '''Returns expected value when given valid input.'''
+    def test_calculate_total_with_discount():
+        '''Test discount calculation logic.'''
 
         # Arrange
-        input_data = "test"
+        price = 100
+        discount_rate = 0.1
 
         # Act
-        result = my_function(input_data)
+        result = calculate_total(price, discount_rate)
 
         # Assert
-        assert result == "expected output"
+        assert result == 90
 
 Best Practices:
-- Mock external dependencies (databases, APIs, file systems)
 - Test one behavior per test function
-- Use descriptive test names: test_<thing>_<expected_behavior>
-- Follow Arrange-Act-Assert pattern with blank lines
-- Keep tests independent and isolated
+- Mock external dependencies using unittest.mock
 - Test both happy path and error conditions
+- Keep tests fast and focused
+- Test edge cases and boundary conditions
+- Use descriptive test names that explain the scenario
+- Arrange-Act-Assert pattern for clear test structure
 """

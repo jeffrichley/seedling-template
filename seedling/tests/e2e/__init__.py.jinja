@@ -1,38 +1,39 @@
-"""End-to-end tests for {{ project_name }}.
+"""End-to-end tests for Cursor Project.
 
-This package contains complete user workflow tests that:
-- Test the entire system from user entry point to final output
-- Use real external dependencies (databases, APIs, file systems)
+This package contains tests that verify complete user journeys:
+- Test the entire system from start to finish
+- Use real implementations of all components
 - Simulate actual user interactions and workflows
-- Test complete user journeys and business processes
-- May take minutes to run and require full system setup
+- Focus on complete user scenarios, not individual features
+- May be the slowest tests but provide highest confidence
 
 Use @pytest.mark.e2e to mark your tests.
 
 Example:
     @pytest.mark.e2e
-    def test_complete_user_onboarding():
-        '''Complete user onboarding workflow from signup to first use.'''
+    def test_complete_shopping_cart_workflow():
+        '''Complete shopping cart workflow from browse to checkout.'''
 
         # Arrange
-        user_credentials = {"email": "newuser@example.com", "password": "secure123"}
+        user = create_test_user()
+        product = create_test_product()
 
-        # Act - Complete user journey
-        signup_result = signup_user(user_credentials)
-        login_result = login_user(user_credentials)
-        profile_result = create_user_profile(login_result.user_id)
+        # Act
+        cart = add_to_cart(user, product)
+        checkout = process_checkout(cart)
+        order = confirm_order(checkout)
 
         # Assert
-        assert signup_result.is_success
-        assert login_result.is_success
-        assert profile_result.is_success
-        assert profile_result.profile.is_complete
+        assert order.status == "confirmed"
+        assert order.items[0].product_id == product.id
+        assert order.user_id == user.id
 
 Best Practices:
-- Test complete user workflows and journeys
-- Use real external dependencies and services
-- Test from user perspective (CLI, API, UI)
-- Set up realistic test environments
-- Test both success and failure scenarios
-- Focus on user experience and business value
+- Test complete user journeys and workflows
+- Use real implementations of all system components
+- Focus on user scenarios, not technical implementation
+- Test critical business processes end-to-end
+- Verify system behavior under realistic conditions
+- May require test data setup and cleanup
+- Consider using test environments that mirror production
 """

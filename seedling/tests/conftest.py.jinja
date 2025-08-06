@@ -1,4 +1,4 @@
-"""Shared test fixtures for {{ project_name }}.
+"""Shared test fixtures for Cursor Project.
 
 This module provides common fixtures used across all test types following the project's
 testing rules and conventions.
@@ -14,10 +14,21 @@ import shutil
 import tempfile
 from collections.abc import Generator
 from pathlib import Path
-from typing import TypedDict
+from typing import Any, TypedDict
 from unittest.mock import MagicMock
 
 import pytest
+
+
+class MockLogger(MagicMock):
+    """A properly typed mock logger for testing."""
+
+    def __init__(self, *args: Any, **kwargs: Any) -> None:
+        super().__init__(*args, **kwargs)  # type: ignore[misc]
+        self.info = MagicMock()
+        self.error = MagicMock()
+        self.warning = MagicMock()
+        self.debug = MagicMock()
 
 
 class UserData(TypedDict):
@@ -81,7 +92,7 @@ def sample_data() -> SampleData:
 
 
 @pytest.fixture(scope="function")
-def mock_logger() -> MagicMock:
+def mock_logger() -> MockLogger:
     """Provide a mock logger for testing logging behavior.
 
     This fixture provides a mock logger that can be used to verify that
@@ -93,12 +104,7 @@ def mock_logger() -> MagicMock:
                 your_function()
                 mock_logger.info.assert_called_once_with("Function completed successfully")
     """
-    mock = MagicMock()
-    mock.info = MagicMock()
-    mock.error = MagicMock()
-    mock.warning = MagicMock()
-    mock.debug = MagicMock()
-    return mock
+    return MockLogger()
 
 
 # Add your project-specific fixtures below:

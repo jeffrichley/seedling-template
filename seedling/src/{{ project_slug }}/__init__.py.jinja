@@ -1,6 +1,7 @@
 """{{ project_name }} - {{ project_description }}."""
 
 import logging
+from pathlib import Path
 
 __version__ = "{{ version }}"
 __author__ = "{{ author_name }}"
@@ -10,47 +11,40 @@ __email__ = "{{ author_email }}"
 logger = logging.getLogger(__name__)
 
 
-# Configuration management
-class Config:
-    """Configuration management for {{ project_name }}."""
-
-    def __init__(self) -> None:
-        self._settings = {
-            "processing_prefix": "Processed: ",
-        }
-
-    def get_setting(self, key: str, default: str = "Processed: ") -> str:
-        """Get a configuration setting."""
-        return self._settings.get(key, default)
-
-    def set_setting(self, key: str, value: str) -> None:
-        """Set a configuration setting."""
-        self._settings[key] = value
-
-
-config = Config()
-
-
-def main_function(input_data: str) -> str:
-    """Main function for {{ project_name }}.
+def add_numbers(
+    a: int | float, b: int | float, file_path: str | Path | None = None
+) -> int | float:
+    """Add two numbers together and optionally write result to file.
 
     Args:
-        input_data: Input data to process
+        a: First number to add
+        b: Second number to add
+        file_path: Optional path to write the result to
 
     Returns:
-        Processed result
+        Sum of the two numbers
 
     Raises:
-        ValueError: If input_data is empty or None
+        TypeError: If inputs are not numeric types
+        OSError: If file writing fails
     """
-    if not input_data:
-        logger.error("input_data cannot be empty")
-        raise ValueError("input_data cannot be empty")
+    if not isinstance(a, int | float) or not isinstance(b, int | float):
+        raise TypeError("Both arguments must be numeric types")
 
-    prefix = config.get_setting("processing_prefix", "Processed: ")
-    result = f"{prefix}{input_data}"
-    logger.info(f"Successfully processed input: {input_data}")
+    logger.info(f"Adding numbers: {a} + {b}")
+    result = a + b
+    logger.info(f"Result: {result}")
+
+    if file_path is not None:
+        try:
+            path = Path(file_path)
+            path.write_text(f"Result: {result}")
+            logger.info(f"Result written to file: {path}")
+        except OSError as e:
+            logger.error(f"Failed to write result to file {file_path}: {e}")
+            raise
+
     return result
 
 
-__all__ = ["main_function", "logger", "config"]
+__all__ = ["add_numbers", "logger"]

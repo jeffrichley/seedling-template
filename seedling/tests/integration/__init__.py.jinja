@@ -1,35 +1,36 @@
-"""Integration tests for {{ project_name }}.
+"""Integration tests for Cursor Project.
 
-This package contains tests that verify cross-module interactions:
-- Test multiple components working together
-- Use real databases, file systems, or external services
-- May take longer to run (seconds, not milliseconds)
-- Focus on component integration, not individual behavior
-- Test data flow between modules
+This package contains tests that verify multiple components work together:
+- Test interactions between different modules or services
+- Use real implementations of some dependencies (databases, file systems)
+- Mock external services (APIs, third-party libraries)
+- Focus on testing component boundaries and data flow
+- May be slower than unit tests but faster than functional tests
 
 Use @pytest.mark.integration to mark your tests.
 
 Example:
     @pytest.mark.integration
-    def test_database_save_and_retrieve():
-        '''Saves data to database and retrieves it successfully.'''
+    def test_user_service_with_database():
+        '''Test user service integration with database.'''
 
         # Arrange
-        db = get_test_database()
-        data = {"key": "value"}
+        user_data = {"name": "John", "email": "john@example.com"}
 
         # Act
-        db.save(data)
-        retrieved = db.get("key")
+        user = user_service.create_user(user_data)
+        retrieved_user = user_service.get_user(user.id)
 
         # Assert
-        assert retrieved == data
+        assert retrieved_user.name == user_data["name"]
+        assert retrieved_user.email == user_data["email"]
 
 Best Practices:
-- Use real external dependencies (databases, file systems)
-- Test data flow between multiple components
-- Set up and tear down test data properly
-- Use test databases or isolated environments
-- Test both success and failure scenarios
-- Focus on integration points, not individual functions
+- Test component interactions and data flow
+- Use real implementations for internal dependencies
+- Mock external services and APIs
+- Test error handling across component boundaries
+- Verify data consistency between components
+- Focus on integration points, not individual component logic
+- Use test databases or temporary file systems
 """
