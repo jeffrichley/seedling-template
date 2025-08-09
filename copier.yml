@@ -74,7 +74,7 @@ python_versions:
 coverage_threshold:
   type: int
   help: Minimum test coverage percentage
-  min: 0
+  min: 50
   max: 100
   default: 80
 

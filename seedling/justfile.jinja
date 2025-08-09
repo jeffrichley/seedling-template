@@ -3,7 +3,7 @@
 
 # Run tests
 test:
-    uv run pytest tests --cov=src --cov-report=term-missing
+    uv run pytest tests
 
 # Run specific test types
 test-unit:
@@ -21,8 +21,6 @@ test-e2e:
 test-performance:
     uv run pytest tests/performance --cov=src --cov-report=term-missing
 
-
-
 # Run linting
 lint:
     nox -s lint
@@ -38,6 +36,22 @@ docs:
 # Check documentation links
 docs-linkcheck:
     nox -s docs_linkcheck
+
+# Serve documentation with auto-reload (watches for changes)
+docs-serve:
+    uv run sphinx-autobuild docs/source docs/build/html --open-browser --port 8000 --watch src/{{ project_slug }}
+
+# Generate API docs with pdoc (modern alternative)
+docs-api:
+    uv run pdoc --docformat google --output-dir docs/build/pdoc src/{{ project_slug }}
+
+# Serve pdoc API docs
+docs-api-serve:
+    uv run pdoc --docformat google -h localhost -p 8001 src/{{ project_slug }}
+
+# Quick docs development server (builds and serves with auto-reload)
+docs-dev:
+    uv run sphinx-autobuild docs/source docs/build/html --port 8000 --watch src/{{ project_slug }} --re-ignore ".*\\.pyc" --re-ignore "_build"
 
 # Run all quality checks
 quality: lint type-check docs-linkcheck

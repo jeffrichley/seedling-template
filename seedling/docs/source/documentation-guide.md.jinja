@@ -1,0 +1,286 @@
+# Documentation Development Guide
+
+This guide covers the enhanced documentation tools available in {{ project_name }} for creating and maintaining comprehensive documentation.
+
+## Overview
+
+{{ project_name }} provides a dual documentation strategy:
+
+- **Sphinx Documentation**: User guides, tutorials, and architectural documentation
+- **Pdoc API Documentation**: Automatically generated API reference from your code
+
+## Quick Start
+
+```bash
+# Start live documentation development
+just docs-serve          # Opens browser to http://localhost:8000
+just docs-api-serve      # Opens API docs at http://localhost:8001
+
+# Generate static documentation
+just docs               # Build Sphinx docs
+just docs-api           # Generate API docs
+```
+
+## Documentation Commands
+
+### Sphinx Documentation (User Guides)
+
+```bash
+# Build static documentation
+just docs
+
+# Check documentation links
+just docs-linkcheck
+
+# Live development server (auto-reload)
+just docs-serve
+
+# Quick development server with ignore patterns
+just docs-dev
+```
+
+**Features:**
+- **Live reload**: Documentation updates automatically when you change source files
+- **Browser auto-open**: Starts with browser already open to the docs
+- **File watching**: Monitors both Sphinx source and Python source files
+- **Ignore patterns**: Skips irrelevant files to prevent unnecessary rebuilds
+
+### Pdoc API Documentation
+
+```bash
+# Generate static API docs
+just docs-api
+
+# Serve live API docs
+just docs-api-serve
+```
+
+**Features:**
+- **Zero-configuration**: Works out of the box with type hints and docstrings
+- **Modern output**: Clean, responsive HTML with search functionality
+- **Google-style docstrings**: Better than Sphinx's reStructuredText for Python
+- **Type annotation rendering**: Beautiful display of type hints
+- **Cross-references**: Automatic linking between classes and functions
+- **No build process**: Can serve directly from source
+
+## Documentation Structure
+
+```
+docs/
+├── source/                 # Sphinx source files
+│   ├── index.md           # Main documentation page
+│   ├── quickstart.md      # Getting started guide
+│   ├── api.md             # API overview
+│   └── ...                # Other documentation files
+├── build/                 # Generated documentation
+│   ├── html/              # Sphinx HTML output
+│   └── pdoc/              # Pdoc API documentation
+└── Makefile               # Documentation build commands
+```
+
+## Writing Documentation
+
+### Sphinx Documentation (User Guides)
+
+Use Markdown files in `docs/source/` for user-facing documentation:
+
+```markdown
+# My Feature Guide
+
+This guide explains how to use the amazing new feature.
+
+## Installation
+
+```bash
+pip install my-package
+```
+
+## Usage
+
+Here's how to use the feature:
+
+```python
+from my_package import MyClass
+
+instance = MyClass()
+result = instance.do_something()
+```
+```
+
+### API Documentation (Pdoc)
+
+Pdoc automatically generates API documentation from your Python code. Use Google-style docstrings:
+
+```python
+class MyClass:
+    """A class that does amazing things.
+    
+    This class provides functionality for processing data and generating
+    reports. It's designed to be easy to use and highly configurable.
+    
+    Args:
+        config: Configuration dictionary for the class
+        debug: Enable debug mode for verbose output
+        
+    Example:
+        >>> instance = MyClass({"timeout": 30}, debug=True)
+        >>> result = instance.process_data()
+    """
+    
+    def __init__(self, config: dict, debug: bool = False) -> None:
+        """Initialize the MyClass instance.
+        
+        Args:
+            config: Configuration dictionary
+            debug: Enable debug mode
+        """
+        self.config = config
+        self.debug = debug
+    
+    def process_data(self, data: list[str]) -> dict[str, int]:
+        """Process a list of data items and return statistics.
+        
+        This method takes a list of strings and processes them to generate
+        various statistics including counts, frequencies, and patterns.
+        
+        Args:
+            data: List of strings to process
+            
+        Returns:
+            Dictionary containing processing statistics
+            
+        Raises:
+            ValueError: If data is empty or contains invalid items
+            
+        Example:
+            >>> stats = instance.process_data(["a", "b", "a", "c"])
+            >>> print(stats["total_count"])
+            4
+        """
+        if not data:
+            raise ValueError("Data cannot be empty")
+        
+        # Processing logic here
+        return {"total_count": len(data)}
+```
+
+## Development Workflow
+
+### 1. Start Development Session
+
+```bash
+# Terminal 1: Start Sphinx development server
+just docs-serve
+
+# Terminal 2: Start API docs server  
+just docs-api-serve
+```
+
+### 2. Edit Documentation
+
+- **User guides**: Edit `.md` files in `docs/source/`
+- **API docs**: Edit docstrings in your Python code
+- **Both servers auto-reload** when you save changes
+
+### 3. Preview Changes
+
+- **Sphinx docs**: http://localhost:8000
+- **API docs**: http://localhost:8001
+
+### 4. Build for Production
+
+```bash
+# Build all documentation
+just docs
+just docs-api
+
+# Check for broken links
+just docs-linkcheck
+```
+
+## Best Practices
+
+### Sphinx Documentation
+
+1. **Use clear, descriptive titles**
+2. **Include code examples** for all features
+3. **Organize content logically** with proper headings
+4. **Keep it user-focused** - explain "what" and "why", not just "how"
+5. **Use consistent formatting** and style
+
+### API Documentation
+
+1. **Write comprehensive docstrings** for all public APIs
+2. **Use Google-style docstrings** for consistency
+3. **Include type hints** - Pdoc uses these for better documentation
+4. **Provide examples** in docstrings
+5. **Document exceptions** that may be raised
+6. **Keep docstrings up-to-date** with code changes
+
+### General Tips
+
+1. **Write documentation as you code** - don't leave it until the end
+2. **Test your documentation** - make sure examples work
+3. **Use consistent terminology** throughout
+4. **Include troubleshooting sections** for common issues
+5. **Keep documentation close to code** when possible
+
+## Configuration
+
+### Sphinx Configuration
+
+The Sphinx configuration is in `docs/source/conf.py`. Key settings:
+
+```python
+# Project information
+project = "{{ project_name }}"
+copyright = "{{ copyright_year }}, {{ author_name }}"
+author = "{{ author_name }}"
+
+# Extensions
+extensions = [
+    "sphinx.ext.autodoc",
+    "sphinx.ext.napoleon",
+    "sphinx.ext.viewcode",
+    "myst_parser",
+]
+
+# Theme
+html_theme = "furo"
+```
+
+### Pdoc Configuration
+
+Pdoc requires minimal configuration. The `--docformat google` flag ensures Google-style docstrings are properly parsed.
+
+## Troubleshooting
+
+### Common Issues
+
+**Sphinx server not reloading:**
+- Check that you're editing files in `docs/source/` or `src/`
+- Ensure the server is running with `just docs-serve`
+
+**Pdoc not showing new functions:**
+- Make sure the function has a docstring
+- Check that the function is imported in `__init__.py`
+- Restart the pdoc server if needed
+
+**Broken links in documentation:**
+- Run `just docs-linkcheck` to find broken links
+- Update links or add redirects as needed
+
+### Getting Help
+
+- **Sphinx documentation**: https://www.sphinx-doc.org/
+- **Pdoc documentation**: https://pdoc.dev/
+- **MyST Markdown**: https://myst-parser.readthedocs.io/
+
+## Next Steps
+
+1. **Explore the existing documentation** to understand the current structure
+2. **Start with the quickstart guide** to get familiar with the project
+3. **Use the live development servers** for real-time documentation editing
+4. **Contribute improvements** to documentation as you use the project
+
+Remember: Good documentation is as important as good code. Take the time to write clear, comprehensive documentation that helps users understand and use your project effectively.

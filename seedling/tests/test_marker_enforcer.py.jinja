@@ -1,0 +1,31 @@
+"""Test marker enforcement plugin for {{ project_name }}.
+
+This module contains a custom pytest plugin that enforces test markers
+to ensure consistent test organization and categorization.
+"""
+
+import pytest
+
+
+def pytest_runtest_setup(item: pytest.Item) -> None:
+    """Enforce that all test functions have at least one marker.
+
+    This plugin runs right before each test executes and fails individual tests
+    that don't have markers. This provides "test failed" messages for better
+    developer experience and ensures consistent test organization.
+    """
+    try:
+        # Skip non-function items (like classes, modules)
+        if not hasattr(item, "function") or not getattr(item, "function", None):  # type: ignore[misc]
+            return
+
+        # Check if the test function has any markers
+        if not any(item.iter_markers()):
+            pytest.fail(
+                f"Test '{item.name}' must have at least one marker. "
+                f"Add a marker like @pytest.mark.unit, @pytest.mark.integration, etc. "
+                f"See pytest.ini for valid markers."
+            )
+    except Exception:
+        # If there's any error, just skip the check to avoid breaking tests
+        pass

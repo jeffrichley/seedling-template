@@ -5,7 +5,7 @@ Key features:
 - Supports Python 3.11 and 3.12 (matrix-ready).
 - Sessions: tests, lint, type_check, docs, precommit, coverage_html, complexity, security, pyproject.
 - Re-uses local virtualenvs for speed; CI passes `--force-python` to isolate.
-- Parametrized "mode" for minimal vs full extras install.
+- Simplified installation with dev extras for all development activities.
 
 Generated from the Seedling Copier template.
 """
@@ -30,36 +30,20 @@ nox.options.reuse_existing_virtualenvs = True
 PROJECT_ROOT = Path(__file__).parent
 
 PYTHON_VERSIONS = ["3.11", "3.12"]  # Update when a stable 3.13 lands
-INSTALL_MODES = ["minimal", "full"]  # "minimal" == core deps only; "full" == dev[all]
 
 
-def install_project(session, mode: str = "minimal"):
-    """Install the project with uv and the chosen extras mode."""
-    assert mode in INSTALL_MODES
-    extras = "" if mode == "minimal" else "[dev]"
-    session.run("uv", "pip", "install", "-q", "-e", f".{extras}", external=True)
-    # Always install core test dependencies
-    session.run(
-        "uv",
-        "pip",
-        "install",
-        "-q",
-        "pytest",
-        "pytest-cov",
-        "pytest-asyncio",
-        "hypothesis",
-        external=True,
-    )
+def install_project(session):
+    """Install the project with uv and dev extras."""
+    session.run("uv", "pip", "install", "-q", "-e", ".[dev]", external=True)
 
 
 # -------- Sessions -------- #
 
 
 @nox.session(python=PYTHON_VERSIONS)
-@nox.parametrize("mode", INSTALL_MODES)
-def tests(session, mode):
+def tests(session):
     """Run pytest with coverage."""
-    install_project(session, mode)
+    install_project(session)
     session.run(
         "pytest",
         "tests",
@@ -72,33 +56,33 @@ def tests(session, mode):
 
 @nox.session(python=PYTHON_VERSIONS[0])
 def lint(session):
-    """Run Ruff autofix + Black check."""
+    """Run Ruff autofix + Black autofix."""
     session.run("uv", "pip", "install", "-q", "ruff", "black", external=True)
     session.run("ruff", "check", "src", "tests", "--fix")
-    session.run("black", "--check", "src", "tests")
+    session.run("black", "src", "tests")
 
 
 @nox.session(python=PYTHON_VERSIONS[0])
 def type_check(session):
     """Run MyPy type checks."""
-    install_project(session, "full")
+    install_project(session)
     session.run("mypy", "src", "tests")
 
 
 @nox.session(python=PYTHON_VERSIONS[0])
 def docs(session):
     """Build Sphinx docs."""
-    install_project(session, "full")
-    session.run("uv", "pip", "install", "-q", "-e", ".[docs]", external=True)
+    install_project(session)
     session.run("sphinx-build", "-W", "docs/source", "docs/build")
 
 
 @nox.session(python=PYTHON_VERSIONS[0])
 def docs_linkcheck(session):
     """Check Sphinx docs links."""
-    install_project(session, "full")
-    session.run("uv", "pip", "install", "-q", "-e", ".[docs]", external=True)
-    session.run("sphinx-build", "-b", "linkcheck", "docs/source", "docs/build/linkcheck")
+    install_project(session)
+    session.run(
+        "sphinx-build", "-b", "linkcheck", "docs/source", "docs/build/linkcheck"
+    )
 
 
 @nox.session(python=PYTHON_VERSIONS[0], name="pre-commit")

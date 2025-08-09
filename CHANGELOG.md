@@ -87,3 +87,19 @@ This debut release bundles everything you need to spin up **world‑class** Pyth
 * Community‑contributed examples
 * Performance optimizations
 * Extended documentation (FAQ, deep‑dive tutorials)
+
+---
+
+## \[0.2.0] – Unreleased
+
+### Added
+
+* **Enhanced Documentation Tools**: Modern documentation development experience
+  * **Pdoc integration**: Zero-configuration API documentation generation
+  * **Sphinx-autobuild**: Live documentation development server with auto-reload
+  * **Dual documentation strategy**: Sphinx for user guides + Pdoc for API reference
+  * **New justfile commands**: `docs-serve`, `docs-api`, `docs-api-serve`, `docs-dev`
+  * **Comprehensive documentation guide**: Step-by-step instructions for writing and maintaining docs
+* **Dependency Groups**: Better organization of development dependencies
+  * Added `[dependency-groups]` section for improved dependency management
+  * Additional useful development tools: `pdoc`, `pytest-mock-resources`, `psutil`

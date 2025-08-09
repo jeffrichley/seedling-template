@@ -1,7 +1,7 @@
-"""Shared test fixtures for Cursor Project.
+"""Shared test fixtures and pytest configuration for {{ project_name }}.
 
 This module provides common fixtures used across all test types following the project's
-testing rules and conventions.
+testing rules and conventions. It also registers custom pytest plugins.
 
 To add new fixtures:
 1. Add the fixture function below
@@ -9,6 +9,9 @@ To add new fixtures:
 3. Consider the fixture scope (function, class, module, session)
 4. Add any necessary cleanup in yield fixtures
 """
+
+# Import and register our custom pytest plugins
+pytest_plugins = ["test_marker_enforcer"]
 
 import shutil
 import tempfile

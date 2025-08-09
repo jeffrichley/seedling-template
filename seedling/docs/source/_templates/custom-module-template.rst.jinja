@@ -1,0 +1,72 @@
+{{ fullname | escape | underline}}
+
+.. automodule:: {{ fullname }}
+   :members:
+   :show-inheritance:
+   :inherited-members:
+   :special-members: __init__
+   :exclude-members: __weakref__
+
+{% block classes %}
+{% if classes %}
+Classes
+-------
+
+.. autosummary::
+   :toctree:
+   :template: custom-class-template.rst
+   :recursive:
+
+{% for item in classes %}
+   ~{{ fullname }}.{{ item }}
+{%- endfor %}
+{% endif %}
+{% endblock %}
+
+{% block functions %}
+{% if functions %}
+Functions
+---------
+
+.. autosummary::
+   :toctree:
+   :template: custom-function-template.rst
+   :recursive:
+
+{% for item in functions %}
+   ~{{ fullname }}.{{ item }}
+{%- endfor %}
+{% endif %}
+{% endblock %}
+
+{% block exceptions %}
+{% if exceptions %}
+Exceptions
+----------
+
+.. autosummary::
+   :toctree:
+   :template: custom-exception-template.rst
+   :recursive:
+
+{% for item in exceptions %}
+   ~{{ fullname }}.{{ item }}
+{%- endfor %}
+{% endif %}
+{% endblock %}
+
+{% block modules %}
+{% if modules %}
+Modules
+-------
+
+.. autosummary::
+   :toctree:
+   :template: custom-module-template.rst
+   :recursive:
+
+{% for item in modules %}
+   ~{{ fullname }}.{{ item }}
+{%- endfor %}
+{% endif %}
+{% endblock %}

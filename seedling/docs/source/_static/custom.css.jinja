@@ -94,6 +94,157 @@ a:hover {
   color: white;
 }
 
+/* Custom styles for prettier autodoc output */
+
+/* Make class/function signatures more readable */
+.sig {
+    font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+    background-color: var(--color-code-background);
+    padding: 0.2em 0.4em;
+    border-radius: 3px;
+    font-size: 0.9em;
+}
+
+/* Style the module docstring */
+.py .descclassname,
+.py .descname {
+    font-weight: bold;
+    color: var(--color-brand-primary);
+}
+
+/* Make parameter lists prettier */
+.field-list {
+    margin: 1em 0;
+}
+
+.field-list dt {
+    font-weight: bold;
+    color: var(--color-brand-primary);
+    margin-right: 0.5em;
+}
+
+.field-list dd {
+    margin-left: 0;
+}
+
+/* Style the inheritance info */
+.inheritance {
+    background-color: var(--color-background-secondary);
+    padding: 0.5em;
+    border-radius: 4px;
+    margin: 0.5em 0;
+    font-size: 0.9em;
+}
+
+/* Make method/attribute lists more organized */
+.py .property {
+    font-style: italic;
+}
+
+/* Style the module header */
+.py .module {
+    border-bottom: 2px solid var(--color-brand-primary);
+    padding-bottom: 0.5em;
+    margin-bottom: 1em;
+}
+
+/* Make autodoc sections more visually separated */
+.py .class,
+.py .function,
+.py .method,
+.py .attribute {
+    margin: 1.5em 0;
+    padding: 1em;
+    border-left: 3px solid var(--color-brand-primary);
+    background-color: var(--color-background-secondary);
+    border-radius: 0 4px 4px 0;
+}
+
+/* Style the docstring content */
+.py .docstring {
+    margin-top: 0.5em;
+    padding-left: 1em;
+    border-left: 2px solid var(--color-background-muted);
+}
+
+/* Make type hints more prominent */
+.py .property .sig-name {
+    color: var(--color-brand-primary);
+    font-weight: bold;
+}
+
+/* Style the "Bases:" section */
+.py .property .sig-name:contains("Bases") {
+    color: var(--color-foreground-muted);
+    font-size: 0.9em;
+}
+
+/* Make the module docstring stand out */
+.py .docstring:first-of-type {
+    background-color: var(--color-background-secondary);
+    padding: 1em;
+    border-radius: 4px;
+    margin: 1em 0;
+    border-left: 4px solid var(--color-brand-primary);
+}
+
+/* Style autodoc-generated tables */
+.autosummary {
+    width: 100%;
+    margin: 1em 0;
+}
+
+.autosummary table {
+    border-collapse: collapse;
+    width: 100%;
+}
+
+.autosummary td,
+.autosummary th {
+    padding: 0.5em;
+    text-align: left;
+    border-bottom: 1px solid var(--color-background-border);
+}
+
+.autosummary th {
+    background-color: var(--color-background-secondary);
+    font-weight: bold;
+}
+
+/* Style viewcode links */
+.viewcode-link {
+    color: var(--color-brand-primary);
+}
+
+.viewcode-link:hover {
+    text-decoration: underline;
+}
+
+/* Style inherited members */
+.inherited {
+    color: var(--color-foreground-muted);
+    font-style: italic;
+}
+
+/* Enhanced signature styling */
+.py .sig-paren {
+    color: var(--color-foreground-muted);
+}
+
+.py .sig-name {
+    color: var(--color-brand-primary);
+    font-weight: bold;
+}
+
+.py .sig-param {
+    color: var(--color-foreground-primary);
+}
+
+.py .sig-return {
+    color: var(--color-foreground-secondary);
+    font-style: italic;
+}
+
 /* Improved search styling */
 .search {
   border-radius: 8px;

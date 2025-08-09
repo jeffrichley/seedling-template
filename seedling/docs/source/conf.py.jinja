@@ -70,6 +70,9 @@ source_suffix = {
     ".md": "markdown",
 }
 
+# Master document for consistent navigation
+master_doc = "master"
+
 # -- Options for HTML output -------------------------------------------------
 
 # The theme to use for HTML and HTML Help pages.  See the documentation for
@@ -130,7 +133,16 @@ autodoc_default_options = {
     "special-members": "__init__",
     "undoc-members": True,
     "exclude-members": "__weakref__",
+    "show-inheritance": True,
+    "inherited-members": True,
+    "no-value": True,
 }
+
+# Make autodoc prettier - following Furo example
+autodoc_preserve_defaults = True
+autodoc_class_signature = "separated"
+autodoc_member_order = "bysource"
+autodoc_default_flags = ["members", "undoc-members", "show-inheritance"]
 
 # MyST settings
 myst_enable_extensions = [
@@ -166,5 +178,26 @@ copybutton_line_continuation_character = "\\"
 autodoc_typehints = "description"
 autodoc_typehints_format = "short"
 autodoc_typehints_description_target = "documented"
+
+# Autosummary settings for prettier API docs
+autosummary_generate = True
+autosummary_imported_members = True
+autosummary_ignore_module_all = False
+
+# Enable strict cross-reference checking
+nitpicky = False
+
+# Suppress warnings for generic type variables and standard library references
+nitpick_ignore = [
+    ("py:class", "enum.Enum"),
+    ("py:class", "abc.ABC"),
+    ("py:class", "collections.abc.Callable"),
+    ("py:class", "collections.abc.Awaitable"),
+]
+
+# Suppress specific warning types
+suppress_warnings = [
+    "ref.python",  # Suppress cross-reference warnings
+]
 
 

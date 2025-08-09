@@ -1,50 +1,21 @@
 """{{ project_name }} - {{ project_description }}."""
 
-import logging
-from pathlib import Path
-
 __version__ = "{{ version }}"
 __author__ = "{{ author_name }}"
 __email__ = "{{ author_email }}"
 
-# Configure logging
-logger = logging.getLogger(__name__)
 
-
-def add_numbers(
-    a: int | float, b: int | float, file_path: str | Path | None = None
-) -> int | float:
-    """Add two numbers together and optionally write result to file.
+def add(a: int, b: int) -> int:
+    """Add two integers together.
 
     Args:
-        a: First number to add
-        b: Second number to add
-        file_path: Optional path to write the result to
+        a: First integer
+        b: Second integer
 
     Returns:
-        Sum of the two numbers
-
-    Raises:
-        TypeError: If inputs are not numeric types
-        OSError: If file writing fails
+        Sum of the two integers
     """
-    if not isinstance(a, int | float) or not isinstance(b, int | float):
-        raise TypeError("Both arguments must be numeric types")
-
-    logger.info(f"Adding numbers: {a} + {b}")
-    result = a + b
-    logger.info(f"Result: {result}")
-
-    if file_path is not None:
-        try:
-            path = Path(file_path)
-            path.write_text(f"Result: {result}")
-            logger.info(f"Result written to file: {path}")
-        except OSError as e:
-            logger.error(f"Failed to write result to file {file_path}: {e}")
-            raise
-
-    return result
+    return a + b
 
 
-__all__ = ["add_numbers", "logger"]
+__all__ = ["add"]

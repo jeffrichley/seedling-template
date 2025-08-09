@@ -1,90 +1,60 @@
-"""Example unit tests for Cursor Project."""
-
-from pathlib import Path
-from typing import Any
-from unittest.mock import MagicMock, patch
+"""Example unit tests for {{ project_name }}."""
 
 import pytest
+from {{ project_slug }} import add
 
-from cursor_project import add_numbers
 
-
-class MockLogger(MagicMock):
-    """A properly typed mock logger for testing."""
+@pytest.mark.unit
+def test_add_returns_correct_sum() -> None:
+    """Test that add returns the correct sum of two integers."""
+    # Arrange
+    a, b = 2, 3
     
-    def __init__(self, *args: Any, **kwargs: Any) -> None:
-        super().__init__(*args, **kwargs)  # type: ignore[misc]
-        self.info = MagicMock()
-        self.error = MagicMock()
-        self.warning = MagicMock()
-        self.debug = MagicMock()
-
-
-def test_add_numbers_returns_correct_sum_and_logs_operation(
-    temp_directory: Path, mock_logger: MockLogger
-) -> None:
-    """Test that add_numbers returns correct sum, logs the operation, and writes to file."""
-    # Arrange
-    a, b = 7, 2
-    expected_sum = 9
-    result_file = temp_directory / "addition_result.txt"
-
     # Act
-    with patch("cursor_project.logger", mock_logger):
-        result = add_numbers(a, b, file_path=result_file)
-
+    result = add(a, b)
+    
     # Assert
-    assert result == expected_sum
-    mock_logger.info.assert_any_call("Adding numbers: 7 + 2")
-    mock_logger.info.assert_any_call("Result: 9")
-    mock_logger.info.assert_any_call(f"Result written to file: {result_file}")
-    assert result_file.read_text() == "Result: 9"
+    assert result == 5
 
 
-def test_add_numbers_with_invalid_input_types_raises_typeerror(mock_logger: MockLogger) -> None:
-    """Test that add_numbers raises TypeError for non-numeric inputs."""
+@pytest.mark.unit
+def test_add_with_zero() -> None:
+    """Test that add works correctly with zero."""
     # Arrange
-    a: str = "not a number"
-    b: int = 5
-
-    # Act & Assert
-    with patch("cursor_project.logger", mock_logger), pytest.raises(
-        TypeError, match="Both arguments must be numeric types"
-    ):
-        add_numbers(a, b)  # type: ignore[arg-type]
-
-
-def test_add_numbers_with_file_write_failure_raises_oserror(mock_logger: MockLogger) -> None:
-    """Test that add_numbers raises OSError when file writing fails."""
-    # Arrange
-    a, b = 5, 3
-    invalid_path = "/invalid/path/that/cannot/be/written/to.txt"
-
-    # Act & Assert
-    with patch("cursor_project.logger", mock_logger), pytest.raises(OSError):
-        add_numbers(a, b, file_path=invalid_path)
-
-    mock_logger.error.assert_called_once()
-
-
-def test_add_numbers_without_file_path_does_not_write_file(mock_logger: MockLogger) -> None:
-    """Test that add_numbers works correctly without file_path parameter."""
-    # Arrange
-    a, b = 10, 20
-    expected_sum = 30
-
+    a, b = 5, 0
+    
     # Act
-    with patch("cursor_project.logger", mock_logger):
-        result = add_numbers(a, b)
-
+    result = add(a, b)
+    
     # Assert
-    assert result == expected_sum
-    mock_logger.info.assert_any_call("Adding numbers: 10 + 20")
-    mock_logger.info.assert_any_call("Result: 30")
-    # Should not have any file writing logs
-    file_write_calls = [
-        call for call in mock_logger.info.call_args_list
-        if "Result written to file" in str(call)
-    ]
-    assert len(file_write_calls) == 0
+    assert result == 5
+
+
+@pytest.mark.unit
+def test_add_with_negative_numbers() -> None:
+    """Test that add works correctly with negative numbers."""
+    # Arrange
+    a, b = -3, 7
+    
+    # Act
+    result = add(a, b)
+    
+    # Assert
+    assert result == 4
+
+
+@pytest.mark.unit
+@pytest.mark.parametrize("a,b,expected", [
+    (1, 1, 2),
+    (10, 20, 30),
+    (-5, 5, 0),
+    (100, 200, 300),
+])
+def test_add_with_various_inputs(a: int, b: int, expected: int) -> None:
+    """Test add function with various input combinations."""
+    # Act
+    result = add(a, b)
+    
+    # Assert
+    assert result == expected
 
