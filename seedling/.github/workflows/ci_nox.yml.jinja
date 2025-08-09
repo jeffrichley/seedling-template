@@ -20,7 +20,7 @@ jobs:
       - name: Setup Python and Nox
         uses: wntrblm/nox@2025.05.01
         with:
-          python-versions: ${{ matrix.python-version }}
+          python-versions: ${{ "{{" }} matrix.python-version {{ "}}" }}
 
       - name: Install uv
         uses: astral-sh/setup-uv@v1
@@ -29,13 +29,13 @@ jobs:
 
       - name: Run nox sessions
         run: |
-          nox --sessions "tests-${{ matrix.python-version }}"
+          nox --sessions "tests-${{ "{{" }} matrix.python-version {{ "}}" }}"
 
       - name: Run quality gates
-        if: ${{ matrix.python-version == '3.11' }}
+        if: ${{ "{{" }} matrix.python-version == '3.11' {{ "}}" }}
         run: |
           nox -s lint type_check docs docs_linkcheck complexity security pyproject
 
       - name: Upload coverage to Codecov
-        if: ${{ matrix.python-version == '3.11' }}
+        if: ${{ "{{" }} matrix.python-version == '3.11' {{ "}}" }}
         uses: codecov/codecov-action@v4

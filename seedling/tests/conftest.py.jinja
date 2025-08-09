@@ -10,9 +10,6 @@ To add new fixtures:
 4. Add any necessary cleanup in yield fixtures
 """
 
-# Import and register our custom pytest plugins
-pytest_plugins = ["test_marker_enforcer"]
-
 import shutil
 import tempfile
 from collections.abc import Generator
@@ -21,6 +18,9 @@ from typing import Any, TypedDict
 from unittest.mock import MagicMock
 
 import pytest
+
+# Import and register our custom pytest plugins
+pytest_plugins = ["test_marker_enforcer"]
 
 
 class MockLogger(MagicMock):

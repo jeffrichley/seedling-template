@@ -15,4 +15,4 @@ jobs:
       - name: Commitizen Bump
         uses: commitizen-tools/commitizen-action@v1
         with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
+          github_token: ${{ "{{" }} secrets.GITHUB_TOKEN {{ "}}" }}
